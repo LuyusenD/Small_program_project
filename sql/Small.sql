@@ -41,3 +41,6 @@ INSERT INTO `serve` (`name`) VALUES
 ('家具安装'),
 ('清洁服务'),
 ('搬家');
+
+INSERT INTO `the_order` (`id`, `oId`, `oName`, `oTel`, `oAddress`, `createTime`, `deleteTime`, `oType`, `oStart`, `oTime`, `oRemark`, `openId`) VALUES 
+(NULL, '20190314233340211121', '测试', '13800138000', '广东深圳', '0', '0', '1', '0', '0', '测试测试测试测试测试测试测试测试', '0');
