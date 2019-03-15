@@ -25,7 +25,7 @@ CREATE TABLE `the_order` (
   `createTime` varchar(10) NOT NULL COMMENT '创建时间',
   `deleteTime` varchar(10) NOT NULL COMMENT '订单取消时间',
   `oType` int NOT NULL COMMENT '订单类型',
-  `oStart` int NOT NULL COMMENT '订单状态',
+  `oState` int NOT NULL COMMENT '订单状态',
   `oTime` varchar(10) NOT NULL COMMENT '预约时间',
   `oRemark` varchar(128) NOT NULL COMMENT '备注',
   `openId` varchar(128) NOT NULL COMMENT '唯一标示'
@@ -36,11 +36,27 @@ CREATE TABLE `serve` (
   `name` varchar(8) NOT NULL COMMENT '服务名称'
 );
 
+CREATE TABLE `state` (
+  `id` INT NOT NULL COMMENT '编号' PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(8) NOT NULL COMMENT '状态名称'
+);
+
+INSERT INTO `state` (`name`) VALUES
+('未付款'),
+('已付款'),
+('执行中'),
+('完成');
+
 INSERT INTO `serve` (`name`) VALUES
 ('机场接送'),
 ('家具安装'),
 ('清洁服务'),
 ('搬家');
 
-INSERT INTO `the_order` (`id`, `oId`, `oName`, `oTel`, `oAddress`, `createTime`, `deleteTime`, `oType`, `oStart`, `oTime`, `oRemark`, `openId`) VALUES 
-(NULL, '20190314233340211121', '测试', '13800138000', '广东深圳', '0', '0', '1', '0', '0', '测试测试测试测试测试测试测试测试', '0');
+INSERT INTO `the_order` (`id`, `oId`, `oName`, `oTel`, `oAddress`, `createTime`, `deleteTime`, `oType`, `oState`, `oTime`, `oRemark`, `openId`) VALUES 
+(NULL, '13437024352606386584', '郏绮梅', '17075319386', '广东深圳', '0', '0', '1', '0', '0', '测试测试测试测试测试测试测试测试', '0'),
+(NULL, '45119326794520023590', '许文栋', '15656891377 ', '广东深圳', '0', '0', '1', '0', '0', '测试测试测试测试测试测试测试测试', '0'),
+(NULL, '53975449004210531849', '杨程', '17602031918', '广东深圳', '0', '0', '1', '0', '0', '测试测试测试测试测试测试测试测试', '0'),
+(NULL, '94771884121000770580', '赵光', '16902436956', '广东深圳', '0', '0', '1', '0', '0', '测试测试测试测试测试测试测试测试', '0'),
+(NULL, '61747845155186950881', '宁艳红', '13914275393', '广东深圳', '0', '0', '1', '0', '0', '测试测试测试测试测试测试测试测试', '0'),
+(NULL, '38915897880215200112', '廖雪冰', '13883599649', '广东深圳', '0', '0', '1', '0', '0', '测试测试测试测试测试测试测试测试', '0');

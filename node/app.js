@@ -4,7 +4,6 @@
  * @date    2019-03-14 14:29:02
  */
 
-'use strict'
 
 const bodyParse = require("body-parser")
 const express=require('express')
