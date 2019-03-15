@@ -9,7 +9,10 @@
 # api: order/allOrder
 # methods: get
 # req:
-# res: {code:200, data: []}
+# res: {code:200, data: {
+#       total: 0, //总数
+#       data: []  //订单数据
+#      }}
 
 # 新增订单
 # api: order/addOrder
@@ -27,8 +30,27 @@
 #   true: {{code: 200, msg: '下单成功'}}
 #   false: {{code: 3000, msg: '下单失败'}}
 #
-#
+# test : http://localhost:3000/order/addorder?oName=%E9%B8%A1%E5%84%BF&oTel=13800138000&oAddress=%E4%B8%AD%E5%9B%BD%E5%B9%BF%E4%B8%9C%E7%9C%81%E6%B7%B1%E5%9C%B3%E5%B8%82&oTime=0&oRemark=%E9%80%9F%E5%BA%A6%E8%A6%81%E5%BF%AB%E5%8A%A8%E4%BD%9C%E8%A6%81%E5%B8%85&openId=aw1rf8564v13a2w5f4a1w23rf5r1aqwe&oType=1
 #
 #
 #
 
+# 取消订单
+# api: order/delorder
+# methods: post
+# req: {
+#   oId       订单号  --> md5(md5(md5(oId))) + 'xn'
+# }
+# res:
+#   {{code: 200, msg: '取消订单成功'}}
+
+# 修改订单状态
+# api: order/editstate
+# methods: post
+# req: {
+#   oId       订单号  --> md5(md5(md5(oId))) + 'xn'
+#   oState    订单状态
+# }
+# res:
+#   {{code: 200, msg: '修改订单成功'}}
+#

@@ -18,17 +18,18 @@ CREATE TABLE `user` (
 
 CREATE TABLE `the_order` (
   `id` int NOT NULL COMMENT '编号' PRIMARY KEY AUTO_INCREMENT,
-  `oId` varchar(128) NOT NULL COMMENT '订单编号',
+  `oId` varchar(128) NOT NULL COMMENT '订单编号' UNIQUE,
   `oName` varchar(8) NOT NULL COMMENT '姓名',
   `oTel` varchar(11) NOT NULL COMMENT '联系方式',
   `oAddress` varchar(64) NOT NULL COMMENT '地址',
   `createTime` varchar(10) NOT NULL COMMENT '创建时间',
   `deleteTime` varchar(10) NOT NULL COMMENT '订单取消时间',
-  `oType` int NOT NULL COMMENT '订单类型',
+  `oType` int NOT NULL COMMENT '服务类型',
   `oState` int NOT NULL COMMENT '订单状态',
   `oTime` varchar(10) NOT NULL COMMENT '预约时间',
   `oRemark` varchar(128) NOT NULL COMMENT '备注',
-  `openId` varchar(128) NOT NULL COMMENT '唯一标示'
+  `openId` varchar(128) NOT NULL COMMENT '唯一标示',
+  `md5` varchar(128) NOT NULL COMMENT '订单密文'
 );
 
 CREATE TABLE `serve` (
