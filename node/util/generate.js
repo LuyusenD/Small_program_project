@@ -21,7 +21,7 @@ class tools {
   parameter () {
     for (let i of arguments[1]) {
       if (!arguments[0][i]) {
-        return {code: -1, data: null, msg: '缺少参数'}
+        return {code: -1, data: null, msg: '缺少参数', get: arguments[1]}
       }
     }
     return false
