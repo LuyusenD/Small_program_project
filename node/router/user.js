@@ -30,8 +30,8 @@ router.get('/getopenid',(req,res) => {
   });
 })
 
-router.get('/adduser',(req,res) => {
-  let v = req.query,
+router.post('/adduser',(req,res) => {
+  let v = req.body,
       sql = `INSERT INTO user (openId, img, name, sex, address) VALUES (?,?,?,?,?)`,
       arr = ["openId","img","name","sex","address"],
       parameter = tools.parameter(v,arr)
