@@ -13,7 +13,15 @@ const request = require('request')
 
 router.get('/getopenid',(req,res) => {
   let v = req.query,
-      url = `https://api.weixin.qq.com/sns/jscode2session?appid=${v.appid}&secret=SECRET&js_code=${v.code}&grant_type=authorization_code`
+      arr = ["appid","code"],
+      parameter = tools.parameter(v,arr)
+
+  if (parameter) {
+    res.send(parameter)
+    return
+  }
+  
+  let url = `https://api.weixin.qq.com/sns/jscode2session?appid=${v.appid}&secret=SECRET&js_code=${v.code}&grant_type=authorization_code`
 
   request(url, (error, response, body) => {
     if (!error && response.statusCode == 200) {
