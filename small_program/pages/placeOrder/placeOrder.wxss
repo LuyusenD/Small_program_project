@@ -1,0 +1,4 @@
+/* pages/placeOrder/placeOrder.wxss */
+.weui-cell__bd{
+  width: 100%;
+}

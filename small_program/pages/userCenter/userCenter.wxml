@@ -13,30 +13,17 @@
   <view class="list">
    <view class="page__bd">
     <view class="weui-cells weui-cells_form">
-        <navigator class="weui-cell"  hover-class="navigator-hover">
-        <image class="chose_icon" src="/image/order.png" ></image>
+        <navigator class="weui-cell"  hover-class="navigator-hover" url='/pages/orderList/orderList'>
           我的订单
           <image class="chose_icon" src="/image/next.png" ></image>
         </navigator>
-    </view>
-    <view class="weui-cells weui-cells_form">
         <navigator class="weui-cell"  hover-class="navigator-hover">
-        <image class="chose_icon" src="/image/order.png" ></image>
-          我的订单
+          待评价
           <image class="chose_icon" src="/image/next.png" ></image>
         </navigator>
-    </view>
-    <view class="weui-cells weui-cells_form">
         <navigator class="weui-cell"  hover-class="navigator-hover">
-        <image class="chose_icon" src="/image/order.png" ></image>
-          我的订单
-          <image class="chose_icon" src="/image/next.png" ></image>
-        </navigator>
-    </view>
-    <view class="weui-cells weui-cells_form">
-        <navigator class="weui-cell"  hover-class="navigator-hover">
-        <image class="chose_icon" src="/image/order.png" ></image>
-          我的订单
+          意见反馈
+           <button open-type="feedback" class="feedback"></button>
           <image class="chose_icon" src="/image/next.png" ></image>
         </navigator>
     </view>

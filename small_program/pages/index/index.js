@@ -72,5 +72,11 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  jump(e){
+    var url = e.currentTarget.dataset.url;
+    wx.navigateTo({
+      url: url,
+    })
   }
 })

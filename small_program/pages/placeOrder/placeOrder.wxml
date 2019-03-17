@@ -1,0 +1,22 @@
+<!--pages/placeOrder/placeOrder.wxml-->
+     <view class="weui-cell">
+          <view class="weui-cell__hd">
+             <label class="weui-label">请选择服务类型</label>
+          </view>
+          <view class="weui-cell__bd">
+            <radio-group class="radio-group" >
+              <label class="radio" wx:for="{{sex}}" wx:key="index">
+                <radio value="{{item.name}}"/>{{item.value}}
+              </label>
+            </radio-group>
+          </view>
+    </view>
+<van-cell-group>
+  <van-field
+    value="{{ phone }}"
+    label="手机号"
+    placeholder="请输入手机号"
+    error-message="手机号格式错误"
+    border="{{ true }}"
+  />
+</van-cell-group>

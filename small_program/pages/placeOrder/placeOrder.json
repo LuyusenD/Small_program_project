@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "我要下单",
+  "usingComponents": {
+    "van-field": "/vant-weapp/dist/field/index",
+    "van-radio": "/vant-weapp/dist/radio/index",
+    "van-radio-group": "/vant-weapp/dist/radio-group/index"
+  }
+}

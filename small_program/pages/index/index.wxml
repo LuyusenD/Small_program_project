@@ -3,9 +3,28 @@
 <image src='/image/login.jpg' class='loginImg'></image>
 <!-- 立即下单  查询订单 管理后台 我的订单  -->
 <view class='container'>
-  <view></view>
-  <view></view>
-  <view></view>
-  <view></view>
+  <view bindtap='jump' data-url='/pages/placeOrder/placeOrder'>
+    <view>
+      <image src='/image/order.png'></image>
+      <view>立即下单</view>
+    </view>
+  </view>
+  <view bindtap='jump' data-url='/pages/search/search'>
+    <view>
+      <image src='/image/seachOrder.png'></image>
+      <view>查询订单</view>
+    </view>
+  </view>
+  <view bindtap='jump' data-url='/pages/admin/admin'>
+    <view>
+      <image src='/image/admin.png'></image>
+      <view>管理后台</view>
+    </view>
+  </view>
+  <view bindtap='jump' data-url='/pages/orderList/orderList'>
+    <view>
+      <image src='/image/orderMine.png'></image>
+      <view>我的订单</view>
+    </view>
+  </view>
 </view>
-<button ></button>
