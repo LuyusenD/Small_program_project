@@ -21,11 +21,13 @@ router.get('/getopenid',(req,res) => {
     return
   }
   
-  let url = `https://api.weixin.qq.com/sns/jscode2session?appid=${v.appid}&secret=SECRET&js_code=${v.code}&grant_type=authorization_code`
+  let url = `https://api.weixin.qq.com/sns/jscode2session?appid=${v.appid}&secret=bb0444e17996d8a233b5a5f6f2a61a67&js_code=${v.code}&grant_type=authorization_code`
 
   request(url, (error, response, body) => {
-    if (!error && response.statusCode == 200) {
-      res.send({code: 200, data: {openId: body.openId, session_key: body.session_key}, msg: '请求openId成功'})
+    if (body.session_key && body.openid) {
+      res.send({code: 200, data: body, msg: '请求openId成功'})
+    } else {
+      res.send({code: -1, data: body, msg: '请求出错'})
     }
   });
 })
