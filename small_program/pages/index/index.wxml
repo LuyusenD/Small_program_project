@@ -1,0 +1,11 @@
+<!--index.wxml-->
+<!--login 图片  -->
+<image src='/image/login.jpg' class='loginImg'></image>
+<!-- 立即下单  查询订单 管理后台 我的订单  -->
+<view class='container'>
+  <view></view>
+  <view></view>
+  <view></view>
+  <view></view>
+</view>
+<button ></button>

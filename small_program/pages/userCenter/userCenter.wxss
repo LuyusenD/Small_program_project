@@ -1,0 +1,62 @@
+/* pages/userCenter/userCenter.wxss */
+.head{display:flex;flex-direction: column;background: #efefef;width:100%;padding: 100rpx 0rpx; align-items: center;  justify-content: space-between;background: #f4de3b}
+.head image{width:150rpx;height:150rpx;margin:0 auto;border-radius: 50%;}
+.list view{font-size:12pt;}
+.list .weui-cell{padding: 15px !important}
+.weui-label{
+  /* margin-right: 50rpx; */
+}
+.page__bd{
+  margin-top: 50rpx;
+  /* box-sizing: border-box
+   */
+   border:1px solid transparent
+}
+.zhuce{
+  text-align: right;
+  margin-top: 20rpx;
+  margin-right: 50rpx;
+}
+.weui-cells_form{
+  width:90%;
+  margin: 0 auto;
+}
+.weui-cell{
+  padding: 20;
+}
+.logo{
+  margin:0 auto;
+  padding: 90rpx 0;
+}
+.logo,
+.logo image{
+  width:350rpx;
+  height:144rpx;
+}
+.loginBtn{
+  margin-top: 100rpx;
+}
+
+
+.chose_icon{
+  width:50rpx;
+  height:50rpx;
+}
+.weui-cell{
+  display: flex;
+  justify-content: space-between
+}
+
+.fail{
+  text-align: center;
+  line-height: 60rpx;
+}
+.mine_head{
+  width: 100%;
+  height: 300rpx;
+  background: #1AAD19;
+  display: flex; 
+  /* overflow: hidden; */
+    align-items:center;
+  justify-content: start;
+}

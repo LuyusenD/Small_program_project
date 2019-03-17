@@ -1,0 +1,47 @@
+<!--pages/userCenter/userCenter.wxml-->
+<!--  个人中心  -->
+<view class="page">
+ <!--页头-->
+ <view class="page__hd">
+  <view class="head">   
+    <view><navigator url="/pages/my/info"><image src="{{userInfo.avatarUrl}}"></image></navigator></view>
+    <view><text>{{userInfo.nickName}}</text></view>
+  </view>
+ </view>
+ <!--主体-->
+ <view class="page__bd"> 
+  <view class="list">
+   <view class="page__bd">
+    <view class="weui-cells weui-cells_form">
+        <navigator class="weui-cell"  hover-class="navigator-hover">
+        <image class="chose_icon" src="/image/order.png" ></image>
+          我的订单
+          <image class="chose_icon" src="/image/next.png" ></image>
+        </navigator>
+    </view>
+    <view class="weui-cells weui-cells_form">
+        <navigator class="weui-cell"  hover-class="navigator-hover">
+        <image class="chose_icon" src="/image/order.png" ></image>
+          我的订单
+          <image class="chose_icon" src="/image/next.png" ></image>
+        </navigator>
+    </view>
+    <view class="weui-cells weui-cells_form">
+        <navigator class="weui-cell"  hover-class="navigator-hover">
+        <image class="chose_icon" src="/image/order.png" ></image>
+          我的订单
+          <image class="chose_icon" src="/image/next.png" ></image>
+        </navigator>
+    </view>
+    <view class="weui-cells weui-cells_form">
+        <navigator class="weui-cell"  hover-class="navigator-hover">
+        <image class="chose_icon" src="/image/order.png" ></image>
+          我的订单
+          <image class="chose_icon" src="/image/next.png" ></image>
+        </navigator>
+    </view>
+  </view>
+  </view>
+ </view>
+ <!--没有页脚-->
+</view>

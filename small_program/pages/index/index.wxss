@@ -1,0 +1,19 @@
+/**index.wxss**/
+.loginImg{
+  width: 100%;
+  height: 400rpx;
+}
+.container{
+  width: 96%;
+  margin: 80rpx auto ;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border:  1px solid red 
+}
+.container>view{
+  margin-bottom: 2%;
+  width: 48%;
+  height: 300rpx;
+  border: 1px solid yellowgreen
+}
