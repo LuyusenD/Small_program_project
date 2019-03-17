@@ -13,6 +13,7 @@ app.use(bodyParse.urlencoded({extended:false}))
 
 let order = require('./router/order.js');
 let user = require('./router/user.js');
+let buff = require('./router/buff.js');
 
 app.listen(3000)
 
@@ -20,3 +21,4 @@ app.use(express.static(__dirname + '/static'))
 // 挂载
 app.use('/order', order);
 app.use('/user', user);
+app.use('/buff', buff);

@@ -18,12 +18,12 @@ router.get('/allorder', (req, res) => {
   })
 })
 
-router.post('/addorder',(req, res) => {
+router.get('/addorder',(req, res) => {
   let sql = `INSERT INTO the_order (oId, oName, oTel, oAddress, createTime, deleteTime, oType, oState, oTime, oRemark, openId, md5) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`
   let oId = tools.generateOid(`Z24`),
       time = tools.generateTime(),
       ciphertext = tools.md5(oId),
-      v = req.body,
+      v = req.query,
       arr = ["oName","oTel","oAddress","oType","oTime","oRemark","openId"],
       parameter = tools.parameter(v,arr)
 
@@ -85,9 +85,9 @@ router.post('/delorder',(req,res) => {
   })
 })
 
-router.get('/editstate',(req,res) => {
+router.post('/editstate',(req,res) => {
   let sql = `UPDATE the_order SET oState = ? WHERE md5 = ?`,
-      v = req.query,
+      v = req.body,
       parameter = tools.parameter(v,['oId'])
 
   if (parameter) {
@@ -101,6 +101,34 @@ router.get('/editstate',(req,res) => {
       res.send({code: 401, data: null, msg: '修改失败,订单ID或订单状态错误'})
     }
   })
-
 })
+
+router.post('/addevaluate',(req,res) => {
+  let sql = 'UPDATE the_order SET evaluate = ? WHERE md5 = ?',
+      v = req.body,
+      parameter = tools.parameter(v,['evaluate','oId'])
+
+  if (parameter) {
+    res.send(parameter)
+    return
+  }
+  new Promise(open => {
+    let testSql = `SELECT evaluate FROM the_order WHERE md5 = ?`
+    pool.query(testSql,[v.oId],(err,result) => {
+      if (result[0].evaluate == null) 
+        open()
+      else
+        res.send({code: 401, data: null, msg: '已评价,请勿重复评价'})
+    })
+  }).then(() => {
+    pool.query(sql,[v.evaluate,v.oId],(err,result) => {
+      if (result.affectedRows > 0) {
+        res.send({code: 200, data: null, msg: '评价成功'})
+      } else {
+        res.send({code: 401, data: null, msg: '评价出错'})
+      }
+    })
+  })
+})
+
 module.exports = router

@@ -54,3 +54,13 @@
 # res:
 #   {{code: 200, msg: '修改订单成功'}}
 
+# 客户评价
+# api: order/addevaluate
+# methods: post
+# req: {
+#   oId       订单号  --> md5(md5(md5(oId))) + 'xn'
+#   evaluate  评价
+# }
+# res:
+#   {{code: 200, msg: '评价成功'}}
+
