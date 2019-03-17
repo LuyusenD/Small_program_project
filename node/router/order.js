@@ -18,12 +18,12 @@ router.get('/allorder', (req, res) => {
   })
 })
 
-router.get('/addorder',(req, res) => {
+router.post('/addorder',(req, res) => {
   let sql = `INSERT INTO the_order (oId, oName, oTel, oAddress, createTime, deleteTime, oType, oState, oTime, oRemark, openId, md5) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`
   let oId = tools.generateOid(`Z24`),
       time = tools.generateTime(),
       ciphertext = tools.md5(oId),
-      v = req.query,
+      v = req.body,
       arr = ["oName","oTel","oAddress","oType","oTime","oRemark","openId"],
       parameter = tools.parameter(v,arr)
 
