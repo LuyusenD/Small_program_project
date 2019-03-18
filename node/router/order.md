@@ -64,3 +64,17 @@
 # res:
 #   {{code: 200, msg: '评价成功'}}
 
+# 用户订单
+# api: order/userorder
+# methods: get
+# req: {
+#   openId       唯一密钥
+# }
+# res: {code:200, 
+#       data: {
+#               total: 0, //总数
+#               data: []  //订单数据
+#             }
+#       msg: '请求成功'
+#      }
+

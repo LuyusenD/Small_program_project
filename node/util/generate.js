@@ -8,14 +8,13 @@ const md5 = require('md5')
 
 class tools {
   constructor () {
-    this.date = new Date()
   }
   generateOid (v) {
-    let d = this.date
+    let d = new Date()
     return `${v}${d.getFullYear()}${d.getMonth() < 10 ? '0' + (d.getMonth()+1) : d.getMonth()+1}${d.getDate()}${d.getHours()}${d.getMinutes()}${d.getTime()}`
   }
   generateTime () {
-    let d = this.date
+    let d = new Date()
     return `${d.getTime()}`
   }
   parameter () {
