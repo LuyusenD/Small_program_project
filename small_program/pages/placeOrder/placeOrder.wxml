@@ -1,22 +1,62 @@
 <!--pages/placeOrder/placeOrder.wxml-->
-     <view class="weui-cell">
-          <view class="weui-cell__hd">
-             <label class="weui-label">请选择服务类型</label>
-          </view>
-          <view class="weui-cell__bd">
-            <radio-group class="radio-group" >
-              <label class="radio" wx:for="{{sex}}" wx:key="index">
-                <radio value="{{item.name}}"/>{{item.value}}
-              </label>
-            </radio-group>
-          </view>
-    </view>
-<van-cell-group>
+  <van-cell-group>
   <van-field
-    value="{{ phone }}"
-    label="手机号"
-    placeholder="请输入手机号"
-    error-message="手机号格式错误"
-    border="{{ true }}"
+    value="{{ obj.oTel }}"
+    required
+    clearable
+    label="电话"
+    left-icon="phone"
+    icon="question-o"
+    placeholder="请输入电话号码"
+    bind:click-icon="onClickIcon"
+  />
+    <van-cell
+      required
+      icon="location"
+      title="预约地址"
+      value="{{obj.oAddress==''?'请选择预约地址':obj.oAddress}}>"
+      bind:click='getAddress'
+  />
+    <van-cell
+      required
+      icon="clock"
+      title="预约时间"
+      value="{{obj.oTime==''?'请选择预约时间':obj.oTime}}>"
+      bind:click='getTime'
+  />
+    <van-cell
+      required
+      icon="friends"
+      title="服务类型"
+      value="{{obj.oType==''?'请选择服务类行':obj.oType}}>"
+      bind:click='getType'
   />
 </van-cell-group>
+<van-cell-group>
+  <van-field
+    value="{{ obj.oRemark }}"
+    label="留言"
+    type="textarea"
+    placeholder="请输入留言"
+    autosize
+    border="{{ false }}"
+  />
+</van-cell-group>
+<view style='height:100rpx;'></view>
+<van-popup
+  show="{{ show }}"
+  position="bottom"
+  overlay="{{ false }}"
+  bind:close="onClose"
+  safe-area-inset-bottom
+>
+  <!-- <van-picker columns="{{ serveType }}" bind:change="onChangeServeType" /> -->
+  <van-picker
+  show-toolbar
+  title="请选择服务类行"
+  columns="{{ serveType }}"
+  bind:cancel="onCancelServeType"
+  bind:confirm="onChangeServeType"
+/>
+</van-popup>
+<van-button size="large" type="primary">立即预约</van-button>
