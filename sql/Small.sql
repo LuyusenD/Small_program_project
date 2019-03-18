@@ -10,7 +10,7 @@ USE smallsql;
 
 CREATE TABLE `user` (
   `openId` varchar(128) NOT NULL COMMENT '唯一标示',
-  `img` varchar(128) NOT NULL COMMENT '头像',
+  `img` varchar(256) NOT NULL COMMENT '头像',
   `name` varchar(8) NOT NULL COMMENT '用户名',
   `sex` int NOT NULL COMMENT '性别',
   `address` varchar(64) NOT NULL COMMENT '地址'
