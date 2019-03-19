@@ -322,18 +322,39 @@ Page({
             : 4;
     arr.oTime=new Date().getTime();
     if (arr.oTel!='' &&arr.oAddress!='' &&arr.oType!='' &&arr.openId!=''){
-      var opt={
-        url: url.url +'order/addOrder',
-        method:"POST",
-        header: {
-          "content-type": "application/x-www-form-urlencoded"
-        },
-        data: arr
-      };
-      url.ajax(opt)
-        .then((res)=>{
-          console.log(res)
+      if ((/^1[34578]\d{9}$/.test(arr.oTel))){
+        var opt = {
+          url: url.url + 'order/addOrder',
+          method: "POST",
+          header: {
+            "content-type": "application/x-www-form-urlencoded"
+          },
+          data: arr
+        };
+        url.ajax(opt)
+          .then((res) => {
+            console.log(res)
+            if(res.code==200){
+              wx.showToast({
+                title: res.msg,
+                icon:'success'
+              });
+              setTimeout(()=>{
+                wx.navigateBack();
+              },1000)
+            }else{
+              wx.showToast({
+                title: res.msg,
+                icon: 'ionic'
+              })
+            }
+          })
+      }else{
+        wx.showToast({
+          title: '请输入正确手机号！！',
+          icon:'none'
         })
+      }
     }else{
       wx.showToast({
         title: '亲。请完善基本信息！',
