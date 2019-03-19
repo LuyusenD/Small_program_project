@@ -15,3 +15,13 @@
 #      serve: [], //服务类型
 #      state: []  //订单状态
 #   }}
+
+# 添加服务
+# api: buff/addserve
+# methods: post
+# req: { str: '' }
+# res: {
+#   code:200, 
+#   data: null
+#   msg: '添加成功'
+#   }

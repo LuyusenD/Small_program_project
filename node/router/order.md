@@ -78,3 +78,17 @@
 #       msg: '请求成功'
 #      }
 
+# 用户订单
+# api: order/getorder
+# methods: get
+# req: {
+#   str       (可传 手机号码 or 订单号(无需加密))
+# }
+# res: {code:200, 
+#       data: {
+#               total: 0, //总数
+#               data: []  //订单数据
+#             }
+#       msg: '查询成功'
+#      }
+

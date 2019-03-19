@@ -23,3 +23,4 @@ app.use(express.static(__dirname + '/static'))
 app.use('/order', order);
 app.use('/user', user);
 app.use('/upload', upload);
+app.use('/buff', buff);

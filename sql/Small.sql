@@ -22,17 +22,24 @@ CREATE TABLE `the_order` (
   `oName` varchar(8) NOT NULL COMMENT '姓名',
   `oTel` varchar(11) NOT NULL COMMENT '联系方式',
   `oAddress` varchar(64) NOT NULL COMMENT '地址',
-  `createTime` varchar(10) NOT NULL COMMENT '创建时间',
-  `deleteTime` varchar(10) NOT NULL COMMENT '订单取消时间',
+  `createTime` varchar(16) NOT NULL COMMENT '创建时间',
+  `deleteTime` varchar(16) NOT NULL COMMENT '订单取消时间',
   `oType` int NOT NULL COMMENT '服务类型',
   `oState` int NOT NULL COMMENT '订单状态',
-  `oTime` varchar(10) NOT NULL COMMENT '预约时间',
+  `oTime` varchar(16) NOT NULL COMMENT '预约时间',
   `oRemark` varchar(128) NOT NULL COMMENT '备注',
   `openId` varchar(128) NOT NULL COMMENT '唯一标示',
   `md5` varchar(128) NOT NULL COMMENT '订单密文',
   `evaluate` varchar(128) COMMENT '评价'
 );
 
+-- CREATE TABLE `admin` (
+--   `id` INT NOT NULL COMMENT '序号' PRIMARY KEY AUTO_INCREMENT,
+--   `username` varchar(16) NOT NULL COMMENT '用户名',
+--   `password` varchar(32) NOT NULL COMMENT '密码',
+--   `ip` varchar(26) COMMENT 'ip地址',
+--   `login` int COMMENT '登录数量' default 0
+-- )
 CREATE TABLE `serve` (
   `id` INT NOT NULL COMMENT '编号' PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(8) NOT NULL COMMENT '服务名称'

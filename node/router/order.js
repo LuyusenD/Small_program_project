@@ -10,6 +10,7 @@ const router = express.Router()
 const pool = require('../pool.js')
 const tools = require('../util/generate.js')
 let arr = ['id','oId','oName','oTel','oAddress','createTime','deleteTime','oType','oState','oTime','oRemark','evaluate']
+// 后台管理 - 获取订单接口
 router.get('/allorder', (req, res) => {
   let sql = `SELECT ${arr.join(',')}  FROM the_order WHERE deleteTime = 0`
   pool.query(sql,[],(err,result)=>{
@@ -17,7 +18,7 @@ router.get('/allorder', (req, res) => {
     res.send({code: 200, data: {total: result.length, data: result}})
   })
 })
-
+// 立即下单
 router.post('/addorder',(req, res) => {
   let sql = `INSERT INTO the_order (oId, oName, oTel, oAddress, createTime, deleteTime, oType, oState, oTime, oRemark, openId, md5) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`
   let oId = tools.generateOid(`Z24`),
@@ -50,7 +51,7 @@ router.post('/addorder',(req, res) => {
     res.send({code: 500, msg: '服务出错'})
   })
 })
-
+// 用户取消订单 / 后台管理订单取消
 router.post('/delorder',(req,res) => {
   let sql = `UPDATE the_order SET deleteTime = ? WHERE md5 = ?`,
       time = tools.generateTime(),
@@ -84,7 +85,7 @@ router.post('/delorder',(req,res) => {
     res.send({code: 500, msg: '服务出错'})
   })
 })
-
+// 用户完成订单 / 已支付接口更新 / 后台管理订单状态
 router.post('/editstate',(req,res) => {
   let sql = `UPDATE the_order SET oState = ? WHERE md5 = ?`,
       v = req.body,
@@ -102,7 +103,7 @@ router.post('/editstate',(req,res) => {
     }
   })
 })
-
+// 用户评论
 router.post('/addevaluate',(req,res) => {
   let sql = 'UPDATE the_order SET evaluate = ? WHERE md5 = ?',
       v = req.body,
@@ -130,7 +131,7 @@ router.post('/addevaluate',(req,res) => {
     })
   })
 })
-
+// 获取用户订单列表
 router.get('/userorder',(req,res) => {
   let sql = `SELECT ${arr.join(',')} FROM the_order WHERE openId = ? `,
       v = req.query,
@@ -148,6 +149,22 @@ router.get('/userorder',(req,res) => {
     } else {
       res.send({code: 200, data: null, msg: '该用户暂无订单'})
     }
+  })
+})
+// 根据手机号码或者订单号返回订单信息
+router.get('/getorder',(req,res) => {
+  let v = req.query,
+      sql = `SELECT * FROM the_order WHERE oId = ? OR oTel = ?`,
+      parameter = tools.parameter(v,['str'])
+
+  if (parameter) {
+    res.send(parameter)
+    return
+  }
+
+  pool.query(sql,[v.str,v.str],(err,result) => {
+    if (err) throw err
+    res.send({code: 200, data: {total: result.length, data: result}, msg: '查询成功'})
   })
 })
 module.exports = router
