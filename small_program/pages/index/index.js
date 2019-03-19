@@ -45,25 +45,25 @@ Page({
      }
    },
   getOpenid(code){
-    wx.request({
-      url: url.url +'user/getopenid',
-      method:"GET",
-      header:{
-       "content-type":"application/json"
+    var opt={
+      url: url.url + 'user/getopenid',
+      method: "GET",
+      header: {
+        "content-type": "application/json"
       },
-      data:{
-        code:code,
-        appid:url.appid
+      data: {
+        code: code,
+        appid: url.appid
       },
-      success:(res)=>{
-        console.log(res)
-        if(res.data.code==200){
-          wx.setStorageSync("openid", res.data.data)
-        }else{
+    };
+    url.ajax(opt)
+      .then((res)=>{
+        if (res.code == 200) {
+          wx.setStorageSync("openid", res.data)
+        } else {
           console.log('获取openid失败')
         }
-      }
-    })
+      })
   },
   getUserInfo: function(e) {
     console.log(e)

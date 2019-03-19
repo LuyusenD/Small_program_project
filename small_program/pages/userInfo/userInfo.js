@@ -71,52 +71,52 @@ Page({
     // console.log(e)
     var e = e.detail;
     var opt = {
-      openId: wx.getStorageSync("openid").openid,
-      img: e.userInfo.avatarUrl,
-      name: e.userInfo.nickName,
-      sex: e.userInfo.gender,
-      address: e.userInfo.city
-    }
-    console.log(opt)
-    wx.request({
       url: url.url + 'user/adduser',
       method: "POST",
       header: {
         "content-type": "application/x-www-form-urlencoded"
       },
-      data: opt,
-      success: (res) => {
-       if(res.data.code==200){
-         if (s.userInfo && s.userInfo.nickName) {
-           wx.showModal({
-             title: '恭喜',
-             content: '登录成功',
-             showCancel: 0,
-             success() {
-               console.log('登录成功');
-               wx.setStorageSync("info", e)
-                wx.navigateBack()
-             }
-           })
-         } else {
-           wx.showModal({
-             title: '提示',
-             content: '登录失败，请允许授权',
-             showCancel: 0,
-             success() {
-             }
-           })
-         }
-       } else {
-         wx.showModal({
-           title: '提示',
-           content: '登录失败，请允许授权',
-           showCancel: 0,
-           success() {
-           }
-         })
-       }
+      data:{
+        openId: wx.getStorageSync("openid").openid,
+        img: e.userInfo.avatarUrl,
+        name: e.userInfo.nickName,
+        sex: e.userInfo.gender,
+        address: e.userInfo.city
       }
-    })
+    }
+    console.log(opt)
+    url.ajax(opt)
+      .then((res)=>{
+        if (res.code == 200) {
+          if (s.userInfo && s.userInfo.nickName) {
+            wx.showModal({
+              title: '恭喜',
+              content: '登录成功',
+              showCancel: 0,
+              success() {
+                console.log('登录成功');
+                wx.setStorageSync("info", e)
+                wx.navigateBack()
+              }
+            })
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: '登录失败，请允许授权',
+              showCancel: 0,
+              success() {
+              }
+            })
+          }
+        } else {
+          wx.showModal({
+            title: '提示',
+            content: '登录失败，请允许授权',
+            showCancel: 0,
+            success() {
+            }
+          })
+        }
+      })
   }
 })

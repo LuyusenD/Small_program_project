@@ -9,6 +9,9 @@
     icon="question-o"
     placeholder="请输入电话号码"
     bind:click-icon="onClickIcon"
+    error-message="{{phoneerr}}"
+    border="{{ false }}"
+    bind:input='getPhone'
   />
     <van-cell
       required
@@ -38,11 +41,34 @@
     label="留言"
     type="textarea"
     placeholder="请输入留言"
+    bind:change='leMessage'
     autosize
     border="{{ false }}"
   />
 </van-cell-group>
 <view style='height:100rpx;'></view>
+<!-- 预约时间 -->
+<van-popup
+  show="{{ time }}"
+  position="bottom"
+  overlay="{{ false }}"
+  bind:close="onClose"
+  bind:confirm="onChangeServeType"
+  safe-area-inset-bottom
+>
+
+  <van-datetime-picker
+  type="datetime"
+  value="{{ currentDate }}"
+  min-date="{{ minDate }}"
+  max-date="{{ maxDate }}"
+  bind:cancel="onCancelTime"
+  bind:change="onChangeTime"
+  bind:confirm="onConfirmTime"
+
+/>
+</van-popup>
+<!-- 服务类型 -->
 <van-popup
   show="{{ show }}"
   position="bottom"
@@ -50,7 +76,7 @@
   bind:close="onClose"
   safe-area-inset-bottom
 >
-  <!-- <van-picker columns="{{ serveType }}" bind:change="onChangeServeType" /> -->
+
   <van-picker
   show-toolbar
   title="请选择服务类行"
@@ -59,4 +85,5 @@
   bind:confirm="onChangeServeType"
 />
 </van-popup>
-<van-button size="large" type="primary">立即预约</van-button>
+
+<van-button size="large" type="primary" bindtap='makeAppointment'>立即预约</van-button>

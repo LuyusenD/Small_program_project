@@ -6,8 +6,12 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 手机号码错误提示
+    phoneerr:'',
     // 底部弹框
     show: false,
+    // 时间底部弹框
+    time:false,
     // 服务类型
     serveType:[],
     obj:{
@@ -18,16 +22,11 @@ Page({
       oRemark:'',
       openId:''
     },    
-    sex:[
-      {
-        name: '男',
-        value: 1
-      },
-      {
-        name: '男',
-        value: 1
-      }
-    ]
+    minHour: 10,
+    maxHour: 20,
+    minDate: new Date().getTime(),
+    maxDate: new Date(2019, 10, 1).getTime(),
+    currentDate: new Date().getTime()
   },
 
   /**
@@ -109,16 +108,17 @@ Page({
       title: '正在加载数据...',
       mask:true
     })
-    var opt={}
-    wx.request({
-      url: url.url +'buff',
-      method:"GET",
-      data:opt,
-      success:(res)=>{
-        if(res.data.code==200){
+    var opt={
+      url: url.url + 'buff',
+      method: "GET",
+      data: {},
+    };
+    url.ajax(opt)
+      .then((res)=>{
+        if (res.code == 200) {
           wx.hideLoading();
-          wx.setStorageSync('Serve', res.data.data.serve)
-          wx.setStorageSync('State', res.data.data.state)
+          wx.setStorageSync('Serve', res.data.serve)
+          wx.setStorageSync('State', res.data.state)
           var serveType = [];
           var arr = wx.getStorageSync('Serve');
           for (var i = 0; i < arr.length; i++) {
@@ -127,16 +127,15 @@ Page({
           this.setData({
             serveType
           });
-        }else{
+        } else {
           wx.hideLoading();
           wx.showToast({
             title: '数据加载失败,清扫后重试!',
-            icon:'none'
+            icon: 'none'
           });
           console.log('获取数据失败..')
         }
-      }
-    })
+      })
   },
   // 点击小图标提示功能
   onClickIcon(e){
@@ -147,15 +146,83 @@ Page({
   },
   // 显示选择地址
   getAddress(){
-
+    var that = this;
+    wx.getLocation({
+      type: 'gcj02', //返回可以用于wx.openLocation的经纬度
+      success: function (res) {
+        var latitude = res.latitude
+        var longitude = res.longitude
+        wx.chooseLocation({
+          success: function (res) {
+            console.log(res)
+            if (res.address) {
+              console.log(that.data.obj.oTime)
+              var obj = {
+                oTel: that.data.obj.oTel,
+                oAddress: res.address,
+                oType: that.data.obj.oType,
+                oTime: that.data.obj.oTime,
+                oRemark: that.data.obj.oRemark,
+                openId: that.data.obj.openId
+              };
+              console.log(obj)
+              that.setData({
+                obj
+              });
+            } else {
+              if (!that.data.obj.oAddress){
+                wx.showToast({
+                  title: '亲！请选择预约地点哦。',
+                  icon: 'none'
+                })
+              }
+            }
+          },
+        })
+      }
+    })
   },
   // 选择预约时间
-  getTime(){
-
+  getTime(event){
+    this.setData({
+      time: !this.data.time,
+      show: false
+      // currentDate: event.detail.value
+    });
+  },
+  // 时间变化
+  onChangeTime(event){
+    console.log(event)
+  },
+  // 时间确定
+  onConfirmTime(event){
+    var obj = {
+      oTel: this.data.obj.oTel,
+      oAddress: this.data.obj.oAddress,
+      oType: this.data.obj.oType,
+      oTime: url.formatTime(event.detail,'Y-M-D h:m:s'),
+      oRemark: this.data.obj.oRemark,
+      openId: this.data.obj.openId
+    };
+    this.setData({
+      time: false,
+      currentDate: event.detail,
+      obj
+    });
+    console.log(url.formatTime(event.detail, 'Y-M-D h:m:s'))
+  },
+  // 时间取消
+  onCancelTime(event){
+    this.setData({
+      time: false,
+    });
   },
   // 选择服务类型
   getType(){
-    this.setData({ show: true });
+    this.setData({ 
+      time: false,
+      show: !this.data.show
+    });
   },
   // 选择服务变动时
   onChangeServeType(e){
@@ -184,5 +251,94 @@ Page({
   onClose() {
     this.setData({ show: false });
   },
-  
+  // 留言触发事件
+  leMessage(e){
+    console.log(e)
+    var obj = {
+      oTel: this.data.obj.oTel,
+      oAddress: this.data.obj.oAddress,
+      oType: this.data.obj.oType,
+      oTime: this.data.obj.oTime,
+      oRemark: e.detail,
+      openId: this.data.obj.openId
+    };
+    this.setData({
+      obj,
+    })
+  },
+  // 输入手机号出发事件
+  getPhone(e){
+    if ((/^1[34578]\d{9}$/.test(e.detail))) {
+      var obj = {
+        oTel: e.detail,
+        oAddress: this.data.obj.oAddress,
+        oType: this.data.obj.oType,
+        oTime: this.data.obj.oTime,
+        oRemark: this.data.obj.oRemark,
+        openId: this.data.obj.openId
+      };
+      this.setData({
+        obj,
+        phoneerr:'',
+      })
+    }else{
+      var obj = {
+        oTel: e.detail,
+        oAddress: this.data.obj.oAddress,
+        oType: this.data.obj.oType,
+        oTime: this.data.obj.oTime,
+        oRemark: this.data.obj.oRemark,
+        openId: this.data.obj.openId
+      };
+      this.setData({
+        obj,
+        phoneerr:'亲，请输入正确手机号码！'
+      });
+      console.log(e)
+    }
+  },
+  // 预约按钮
+  makeAppointment(){
+    // 判断是否为空
+    // 修改服务类型
+      var obj={
+        oTel: this.data.obj.oTel,
+        oAddress: this.data.obj.oAddress,
+        oType: this.data.obj.oType,
+        oTime: this.data.obj.oTime,
+        oRemark: this.data.obj.oRemark,
+        openId:wx.getStorageSync("openid").openid,
+        oName:wx.getStorageSync("info").userInfo.nickName
+      };
+      console.log(obj);
+      this.setData({
+        obj
+      });
+    var arr = this.data.obj;
+     arr.oType =
+      arr.oType == '机场接送' ? 1
+        : arr.oType == '家具安装' ? 2
+          : arr.oType == '清洁服务' ? 3
+            : 4;
+    arr.oTime=new Date().getTime();
+    if (arr.oTel!='' &&arr.oAddress!='' &&arr.oType!='' &&arr.openId!=''){
+      var opt={
+        url: url.url +'order/addOrder',
+        method:"POST",
+        header: {
+          "content-type": "application/x-www-form-urlencoded"
+        },
+        data: arr
+      };
+      url.ajax(opt)
+        .then((res)=>{
+          console.log(res)
+        })
+    }else{
+      wx.showToast({
+        title: '亲。请完善基本信息！',
+        icon: 'none'
+      })
+    }
+  }
 })
