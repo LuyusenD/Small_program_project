@@ -25,7 +25,7 @@ router.post('/addorder',(req, res) => {
       time = tools.generateTime(),
       ciphertext = tools.md5(oId),
       v = req.body,
-      arr = ["oName","oTel","oAddress","oType","oTime","oRemark","openId"],
+      arr = ["oName","oTel","oAddress","oType","oTime","openId"],
       parameter = tools.parameter(v,arr)
 
   if (parameter) {
@@ -43,7 +43,7 @@ router.post('/addorder',(req, res) => {
         res.send({code: -1, data: null, msg: '服务类型错误'})
     })
   }).then(() => {
-    pool.query(sql,[oId,v.oName,v.oTel,v.oAddress,time,0,v.oType,1,v.oTime,v.oRemark,v.openId,ciphertext],(err,result)=>{
+    pool.query(sql,[oId,v.oName,v.oTel,v.oAddress,time,0,v.oType,1,v.oTime,v.oRemark || '',v.openId,ciphertext],(err,result)=>{
       if (err) throw err;
       result ? res.send({code: 200, data: null,msg: '下单成功'}) : res.send({code: 3000, data: null, msg: '下单失败'})
     })

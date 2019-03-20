@@ -10,6 +10,7 @@ const router = express.Router()
 const pool = require('../pool.js')
 const tools = require('../util/generate.js')
 const request = require('request')
+const os = require('os')
 
 router.get('/getopenid',(req,res) => {
   let v = req.query,
@@ -53,4 +54,14 @@ router.post('/adduser',(req,res) => {
   })
 })
 
+router.get('/login',(req,res) => {
+  let wlan = os.networkInterfaces().WLAN,mac,ip
+  for (let i of wlan) {
+    if (i.family == 'IPv4') {
+      ip = i.address
+      mac = i.mac
+    }
+  }
+  console.log(mac,ip)
+})
 module.exports = router

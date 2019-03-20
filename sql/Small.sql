@@ -33,13 +33,14 @@ CREATE TABLE `the_order` (
   `evaluate` varchar(128) COMMENT '评价'
 );
 
--- CREATE TABLE `admin` (
---   `id` INT NOT NULL COMMENT '序号' PRIMARY KEY AUTO_INCREMENT,
---   `username` varchar(16) NOT NULL COMMENT '用户名',
---   `password` varchar(32) NOT NULL COMMENT '密码',
---   `ip` varchar(26) COMMENT 'ip地址',
---   `login` int COMMENT '登录数量' default 0
--- )
+CREATE TABLE `admin` (
+  `id` INT NOT NULL COMMENT '序号' PRIMARY KEY AUTO_INCREMENT,
+  `username` varchar(16) NOT NULL COMMENT '用户名',
+  `password` varchar(32) NOT NULL COMMENT '密码',
+  `ip` varchar(26) COMMENT 'ip地址',
+  `login` int COMMENT '登录数量' default 0
+);
+
 CREATE TABLE `serve` (
   `id` INT NOT NULL COMMENT '编号' PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(8) NOT NULL COMMENT '服务名称'
@@ -49,6 +50,8 @@ CREATE TABLE `state` (
   `id` INT NOT NULL COMMENT '编号' PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(8) NOT NULL COMMENT '状态名称'
 );
+
+INSERT INTO `admin` (`username`,`password`) VALUES ('admin','123456');
 
 INSERT INTO `state` (`name`) VALUES
 ('未付款'),
