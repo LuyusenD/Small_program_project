@@ -1,18 +1,26 @@
 // pages/orderList/orderList.js
+import url from'../../utils/config.js';
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    // 用户所有订单
+    orderList:[],
+    // 当前分页显示订单个数
+    order:[],
+    // 当前页数
+    page:1,
+    // 当前页数显示个数
+    pageSize:6,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    this.getOrderList();
   },
 
   /**
@@ -47,14 +55,38 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+    wx.showLoading({
+      title: '正在加载数据...',
+      mask: true
+    });
+    console.log(this.data.orderList.length / this.data.pageSize)
+    console.log(this.data.page)
+    if (this.data.orderList.length / this.data.pageSize > this.data.page) {
+      this.setData({
+        page: this.data.page + 1
+      });
+      setTimeout(() => {
+        wx.hideLoading();
+        this.setData({
+          order: this.nextData(this.data.orderList, this.data.pageSize, this.data.page)
+        })
+      }, 1500)
+    } else {
+      setTimeout(() => {
+        wx.hideLoading();
+        wx.showToast({
+          title: '亲,没有更多订单了!',
+          icon: 'none'
+        })
+      }, 1500)
+    }
   },
 
   /**
@@ -62,5 +94,51 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+  // 获取用户所有订单
+  getOrderList(){
+    wx.showLoading({
+      title: '正在加载数据...',
+      mask:true
+    })
+    var opt={
+      url: url.url +"order/userorder",
+      data:{
+        openId: wx.getStorageSync('openid').openid
+      }
+    };
+    url.ajax(opt)
+      .then((res)=>{
+        wx.hideLoading();
+        if(res.code==200){
+          this.setData({
+            orderList:res.data.data,
+            order: this.nextData(res.data.data,this.data.pageSize,this.data.page)
+          })
+        }else{
+          wx.showToast({
+            title: '获取订单信息失败,请稍后重试...',
+            icon:'none'
+          })
+        }
+      })
+  },
+  // 页面分页逻辑
+  nextData(arr,pageSize,page){
+    var start=(page-1)*pageSize;
+    var end=start+pageSize;
+    var order=this.data.order;
+    var arr = arr.slice(start, end);
+    // order.push()
+    // this.setData({
+    //   order
+    // });
+    // console.log(order[0])
+    // var arr= this.data.order;
+    for (var i = 0; i < arr.length;i++){
+      order.push(arr[i])
+    }
+    console.log(order)
+    return order;
   }
 })

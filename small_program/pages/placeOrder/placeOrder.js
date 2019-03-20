@@ -20,7 +20,8 @@ Page({
       oType:'',
       oTime:'',
       oRemark:'',
-      openId:''
+      openId:'',
+      oTypeIndex:1
     },    
     minHour: 10,
     maxHour: 20,
@@ -202,7 +203,8 @@ Page({
       oType: this.data.obj.oType,
       oTime: url.formatTime(event.detail,'Y-M-D h:m:s'),
       oRemark: this.data.obj.oRemark,
-      openId: this.data.obj.openId
+      openId: this.data.obj.openId,
+      oTypeIndex: this.data.obj.oTypeIndex
     };
     this.setData({
       time: false,
@@ -226,20 +228,21 @@ Page({
   },
   // 选择服务变动时
   onChangeServeType(e){
-    var serveType = e.detail.value;
-    // console.log(serveType)
+    var serveType = wx.getStorageSync('Serve')[e.detail.index].name;
+    console.log(wx.getStorageSync('Serve')[e.detail.index]);
     var obj= {
       oTel: this.data.obj.oTel,
       oAddress: this.data.obj.oAddress,
       oType: serveType,
       oTime: this.data.obj.oTime,
       oRemark: this.data.obj.oRemark,
-      openId: this.data.obj.openId
+      openId: this.data.obj.openId,
+      oTypeIndex:wx.getStorageSync('Serve')[e.detail.index].id
     };
     this.setData({
       obj
     })
-    // console.log(this.data.obj.oType)
+    console.log(this.data.obj)
     this.setData({ show: false });
   },
   // 选择服务类型取消
@@ -260,7 +263,8 @@ Page({
       oType: this.data.obj.oType,
       oTime: this.data.obj.oTime,
       oRemark: e.detail,
-      openId: this.data.obj.openId
+      openId: this.data.obj.openId,
+      oTypeIndex: this.data.obj.oTypeIndex
     };
     this.setData({
       obj,
@@ -288,7 +292,8 @@ Page({
         oType: this.data.obj.oType,
         oTime: this.data.obj.oTime,
         oRemark: this.data.obj.oRemark,
-        openId: this.data.obj.openId
+        openId: this.data.obj.openId,
+        oTypeIndex: this.data.obj.oTypeIndex
       };
       this.setData({
         obj,
@@ -308,18 +313,15 @@ Page({
         oTime: this.data.obj.oTime,
         oRemark: this.data.obj.oRemark,
         openId:wx.getStorageSync("openid").openid,
-        oName:wx.getStorageSync("info").userInfo.nickName
+        oName:wx.getStorageSync("info").userInfo.nickName,
+        oTypeIndex: this.data.obj.oTypeIndex
       };
       console.log(obj);
       this.setData({
         obj
       });
     var arr = this.data.obj;
-     arr.oType =
-      arr.oType == '机场接送' ? 1
-        : arr.oType == '家具安装' ? 2
-          : arr.oType == '清洁服务' ? 3
-            : 4;
+    arr.oType = this.data.obj.oTypeIndex;
     arr.oTime=new Date().getTime();
     if (arr.oTel!='' &&arr.oAddress!='' &&arr.oType!='' &&arr.openId!=''){
       if ((/^1[34578]\d{9}$/.test(arr.oTel))){

@@ -1,3 +1,7 @@
 {
-  "navigationBarTitleText": "我的订单"
+  "enablePullDownRefresh": true,
+  "navigationBarTitleText": "我的订单",
+  "usingComponents": {
+    "van-card": "/vant-weapp/dist/card/index"
+  }
 }
