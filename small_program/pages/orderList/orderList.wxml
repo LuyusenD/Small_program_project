@@ -1,7 +1,7 @@
 <block wx:if="{{order.length>0}}">
     <van-card
     wx:for="{{order}}"
-    wx:ket="{{item.id}}"
+    wx:key="{{item.id}}"
       num="2"
       tag="标签"
       price="10.00"
@@ -9,11 +9,12 @@
       title="商品标题"
       thumb="{{ imageURL }}">
       <view slot="footer">
-        <van-button size="mini">按钮</van-button>
-        <van-button size="mini">按钮</van-button>
+        <van-button size="mini" data-value="{{item}}" bindtap='cancelOrder'>按钮</van-button>
       </view>
     </van-card>
 </block>
 <block wx:if="{{order.length<0}}">
   <image src='imgNot' src='/image/noteOrder.png'></image>
 </block>
+<!-- 删除订单弹框 -->
+<van-dialog id="van-dialog" />

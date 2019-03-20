@@ -1,5 +1,7 @@
 // pages/orderList/orderList.js
 import url from'../../utils/config.js';
+import MD5 from'../../utils/MD5.js';
+import Dialog from '../../vant-weapp/dist/dialog/dialog';
 Page({
 
   /**
@@ -111,10 +113,17 @@ Page({
       .then((res)=>{
         wx.hideLoading();
         if(res.code==200){
-          this.setData({
-            orderList:res.data.data,
-            order: this.nextData(res.data.data,this.data.pageSize,this.data.page)
-          })
+          if(res.data){
+            this.setData({
+              orderList: res.data.data,
+              order: this.nextData(res.data.data, this.data.pageSize, this.data.page)
+            })
+          }else{
+            wx.showToast({
+              title: '获取订单信息失败,请稍后重试...',
+              icon: 'none'
+            })
+          }
         }else{
           wx.showToast({
             title: '获取订单信息失败,请稍后重试...',
@@ -140,5 +149,48 @@ Page({
     }
     console.log(order)
     return order;
-  }
+  },
+  // 取消订单
+  cancelOrder(e){
+    var _this=this;
+    // 订单编号
+    var oId = e.currentTarget.dataset.value.oId;
+    console.log(oId);
+    Dialog.confirm({
+      title: '提示',
+      message: '你确定要删除该订单吗?'
+    }).then(() => {
+      var opt={
+        url: url.url +'order/delorder',
+        method:"POST",
+        header: {
+          "content-type": "application/x-www-form-urlencoded"
+        },
+        data:{
+          oId: MD5.md5(MD5.md5(MD5.md5(oId)))
+        }
+      };
+      url.ajax(opt)
+        .then((res)=>{
+          if(res.code==200){
+            Dialog.alert({
+              message: '删除成功'
+            }).then(() => {
+              // on close
+              _this.getOrderList();
+            });
+          }else{
+            Dialog.alert({
+              message: '删除失败' + res.msg
+            }).then(() => {
+              // on close
+            });
+          }
+        })
+      // on confirm
+    }).catch(() => {
+      // on cancel
+    });
+  },
+
 })
