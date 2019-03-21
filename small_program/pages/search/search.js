@@ -1,11 +1,13 @@
 // pages/search/search.js
+import url from '../../utils/config.js'
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    value:'',
+    list:[]
   },
 
   /**
@@ -62,5 +64,44 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+  // 搜索发生变化触发
+  onChageSearch(e){
+    console.log(e.detail.value)
+    this.setData({
+      value: e.detail.value
+    })
+  },
+  // 点击搜索触发
+  onSearch(e){
+    // console.log(e)
+    var opt={
+      url: url.url +"order/getorder",
+      data:{
+        str:this.data.value
+      }
+    }
+  if(this.data.value){
+    url.ajax(opt)
+      .then((res) => {
+        if (res.code == 200) {
+          if (res.data.data.length > 0) {
+            this.setData({
+              list: res.data.data
+            })
+          } else {
+            wx.showToast({
+              title: '暂无查到相关订单!!',
+              icon: 'none'
+            })
+          }
+        }
+      })
+  }else{
+    wx.showToast({
+      title: '亲，亲输入订单号，或手机号',
+      icon:'none'
+    })
+  }
   }
 })

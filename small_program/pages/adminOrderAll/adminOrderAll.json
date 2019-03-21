@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "后台管理",
+  "usingComponents": {
+    "van-card": "/vant-weapp/dist/card/index",
+    "van-dialog": "/vant-weapp/dist/dialog/index"
+  }
+}

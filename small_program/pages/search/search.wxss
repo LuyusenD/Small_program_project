@@ -1,1 +1,140 @@
 /* pages/search/search.wxss */
+.mai{
+/* position: absolute; */
+width: 100%;
+height:800rpx;
+background: white;
+/* bottom: 0; */
+/* opacity: 0; */
+margin-top: 300rpx;
+overflow: hidden;
+padding-top: 40rpx;
+/* display: flex; */
+/* justify-content: space-around; */
+/* flex-wrap: wrap; */
+}
+.mai1{
+/* position: absolute; */
+width: 100%;
+height:800rpx;
+background: white;
+/* bottom: 0; */
+/* opacity: 0; */
+margin-top: 300rpx;
+overflow: hidden;
+/* padding-top: 40rpx; */
+/* display: flex; */
+/* justify-content: space-around; */
+/* flex-wrap: wrap; */
+}
+.mai .shangpin{
+display: block;
+width: 33%;
+height: 40rpx;
+font-size :12px;
+text-align: center;
+float:left;
+margin: 30rpx 0;
+}
+.mai1 .shangpin{
+display: block;
+width: 33%;
+height: 40rpx;
+font-size :12px;
+text-align: center;
+float:left;
+margin: 30rpx 0;
+}
+.active{
+color: #04b87c;
+display: block;
+border: 1px solid #04b87c;
+} 
+.return{
+width: 13.5%;
+margin: 0 auto;
+margin-bottom: 30rpx;
+display:block;
+
+}
+.re_x{
+width: 30rpx;
+height: 30rpx;
+border-radius: 50%;
+text-align: center;
+border: 1px solid black;
+font-size: 12px;
+display: inline-block;
+line-height: 25rpx;
+margin: 0 auto;
+margin-right:10rpx;
+}
+.re_1{
+margin: 0 auto; font-size: 14px;
+}
+.pay{
+width:200rpx;
+height:80rpx;
+background: black;
+color: white;
+border-radius: 15%;
+line-height: 80rpx;
+text-align: center;
+margin: 40rpx auto;
+}
+
+.fanjian{
+  display: block;
+  font-size: 12px;
+  text-align: center
+}
+.connect{
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;  
+}
+/* 搜索框样式 */
+.search
+{
+  margin-top:10px;
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+  align-items: center;
+  width:90%;
+  height:60rpx;
+  background-color:whitesmoke;
+  margin: 10px auto;
+  border:1rpx solid whitesmoke;
+  border-radius: 5rpx;
+
+}
+
+/* 搜索框提示文字样式 */
+.search input
+{
+  font-size:27rpx;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-left:30rpx; 
+  width: 80%
+}
+
+/* 搜索框小图标 */
+.search image
+{ 
+  width:40rpx;
+  height:40rpx;
+  padding-right:20rpx;
+}
+.room>image{
+  display: block;
+  width: 50px;
+  height: 40px;
+  padding-top: 50rpx;
+  margin: 0 auto;
+}
+.room>text{
+  display: block;
+  font-size: 14px;
+  text-align: center
+}

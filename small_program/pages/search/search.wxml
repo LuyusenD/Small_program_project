@@ -1,2 +1,12 @@
 <!--pages/search/search.wxml-->
-<text>pages/search/search.wxml</text>
+        <view class='search'>
+            <input type='number' placeholder='输入你想要搜索的订单手机号' confirm-type='search' value="{{value}}" bindinput='onChageSearch' bindconfirm='query'></input>
+            <image class="" src='/image/search.png' bindtap='onSearch'></image>
+        </view>
+  <van-card
+  num="2"
+  price="2.00"
+  desc="描述信息"
+  title="商品标题"
+  thumb="{{ imageURL }}"
+/>
