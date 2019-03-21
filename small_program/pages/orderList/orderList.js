@@ -78,6 +78,10 @@ Page({
         wx.hideLoading();
         this.setData({
           order: this.nextData(this.data.orderList, this.data.pageSize, this.data.page)
+        });
+        wx.showToast({
+          title: '订单刷新成功',
+          icon:'success'
         })
       }, 1500)
     } else {
@@ -167,7 +171,7 @@ Page({
           "content-type": "application/x-www-form-urlencoded"
         },
         data:{
-          oId: MD5.md5(MD5.md5(MD5.md5(oId)))
+          oId: MD5.md5(MD5.md5(MD5.md5(oId))) +"xn"
         }
       };
       url.ajax(opt)

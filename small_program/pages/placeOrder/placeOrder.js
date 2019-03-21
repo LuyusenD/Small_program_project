@@ -164,7 +164,8 @@ Page({
                 oType: that.data.obj.oType,
                 oTime: that.data.obj.oTime,
                 oRemark: that.data.obj.oRemark,
-                openId: that.data.obj.openId
+                openId: that.data.obj.openId,
+                oTypeIndex: that.data.obj.oTypeIndex
               };
               console.log(obj)
               that.setData({
@@ -211,7 +212,7 @@ Page({
       currentDate: event.detail,
       obj
     });
-    console.log(url.formatTime(event.detail, 'Y-M-D h:m:s'))
+    console.log(this.data.obj)
   },
   // 时间取消
   onCancelTime(event){
@@ -279,7 +280,8 @@ Page({
         oType: this.data.obj.oType,
         oTime: this.data.obj.oTime,
         oRemark: this.data.obj.oRemark,
-        openId: this.data.obj.openId
+        openId: this.data.obj.openId,
+        oTypeIndex: this.data.obj.oTypeIndex
       };
       this.setData({
         obj,
