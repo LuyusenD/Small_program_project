@@ -15,8 +15,8 @@
       <view>查询订单</view>
     </view>
   </view>
-  <!-- <view bindtap='jump' data-url='/pages/admin/admin'> -->
-  <view bindtap='jump' data-url='/pages/adminOrderAll/adminOrderAll'>
+  <view bindtap='jump' data-url='/pages/admin/admin'>
+  <!-- <view bindtap='jump' data-url='/pages/adminOrderAll/adminOrderAll'> -->
     <view>
       <image src='/image/admin.png'></image>
       <view>管理后台</view>
