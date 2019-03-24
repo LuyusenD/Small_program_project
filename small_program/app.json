@@ -10,7 +10,9 @@
     "pages/placeOrder/placeOrder",
     "pages/search/search",
     "pages/admin/admin",
-    "pages/adminOrderAll/adminOrderAll"
+    "pages/adminOrderAll/adminOrderAll",
+    "pages/addServe/addServe",
+    "pages/adminList/adminList"
   ],
   "permission": {
     "scope.userLocation": {

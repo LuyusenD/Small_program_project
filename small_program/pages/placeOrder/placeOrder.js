@@ -21,7 +21,8 @@ Page({
       oTime:'',
       oRemark:'',
       openId:'',
-      oTypeIndex:1
+      oTypeIndex:1,
+      oName:''
     },    
     minHour: 10,
     maxHour: 20,
@@ -165,7 +166,8 @@ Page({
                 oTime: that.data.obj.oTime,
                 oRemark: that.data.obj.oRemark,
                 openId: that.data.obj.openId,
-                oTypeIndex: that.data.obj.oTypeIndex
+                oTypeIndex: that.data.obj.oTypeIndex,
+                oName: that.data.obj.oName
               };
               console.log(obj)
               that.setData({
@@ -205,7 +207,8 @@ Page({
       oTime: url.formatTime(event.detail,'Y-M-D h:m:s'),
       oRemark: this.data.obj.oRemark,
       openId: this.data.obj.openId,
-      oTypeIndex: this.data.obj.oTypeIndex
+      oTypeIndex: this.data.obj.oTypeIndex,
+      oName: this.data.obj.oName
     };
     this.setData({
       time: false,
@@ -238,7 +241,8 @@ Page({
       oTime: this.data.obj.oTime,
       oRemark: this.data.obj.oRemark,
       openId: this.data.obj.openId,
-      oTypeIndex:wx.getStorageSync('Serve')[e.detail.index].id
+      oTypeIndex:wx.getStorageSync('Serve')[e.detail.index].id,
+      oName: this.data.obj.oName
     };
     this.setData({
       obj
@@ -265,7 +269,8 @@ Page({
       oTime: this.data.obj.oTime,
       oRemark: e.detail,
       openId: this.data.obj.openId,
-      oTypeIndex: this.data.obj.oTypeIndex
+      oTypeIndex: this.data.obj.oTypeIndex,
+      oName: this.data.obj.oName
     };
     this.setData({
       obj,
@@ -281,7 +286,8 @@ Page({
         oTime: this.data.obj.oTime,
         oRemark: this.data.obj.oRemark,
         openId: this.data.obj.openId,
-        oTypeIndex: this.data.obj.oTypeIndex
+        oTypeIndex: this.data.obj.oTypeIndex,
+        oName: this.data.obj.oName
       };
       this.setData({
         obj,
@@ -295,7 +301,8 @@ Page({
         oTime: this.data.obj.oTime,
         oRemark: this.data.obj.oRemark,
         openId: this.data.obj.openId,
-        oTypeIndex: this.data.obj.oTypeIndex
+        oTypeIndex: this.data.obj.oTypeIndex,
+        oName: this.data.obj.oName
       };
       this.setData({
         obj,
@@ -303,6 +310,23 @@ Page({
       });
       console.log(e)
     }
+  },
+  // 姓名
+  getName(e){
+    console.log(e)
+    var obj = {
+      oTel: this.data.obj.oTel,
+      oAddress: this.data.obj.oAddress,
+      oType: this.data.obj.oType,
+      oTime: this.data.obj.oTime,
+      oRemark: this.data.obj.oRemark,
+      openId: this.data.obj.openId,
+      oTypeIndex: this.data.obj.oTypeIndex,
+      oName: e.detail
+    };
+    this.setData({
+      obj
+    })
   },
   // 预约按钮
   makeAppointment(){
@@ -316,7 +340,8 @@ Page({
         oRemark: this.data.obj.oRemark,
         openId:wx.getStorageSync("openid").openid,
         oName:wx.getStorageSync("info").userInfo.nickName,
-        oTypeIndex: this.data.obj.oTypeIndex
+        oTypeIndex: this.data.obj.oTypeIndex,
+        oName: this.data.obj.oName,
       };
       console.log(obj);
       this.setData({
@@ -325,7 +350,7 @@ Page({
     var arr = this.data.obj;
     arr.oType = this.data.obj.oTypeIndex;
     arr.oTime=new Date().getTime();
-    if (arr.oTel!='' &&arr.oAddress!='' &&arr.oType!='' &&arr.openId!=''){
+    if (arr.oTel != '' && arr.oAddress != '' && arr.oType != '' && arr.openId != '' && arr.oName!=''){
       if ((/^1[34578]\d{9}$/.test(arr.oTel))){
         var opt = {
           url: url.url + 'order/addOrder',

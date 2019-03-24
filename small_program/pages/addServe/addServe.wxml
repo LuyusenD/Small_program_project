@@ -1,0 +1,15 @@
+<!--pages/addServe/addServe.wxml-->
+<view style='height:50rpx;'></view>
+<van-cell-group>
+  <van-field
+    value="{{ oType }}"
+    type="text"
+    label="服务类型"
+    placeholder="请输入要添加的服务类型"
+    required
+    bind:input='getoType'
+    border="{{ false }}"
+  />
+</van-cell-group>
+<view style='height:100rpx;'></view>
+<van-button size="large" bindtap='addoType' type='primary'>添加服务</van-button>

@@ -1,0 +1,17 @@
+<!--pages/adminList/adminList.wxml-->
+ <view class="page__bd"> 
+  <view class="list">
+   <view class="page__bd">
+    <view class="weui-cells weui-cells_form">
+        <navigator class="weui-cell"  hover-class="navigator-hover" url='/pages/adminOrderAll/adminOrderAll'>
+          查看所有订单
+          <image class="chose_icon" src="/image/next.png" ></image>
+        </navigator>
+        <navigator class="weui-cell"  hover-class="navigator-hover" url='/pages/addServe/addServe'>
+          添加服务
+          <image class="chose_icon" src="/image/next.png" ></image>
+        </navigator>
+    </view>
+  </view>
+  </view>
+ </view>

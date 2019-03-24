@@ -1,7 +1,11 @@
 {
-  "navigationBarTitleText": "后台管理",
+  "navigationBarTitleText": "订单管理",
   "usingComponents": {
     "van-card": "/vant-weapp/dist/card/index",
-    "van-dialog": "/vant-weapp/dist/dialog/index"
+    "van-dialog": "/vant-weapp/dist/dialog/index",
+    "van-panel": "/vant-weapp/dist/panel/index",
+    "van-button": "/vant-weapp/dist/button/index",
+    "van-row": "/vant-weapp/dist/row/index",
+    "van-col": "/vant-weapp/dist/col/index"
   }
 }

@@ -2,19 +2,90 @@
 <!-- <text>pages/adminOrderAll/adminOrderAll.wxml</text> -->
 <!-- 所有订单页面 -->
 <block wx:if="{{order.length>0}}">
-    <van-card
+    <!-- <van-panel title="订单编号"
+      wx:for="{{order}}"
+      wx:key="{{item.id}}"
+      status="状态" use-footer-slot>
+    <view class='contion'>
+      <view class='name'>
+        <view>姓名</view>
+        <view>养成</view>
+      </view>
+      <view class='tel'>
+        <view>电话</view>
+        <view>17603021918</view></view>
+      <view class='status'>
+        <view>订单状态</view>
+        <view>已完成</view>
+      </view>
+    </view>
+    <view slot="footer">
+      <van-button size="small">按钮</van-button>
+      <van-button size="small" type="danger">按钮</van-button>
+    </view>
+  </van-panel> -->
+  <view class='order'
     wx:for="{{order}}"
     wx:key="{{item.id}}"
-      num="2"
-      tag="标签"
-      price="10.00"
-      desc="描述信息"
-      title="商品标题"
-      thumb="{{ imageURL }}">
-      <view slot="footer">
-        <van-button size="mini" data-value="{{item}}" bindtap='cancelOrder'>按钮</van-button>
-      </view>
-    </van-card>
+
+  >
+    <view class='orderD'>
+       <van-row custom-class='size'>
+        <van-col span="24">
+          <van-col span="12">订单编号</van-col>
+          <van-col span="12">{{item.oId}}</van-col>
+        </van-col>
+        <van-col span="24">
+          <van-col span="12">用户姓名</van-col>
+          <van-col span="12">{{item.oName}}</van-col>
+        </van-col>
+        <van-col span="24">
+          <van-col span="12">预约时间</van-col>
+          <van-col span="12">{{item.createTime}}</van-col>
+        </van-col>
+        <van-col span="24">
+          <van-col span="12">
+            <van-col span="12">服务类型</van-col>
+            <van-col span="12">{{item.oType}}</van-col>
+          </van-col>
+          <van-col span="12">
+            <van-col span="12">订单状态</van-col>
+            <van-col span="12">
+              <text wx:if="{{item.oState==4}}" class='success'>已完成</text>
+              <text wx:if="{{item.oState==3}}" class='danger'>执行中</text>
+              <text wx:if="{{item.oState==2}}" class='wang'>已支付</text>
+              <text wx:if="{{item.oState==1}}">未支付</text>
+              <text wx:if="{{item.oState!=1&&item.oState!=2&&item.oState!=3&&item.oState!=4}}">未支付</text>
+            </van-col>
+          </van-col>
+        </van-col>
+         <van-col span="24">
+          <van-col span="12" offset='17'>
+            <van-col span="24">
+              $24
+            </van-col>
+          </van-col>
+        </van-col>
+        <van-col span="24">
+          <van-col span="12">
+           </van-col>
+          <van-col span="12">
+           </van-col>
+        </van-col>
+         <van-col span="24">
+          <van-col span="12" offset='12'>
+            <van-col span="12">
+              <van-button size="small" data-value="{{item}}" 
+              >查看详情</van-button>
+            </van-col>
+            <van-col span="12">
+              <van-button size="mini" bindtap='cancelOrder' data-value="{{item}}" type="danger">删除订单</van-button>
+            </van-col>
+          </van-col>
+        </van-col>
+      </van-row>
+    </view>
+  </view>
 </block>
 <block wx:if="{{order.length<0}}">
   <image src='imgNot' src='/image/noteOrder.png'></image>

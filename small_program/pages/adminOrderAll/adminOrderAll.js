@@ -115,6 +115,14 @@ Page({
         wx.hideLoading();
         if (res.code == 200) {
           if (res.data) {
+            var oType = wx.getStorageSync("Serve");
+            for (var i = 0; i < oType.length;i++){
+              for (var j = 0; j < res.data.data.length;j++){
+                if (res.data.data[j].oType==oType[i].id){
+                  res.data.data[j].oType = oType[i].name
+                }
+              }
+            }
             this.setData({
               orderList: res.data.data,
               order: this.nextData(res.data.data, this.data.pageSize, this.data.page)
@@ -152,6 +160,47 @@ Page({
     return order;
   },
   // 取消订单
+  cancelOrder(e) {
+    var _this = this;
+    // 订单编号
+    var oId = e.currentTarget.dataset.value.oId;
+    console.log(oId);
+    Dialog.confirm({
+      title: '提示',
+      message: '你确定要删除该订单吗?'
+    }).then(() => {
+      var opt = {
+        url: url.url + 'order/delorder',
+        method: "POST",
+        header: {
+          "content-type": "application/x-www-form-urlencoded"
+        },
+        data: {
+          oId: MD5.md5(MD5.md5(MD5.md5(oId))) + "xn"
+        }
+      };
+      url.ajax(opt)
+        .then((res) => {
+          if (res.code == 200) {
+            Dialog.alert({
+              message: '删除成功'
+            }).then(() => {
+              // on close
+              _this.getOrderList();
+            });
+          } else {
+            Dialog.alert({
+              message: '删除失败' + res.msg
+            }).then(() => {
+              // on close
+            });
+          }
+        })
+      // on confirm
+    }).catch(() => {
+      // on cancel
+    });
+  },
   cancelOrder(e) {
     var _this = this;
     // 订单编号

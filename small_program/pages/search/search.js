@@ -88,7 +88,8 @@ Page({
           if (res.data.data.length > 0) {
             this.setData({
               list: res.data.data
-            })
+            });
+            console.log(this.data.list)
           } else {
             wx.showToast({
               title: '暂无查到相关订单!!',

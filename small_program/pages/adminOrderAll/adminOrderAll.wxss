@@ -1,1 +1,14 @@
 /* pages/adminOrderAll/adminOrderAll.wxss */
+.order{
+  width: 100%;
+  height: 300rpx;
+  background: #fafafa;
+  border-radius:15%; 
+  margin: 0 auto;
+  padding: 10rpx;
+}
+.orderD{
+  padding: 20rpx;
+  color: #323233;
+  font-size: 14px;
+}
