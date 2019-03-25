@@ -138,3 +138,19 @@ margin: 40rpx auto;
   font-size: 14px;
   text-align: center
 }
+@import '../../css/main.wxss';
+.goods_bg {
+    width: 194rpx;
+    height: 194rpx;
+    border-radius: 10rpx;
+    background: #f8f8f8;
+}
+.goods_bg .goods_img {
+    width: 90rpx;
+}
+.order_list .order_item + .order_item {
+    margin-top: 20rpx;
+}
+.goods .goods_item + .goods_item {
+    border-top: 1px solid #e5e5e5;
+}

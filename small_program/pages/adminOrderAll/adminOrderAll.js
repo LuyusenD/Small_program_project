@@ -186,7 +186,7 @@ Page({
               message: '删除成功'
             }).then(() => {
               // on close
-              _this.getOrderList();
+              _this.getorderListAll();
             });
           } else {
             Dialog.alert({
@@ -227,7 +227,7 @@ Page({
               message: '删除成功'
             }).then(() => {
               // on close
-              _this.getOrderList();
+              _this.getorderListAll();
             });
           } else {
             Dialog.alert({

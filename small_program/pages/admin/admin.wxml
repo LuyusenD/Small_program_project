@@ -10,7 +10,7 @@
                         <image class="ab udlr" src="http://wapxiaochengxu.oss-cn-beijing.aliyuncs.com/assets/account.png"></image>
                     </view>
                     <view>
-                        <input name="username" placeholder="请输入账号" placeholderStyle="font-size:30rpx;"></input>
+                        <input name="username" placeholder="请输入账号"  placeholderStyle="font-size:30rpx;"></input>
                     </view>
                 </view>
             </view>
