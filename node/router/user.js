@@ -54,14 +54,73 @@ router.post('/adduser',(req,res) => {
   })
 })
 
-router.get('/login',(req,res) => {
-  let wlan = os.networkInterfaces().WLAN,mac,ip
-  for (let i of wlan) {
-    if (i.family == 'IPv4') {
-      ip = i.address
-      mac = i.mac
-    }
+router.post('/login',(req,res) => {
+  let network = os.networkInterfaces(),
+      ip = network[Object.keys(network)[0]][1].address,
+      v = req.body,
+      arr = ["username","password"],
+      parameter = tools.parameter(v,arr)
+
+  if (parameter) {
+    res.send(parameter)
+    return
   }
-  console.log(mac,ip)
+  
+  new Promise((open) => {
+    let sql = `SELECT * FROM admin WHERE username = ? && password = ?`
+
+    pool.query(sql,[v.username,v.password],(err,result) => {
+      if (err) throw err
+      if (result.length < 1) {
+        res.send({code: 401, data: null, msg: '账号或密码错误'})
+        return
+      }
+      if (result[0].login > 0) {
+        res.send({code: 401, data: null, msg: '账号已在登录状态,请在原设备退出登录,再重新登陆'})
+        return
+      }
+      open(result[0])
+    })
+  })
+  .then(v => {
+    let sql = `UPDATE admin SET ip = ?, login = ? WHERE id = ?;`
+
+    pool.query(sql,[ip,1,v.id],(err,result) => {
+      if (result.affectedRows > 0) {
+        res.send({code: 200, data: {id: v.id, username: v.username}, msg: '登录成功'})
+        return
+      }
+    })
+  })
+  
+  // console.log(req.ip)
+})
+
+router.post('/out',(req,res) => {
+  let v = req.body
+
+  new Promise(open => {
+    let sql = `SELECT * FROM admin WHERE id = ? && username = ?`
+    pool.query(sql,[v.id,v.username],(err,result) => {
+      if (result.length < 1) {
+        res.send({code: 401, data: null, msg: '非法请求'})
+        return
+      }
+      if (result[0].login < 1) {
+        res.send({code: 401, data: null, msg: '账号未登录'})
+        return
+      }
+      open(result[0])
+    })
+  })
+  .then(v => {
+    let sql = `UPDATE admin SET ip = ?, login = ? WHERE id = ?;`
+
+    pool.query(sql,['',0,v.id],(err,result) => {
+      if (result.affectedRows > 0) {
+        res.send({code: 200, data: null, msg: '退出登录成功'})
+      }
+    })
+  })
 })
 module.exports = router

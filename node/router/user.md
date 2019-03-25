@@ -27,4 +27,24 @@
 # }
 # res:
 #   {{code: 200, data: null, msg: '登记用户成功'}}
+
+# 后台管理 - 登录
+# api: user/login
+# methods: post
+# req: {
+#   username
+#   password
+# }
+# res:
+#   {{code: 200, data: {id,name}, msg: '登录成功'}}
+
+# 后台管理 - 退出登录
+# api: user/out
+# methods: post
+# req: {
+#   id
+#   username
+# }
+# res:
+#   {{code: 200, data: null, msg: '退出登录成功'}}
 #

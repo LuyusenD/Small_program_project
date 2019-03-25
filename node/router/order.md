@@ -63,8 +63,9 @@
 # }
 # res:
 #   {{code: 200, msg: '评价成功'}}
+# ps: (必须有创建时间 完成订单时间 订单状态为 完成状态 才能添加评论)
 
-# 用户订单
+# 用户订单 - 根据个人用户查询订单
 # api: order/userorder
 # methods: get
 # req: {
@@ -78,7 +79,7 @@
 #       msg: '请求成功'
 #      }
 
-# 用户订单
+# 用户订单 - 根据手机号码 订单号查询订单
 # api: order/getorder
 # methods: get
 # req: {

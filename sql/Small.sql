@@ -35,7 +35,7 @@ CREATE TABLE `the_order` (
 
 CREATE TABLE `admin` (
   `id` INT NOT NULL COMMENT '序号' PRIMARY KEY AUTO_INCREMENT,
-  `username` varchar(16) NOT NULL COMMENT '用户名',
+  `username` varchar(16) NOT NULL COMMENT '用户名' UNIQUE,
   `password` varchar(32) NOT NULL COMMENT '密码',
   `ip` varchar(26) COMMENT 'ip地址',
   `login` int COMMENT '登录数量' default 0

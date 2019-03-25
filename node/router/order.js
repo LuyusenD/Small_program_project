@@ -104,9 +104,9 @@ router.post('/editstate',(req,res) => {
   })
 })
 // 用户评论
-router.post('/addevaluate',(req,res) => {
+router.get('/addevaluate',(req,res) => {
   let sql = 'UPDATE the_order SET evaluate = ? WHERE md5 = ?',
-      v = req.body,
+      v = req.query,
       parameter = tools.parameter(v,['evaluate','oId'])
 
   if (parameter) {
@@ -114,10 +114,16 @@ router.post('/addevaluate',(req,res) => {
     return
   }
   new Promise(open => {
-    let testSql = `SELECT evaluate FROM the_order WHERE md5 = ?`
+    let testSql = `SELECT evaluate, oState, createTime, deleteTime FROM the_order WHERE md5 = ?`
     pool.query(testSql,[v.oId],(err,result) => {
-      if (result[0].evaluate == null) 
-        open()
+      let {evaluate, oState, createTime, deleteTime} = result[0]
+      if (evaluate == null) 
+        if (oState == 4 && createTime > 0 && deleteTime > 0) // 订单完成的id 待优化
+          open()
+        else {
+          res.send({code: 401, data: null, msg: '请在订单完成后评论,评论失败'})
+          return
+        }
       else
         res.send({code: 401, data: null, msg: '已评价,请勿重复评价'})
     })
