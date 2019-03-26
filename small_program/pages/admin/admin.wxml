@@ -10,7 +10,7 @@
                         <image class="ab udlr" src="http://wapxiaochengxu.oss-cn-beijing.aliyuncs.com/assets/account.png"></image>
                     </view>
                     <view>
-                        <input name="username" placeholder="请输入账号"  placeholderStyle="font-size:30rpx;"></input>
+                        <input name="username" bindinput='getUserName' placeholder="请输入账号" value='{{uname}}'  placeholderStyle="font-size:30rpx;"></input>
                     </view>
                 </view>
             </view>
@@ -20,12 +20,12 @@
                         <image class="ab udlr" src="http://wapxiaochengxu.oss-cn-beijing.aliyuncs.com/assets/password.png"></image>
                     </view>
                     <view>
-                        <input name="password" password="{{true}}" placeholder="请输入密码"></input>
+                        <input name="password" bindinput='getPassword' value="{{password}}" placeholder="请输入密码"></input>
                     </view>
                 </view>
             </view>
         </view>
-        <button  formType="submit"style="background-color:{{__wechat_main_color}}">登录</button>
+        <button  bindtap="submit"style="background-color:{{__wechat_main_color}}">登录</button>
     </view>
      </form>
 
