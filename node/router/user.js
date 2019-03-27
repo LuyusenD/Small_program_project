@@ -86,7 +86,7 @@ router.post('/login',(req,res) => {
     let {id,username} = v
     let sql = `UPDATE admin SET ip = ?, login = ? WHERE id = ?;`
 
-    pool.query(sql,[ip,1,v.id],(err,result) => {
+    pool.query(sql,[ip,1,id],(err,result) => {
       if (result.affectedRows > 0) {
         res.send({code: 200, data: {id, username}, msg: '登录成功'})
         return
