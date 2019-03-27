@@ -3,10 +3,32 @@
             <input type='number' placeholder='输入你想要搜索的订单手机号' confirm-type='search' value="{{value}}" bindinput='onChageSearch' bindconfirm='query'></input>
             <image class="" src='/image/search.png' bindtap='onSearch'></image>
         </view>
-  <van-card
-  num="2"
-  price="2.00"
-  desc="描述信息"
-  title="商品标题"
-  thumb="{{ imageURL }}"
-/>
+    <view class='container pt10'>
+      <view class="order_list" wx:for='{{list}}'>
+        <view class="bw order_item">
+          <navigator url="/pages/order_details2/details?id={{item.order_id}}" class="db plr30">
+            <view class="flex_sb lh90 bdb font15">
+              <text>订单编号:{{item.oId}}</text>
+              <text class='{{item.status==3?"color3":"color2"}}'>{{item.status==1?"未支付":item.status==2?"已支付":item.status==3?"执行中":"已完成"}}</text>
+            </view>
+            <view class="goods">
+              <view class="flex_a ptb30 goods_item" >
+                <view class="goods_bg flex_aj">
+                  <image src='{{good.img}}' class="goods_img" mode="widthFix"></image>
+                </view>
+                <view class="ml20">
+                  <view class="font15 fw">服务类型 ： {{item.oType}}</view>
+                  <view class="mt20 color2 fw">￥
+                    <text class="font17 mr10">1111</text></view>
+                </view>
+              </view>
+            </view>
+            <view class="flex_sb lh90 bdt">
+              <text>共1件商品</text>
+              <text>共计：<text class='color2'>￥11</text></text>
+            </view>
+          </navigator>
+        </view>
+      </view>
+      <view class='tac lh80 col9' wx:if='{{list.length<=0}}'>暂无更多数据</view>
+    </view>

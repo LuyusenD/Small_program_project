@@ -1,4 +1,8 @@
 /**index.wxss**/
+page{
+  position: fixed;
+  height: 100%;
+}
 .loginImg{
   width: 100%;
   height: 400rpx;

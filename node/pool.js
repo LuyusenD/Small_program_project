@@ -9,7 +9,7 @@ const mysql = require('mysql');
 let pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: 'root',
+  password: '',
   database: 'smallsql',
   connectionLimit: 10
 });

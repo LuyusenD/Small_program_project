@@ -7,7 +7,7 @@
   /* margin-right: 50rpx; */
 }
 .page__bd{
-  margin-top: 50rpx;
+  /* margin-top: 50rpx; */
   /* box-sizing: border-box
    */
    border:1px solid transparent

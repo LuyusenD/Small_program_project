@@ -86,6 +86,16 @@ Page({
       .then((res) => {
         if (res.code == 200) {
           if (res.data.data.length > 0) {
+            var arr=wx.getStorageSync('Serve')
+            for(var i=0;i<arr.length;i++){
+              for (var j = 0; j < res.data.data.length;j++){
+                if (res.data.data[i].oType = arr[i].id){
+                  res.data.data[i].oType = arr[i].name
+                  continue;
+                  // console.log()
+                }
+              }
+            }
             this.setData({
               list: res.data.data
             });

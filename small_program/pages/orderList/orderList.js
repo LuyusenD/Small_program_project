@@ -117,6 +117,16 @@ Page({
       .then((res)=>{
         wx.hideLoading();
         if(res.code==200){
+          var arr = wx.getStorageSync('Serve')
+          for (var i = 0; i < arr.length; i++) {
+            for (var j = 0; j < res.data.data.length; j++) {
+              if (res.data.data[i].oType = arr[i].id) {
+                res.data.data[i].oType = arr[i].name
+                continue;
+                // console.log()
+              }
+            }
+          }
           if(res.data){
             this.setData({
               orderList: res.data.data,
