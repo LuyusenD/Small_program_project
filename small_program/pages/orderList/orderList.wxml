@@ -25,7 +25,7 @@
           </navigator>
         </view>
       </view>
-      <view class='tac lh80 col9' wx:if='{{list.length<=0}}'>暂无更多数据</view>
+      <view class='tac lh80 col9' wx:if='{{order.length<=0}}'>暂无更多数据</view>
     </view>
 <!-- 删除订单弹框 -->
 <van-dialog id="van-dialog" />

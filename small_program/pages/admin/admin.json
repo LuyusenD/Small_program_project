@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "后台管理"
+  "navigationBarTitleText": "后台管理",
+  "usingComponents": {
+    "van-dialog": "/vant-weapp/dist/dialog/index"
+  }
 }

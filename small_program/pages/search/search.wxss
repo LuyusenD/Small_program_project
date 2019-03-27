@@ -105,7 +105,7 @@ margin: 40rpx auto;
   height:60rpx;
   background-color:whitesmoke;
   margin: 10px auto;
-  border:1rpx solid whitesmoke;
+  border:1rpx solid black;
   border-radius: 5rpx;
 
 }

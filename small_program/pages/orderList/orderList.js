@@ -120,10 +120,9 @@ Page({
           var arr = wx.getStorageSync('Serve')
           for (var i = 0; i < arr.length; i++) {
             for (var j = 0; j < res.data.data.length; j++) {
-              if (res.data.data[i].oType = arr[i].id) {
-                res.data.data[i].oType = arr[i].name
+              if (res.data.data[j].oType = arr[i].id) {
+                res.data.data[j].oType = arr[i].name
                 continue;
-                // console.log()
               }
             }
           }
@@ -134,8 +133,12 @@ Page({
             })
           }else{
             wx.showToast({
-              title: '获取订单信息失败,请稍后重试...',
+              title: '你还没有订单，快起下单吧！',
               icon: 'none'
+            });
+            this.setData({
+              orderList: [],
+              order: []
             })
           }
         }else{
