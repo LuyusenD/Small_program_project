@@ -97,8 +97,14 @@ router.post('/login',(req,res) => {
 })
 
 router.post('/out',(req,res) => {
-  let v = req.body
+  let v = req.body,
+      arr = ["username","id"],
+      parameter = tools.parameter(v,arr)
 
+  if (parameter) {
+  res.send(parameter)
+  return
+  }
   new Promise(open => {
     let sql = `SELECT * FROM admin WHERE id = ? && username = ?`
     pool.query(sql,[v.id,v.username],(err,result) => {
@@ -122,5 +128,101 @@ router.post('/out',(req,res) => {
       }
     })
   })
+})
+
+router.post('/addadmin',(req,res) => {
+  let v = req.body,
+      arr = ["username","password","adminId","adminName"],
+      parameter = tools.parameter(v,arr)
+
+  if (parameter) {
+  res.send(parameter)
+  return
+  }
+  new Promise(open => {
+    let sql = `SELECT * FROM admin WHERE id = ? && username = ?`
+
+    pool.query(sql,[v.adminId,v.adminName],(err,result) => {
+      if (result.length < 1) {
+        res.send({code: 401, data: null, msg: '非法添加'})
+      }
+      open()
+    })
+  })
+  .then(() => {
+    let sql = `INSERT INTO admin (id, username, password, ip, login) VALUES (NULL, ?, ?, NULL, 0);`
+
+    pool.query(sql,[v.username,v.password],(err,result) => {
+      if (result) {
+        res.send({code: 200, data: null, msg: '添加管理用户成功'})
+      } else {
+        res.send({code: 401, data: null, msg: '用户已存在或服务错误'})
+      }
+    })
+  })
+})
+
+router.post('/deladmin',(req,res) => {
+  let v = req.body,
+      arr = ["username","id"],
+      parameter = tools.parameter(v,arr)
+
+  if (parameter) {
+  res.send(parameter)
+  return
+  }
+
+  new Promise(open => {
+    let sql = `SELECT * FROM admin WHERE id = ? && username = ?`
+    pool.query(sql,[v.id,v.username],(err,result) => {
+      if (result.length < 1) {
+        res.send({code: 401, data: null, msg: '非法请求'})
+        return
+      }
+      open(result[0].id)
+    })
+  })
+  .then(v => {
+    let sql = `DELETE FROM admin WHERE id = ?`
+    pool.query(sql,[v],(err,result) => {
+      if (result.affectedRows > 0)
+        res.send({code: 200, data: null, msg: '删除成功'})
+      else 
+        res.send({code: 401, data: null, msg: '账号不存在'})
+    })
+  })
+})
+
+router.post('/forget', (req,res) => {
+  let v = req.body,
+      arr = ["id","username","oldpassword","newpassword"],
+      parameter = tools.parameter(v,arr)
+
+  if (parameter) {
+  res.send(parameter)
+  return
+  }
+
+  new Promise(open => {
+    let sql = `SELECT * FROM admin WHERE id = ? && username = ? && password = ?`
+    pool.query(sql,[v.id,v.username,v.oldpassword],(err,result) => {
+      if (result.length < 1) {
+        res.send({code: 401, data: null, msg: '非法请求'})
+        return
+      }
+      open(v.id)
+    })
+  })
+  .then(id => {
+    let sql = `UPDATE admin SET password = ? WHERE id = ?`
+    pool.query(sql,[v.newpassword,id],(err,result) => {
+      if (result.affectedRows > 0) {
+        res.send({code: 200, data: null, msg: '修改密码成功'})
+      } else {
+        res.send({code: 401, data: null, msg: '服务出错'})
+      }
+    })
+  })
+  
 })
 module.exports = router
