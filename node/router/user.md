@@ -47,4 +47,38 @@
 # }
 # res:
 #   {{code: 200, data: null, msg: '退出登录成功'}}
+
+# 后台管理 - 添加管理用户
+# api: user/addadmin
+# methods: post
+# req: {
+#   adminId    //当前用户id
+#   adminName  //当前用户name
+#   username   //当前新增name
+#   password   //当前新增密码
+# }
+# res:
+#   {{code: 200, data: null, msg: '新增成功'}}
+
+# 后台管理 - 删除管理用户
+# api: user/deladmin
+# methods: post
+# req: {
+#   username   //注销用户的name
+#   id         //注销用户的id
+# }
+# res:
+#   {{code: 200, data: null, msg: '注销用户成功'}}
+
+# 后台管理 - 修改密码
+# api: user/forget
+# methods: post
+# req: {
+#   username   //用户的name
+#   id         //用户的id
+#   oldpassword   //原密码
+#   newpassword   //新密码
+# }
+# res:
+#   {{code: 200, data: null, msg: '修改密码成功'}}
 #
