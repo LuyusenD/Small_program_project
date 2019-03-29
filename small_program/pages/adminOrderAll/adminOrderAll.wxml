@@ -79,7 +79,7 @@
               >查看详情</van-button>
             </van-col>
             <van-col span="12">
-              <van-button size="mini" bindtap='cancelOrder' data-value="{{item}}" type="danger">删除订单</van-button>
+              <van-button size="small" bindtap='cancelOrder' data-value="{{item}}" type="danger">删除订单</van-button>
             </van-col>
           </van-col>
         </van-col>

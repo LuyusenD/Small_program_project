@@ -265,3 +265,10 @@ button::after {
 .text2 text:nth-child(1) {
     border-right: 1rpx solid #e5e5e5;
 }
+.password{
+  width:20%;
+  text-align: right;
+  float: right;
+  font-size: 14px;
+  margin-top:400rpx;
+}

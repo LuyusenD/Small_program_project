@@ -29,7 +29,17 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var user=wx.getStorageSync('user');
+    if(!user){
+      Dialog.alert({
+        title: '提示',
+        message: '该账号已过期，请重新登录！'
+      }).then(() => {
+        // on close
+        wx.navigateBack();
+      });
 
+    }
   },
 
   /**

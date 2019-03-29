@@ -12,7 +12,10 @@
     "pages/admin/admin",
     "pages/adminOrderAll/adminOrderAll",
     "pages/addServe/addServe",
-    "pages/adminList/adminList"
+    "pages/adminList/adminList",
+    "pages/adminAddUser/adminAddUser",
+    "pages/adminSetPaddword/adminSetPassword",
+    "pages/forgetPassword/forgetPassword"
   ],
   "permission": {
     "scope.userLocation": {

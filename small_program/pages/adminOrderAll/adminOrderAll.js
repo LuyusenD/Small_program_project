@@ -125,6 +125,9 @@ Page({
               }
             }
             this.setData({
+              order:[],
+            })
+            this.setData({
               orderList: res.data.data,
               order: this.nextData(res.data.data, this.data.pageSize, this.data.page)
             })

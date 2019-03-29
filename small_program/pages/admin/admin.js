@@ -22,9 +22,16 @@ Page({
     });
     if(wx.getStorageSync("user")){
       wx.hideLoading();
-      wx.navigateTo({
-        url: '/pages/adminList/adminList',
-      })
+      Dialog.confirm({
+        title: '登录提示',
+        message: '是否继续登录'+wx.getStorageSync('user').username
+      }).then(() => {
+        wx.navigateTo({
+          url: '/pages/adminList/adminList',
+        })
+      }).catch(() => {
+        // on cancel
+      });
     }else{
       wx.hideLoading();
       console.log('用户未登录')
@@ -155,5 +162,11 @@ Page({
           });
         }
       })
+  },
+  // 忘记密码
+  forgetPassword(){
+    wx.navigateTo({
+      url: '/pages/forgetPassword/forgetPassword',
+    })
   }
 })
