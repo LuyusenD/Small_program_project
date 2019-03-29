@@ -72,6 +72,9 @@ Page({
       value: e.detail.value
     })
   },
+  query(){
+    this.onSearch();
+  },
   // 点击搜索触发
   onSearch(e){
     // console.log(e)
@@ -89,8 +92,8 @@ Page({
             var arr=wx.getStorageSync('Serve')
             for(var i=0;i<arr.length;i++){
               for (var j = 0; j < res.data.data.length;j++){
-                if (res.data.data[i].oType = arr[i].id){
-                  res.data.data[i].oType = arr[i].name
+                if (res.data.data[j].oType = arr[i].id){
+                  res.data.data[j].oType = arr[i].name
                   continue;
                   // console.log()
                 }

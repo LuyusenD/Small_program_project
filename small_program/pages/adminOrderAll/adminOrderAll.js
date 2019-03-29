@@ -2,6 +2,7 @@
 import url from '../../utils/config.js';
 import MD5 from '../../utils/MD5.js';
 import Dialog from '../../vant-weapp/dist/dialog/dialog';
+
 Page({
 
   /**

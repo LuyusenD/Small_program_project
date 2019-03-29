@@ -1,4 +1,7 @@
 // pages/adminList/adminList.js
+import url from '../../utils/config.js';
+import MD5 from '../../utils/MD5.js';
+import Dialog from '../../vant-weapp/dist/dialog/dialog';
 Page({
 
   /**
@@ -62,5 +65,58 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  // 页面跳转
+  jump(e) {
+    var url = e.currentTarget.dataset.url;
+    wx.navigateTo({
+      url: url,
+    })
+  },
+  // 是否退出的登录
+  isloginOut(){
+    var _this=this;
+    Dialog.confirm({
+      title: '提示',
+      message: '是否确认退出该账号？'
+    }).then(() => {
+      console.log('弹框后点取消');
+      _this.loginOut()
+    }).catch(() => {
+      console.log('弹框后点取消')
+    });
+  },
+  // 退出登录
+  loginOut() {
+    var user=wx.getStorageSync('user')
+    var opt={
+      url: url.url +"user/out",
+      method: "POST",
+      header: {
+        "content-type": "application/x-www-form-urlencoded"
+      },
+      data:{
+        id: user.id,
+        username: user.username
+      }
+    };
+    url.ajax(opt)
+      .then((res)=>{
+        if(res.code==200){
+          wx.showLoading({
+            title: '正在退出登录..',
+          })
+          setTimeout(()=>{
+            wx.hideLoading();
+            wx.removeStorage({
+              key: 'user',
+              success(res) {
+                console.log(res)
+              }
+            })  
+            wx.navigateBack();
+          },1000)
+        }
+      })
   }
 })

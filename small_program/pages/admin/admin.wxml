@@ -20,7 +20,7 @@
                         <image class="ab udlr" src="http://wapxiaochengxu.oss-cn-beijing.aliyuncs.com/assets/password.png"></image>
                     </view>
                     <view>
-                        <input name="password" bindinput='getPassword' value="{{password}}" placeholder="请输入密码"></input>
+                        <input type='password' name="password" bindinput='getPassword' value="{{password}}" placeholder="请输入密码"></input>
                     </view>
                 </view>
             </view>
@@ -30,4 +30,4 @@
      </form>
 
 </view>
-
+<van-dialog id="van-dialog" />
