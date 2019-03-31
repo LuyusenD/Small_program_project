@@ -115,18 +115,19 @@ Page({
     };
     url.ajax(opt)
       .then((res)=>{
+        console.log(res)
         wx.hideLoading();
         if(res.code==200){
-          var arr = wx.getStorageSync('Serve')
-          for (var i = 0; i < arr.length; i++) {
-            for (var j = 0; j < res.data.data.length; j++) {
-              if (res.data.data[j].oType = arr[i].id) {
-                res.data.data[j].oType = arr[i].name
-                continue;
+          if(res.data){
+            var arr = wx.getStorageSync('Serve')
+            for (var i = 0; i < arr.length; i++) {
+              for (var j = 0; j < res.data.data.length; j++) {
+                if (res.data.data[j].oType = arr[i].id) {
+                  res.data.data[j].oType = arr[i].name
+                  continue;
+                }
               }
             }
-          }
-          if(res.data){
             this.setData({
               orderList: res.data.data,
               order: this.nextData(res.data.data, this.data.pageSize, this.data.page)

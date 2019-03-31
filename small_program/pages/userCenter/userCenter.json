@@ -1,1 +1,7 @@
-{}
+{
+  "navigationBarTitleText": "个人中心",
+  "usingComponents": {
+    "van-switch": "/vant-weapp/dist/switch/index",
+    "van-dialog": "/vant-weapp/dist/dialog/index"
+  }
+}

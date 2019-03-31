@@ -15,7 +15,8 @@
     "pages/adminList/adminList",
     "pages/adminAddUser/adminAddUser",
     "pages/adminSetPaddword/adminSetPassword",
-    "pages/forgetPassword/forgetPassword"
+    "pages/forgetPassword/forgetPassword",
+    "pages/evaluate/evaluate"
   ],
   "permission": {
     "scope.userLocation": {

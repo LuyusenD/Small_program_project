@@ -9,7 +9,8 @@ Page({
   data: {
     password1: '',
     password2: '',
-    password3: ''
+    password3: '',
+    language:true
   },
 
   /**
@@ -30,7 +31,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (wx.getStorageSync('language')) {
+      this.setData({
+        language: true
+      })
+    } else {
+      this.setData({
+        language: false
+      })
+    }
   },
 
   /**
@@ -93,6 +102,7 @@ Page({
   },
   // 修改密码
   setPassword() {
+    var _this=this;
     var opt = {
       url: url.url + "user/forget",
       method: "POST",
@@ -109,8 +119,8 @@ Page({
     if (this.data.password1 && this.data.password2) {
       if(this.data.password2!=this.data.password3){
         wx.showToast({
-          title: '两次密码输入不一致！',
-          icon:'none'
+          title: this.data.language ? '两次密码输入不一致！' : 'Two password input inconsistencies!',
+          icon: 'none'
         })
         return;
       }
@@ -119,7 +129,7 @@ Page({
           console.log(res);
           if (res.code == 200) {
             wx.showToast({
-              title: '修改成功！',
+              title: this.data.language ? '修改成功！' : 'Successful revision!',
               icon: 'success'
             })
             this.setData({
@@ -128,13 +138,7 @@ Page({
               password3: ""
             })
             setTimeout(() => {
-              wx.removeStorage({
-                key: 'user',
-                success(res) {
-                  console.log(res)
-                  wx.navigateBack();
-                }
-              })  
+              _this.loginOut();
             }, 1000)
           } else {
             wx.showToast({
@@ -145,9 +149,38 @@ Page({
         })
     } else {
       wx.showToast({
-        title: '请先输入旧密码和修改后密码！',
+        title: this.data.language ? '请先输入旧密码和修改后密码！' : 'Please enter the old password and the modified password first!',
         icon: 'none'
       })
     }
+  },
+  // 退出登录
+  loginOut() {
+    var user = wx.getStorageSync('user')
+    var opt = {
+      url: url.url + "user/out",
+      method: "POST",
+      header: {
+        "content-type": "application/x-www-form-urlencoded"
+      },
+      data: {
+        id: user.id,
+        username: user.username
+      }
+    };
+    url.ajax(opt)
+      .then((res) => {
+        if (res.code == 200) {
+          setTimeout(() => {
+            wx.removeStorage({
+              key: 'user',
+              success(res) {
+                console.log(res)
+              }
+            })
+            wx.navigateBack();
+          }, 1000)
+        }
+      })
   }
 })

@@ -14,21 +14,30 @@
    <view class="page__bd">
     <view class="weui-cells weui-cells_form">
         <navigator class="weui-cell"  hover-class="navigator-hover" url='/pages/orderList/orderList'>
-          我的订单
+          {{checked?order.Chinese:order.Englist}}
           <image class="chose_icon" src="/image/next.png" ></image>
         </navigator>
         <navigator class="weui-cell"  hover-class="navigator-hover">
-          待评价
+          {{checked?evaluate.Chinese:evaluate.Englist}}
           <image class="chose_icon" src="/image/next.png" ></image>
         </navigator>
         <navigator class="weui-cell"  hover-class="navigator-hover">
-          意见反馈
+          {{checked?Feedback.Chinese:Feedback.Englist}}
            <button open-type="feedback" class="feedback"></button>
           <image class="chose_icon" src="/image/next.png" ></image>
         </navigator>
+         <view class="weui-cell">
+          {{checked?language.Chinese:language.Englist}}
+          <view >
+          China
+          <van-switch checked="{{checked}}"bind:change="onChange"/>
+          English
+          </view>
+        </view>
     </view>
   </view>
   </view>
  </view>
  <!--没有页脚-->
 </view>
+<van-dialog id="van-dialog" />

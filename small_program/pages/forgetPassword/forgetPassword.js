@@ -9,7 +9,8 @@ Page({
   data: {
     password1: '',
     password2: '',
-    password3: ''
+    password3: '',
+    language:true
   },
 
   /**
@@ -30,7 +31,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (wx.getStorageSync('language')) {
+      this.setData({
+        language: true
+      })
+    } else {
+      this.setData({
+        language: false
+      })
+    }
   },
 
   /**
@@ -109,7 +118,7 @@ Page({
     if (this.data.password1 && this.data.password2) {
       if (this.data.password2 != this.data.password3) {
         wx.showToast({
-          title: '两次密码输入不一致！',
+          title: this.data.language ? '两次密码输入不一致！' :'Two password input inconsistencies!',
           icon: 'none'
         })
         return;
@@ -119,7 +128,7 @@ Page({
           console.log(res);
           if (res.code == 200) {
             wx.showToast({
-              title: '修改成功！',
+              title: this.data.language ? '修改成功！' :'Successful revision!',
               icon: 'success'
             })
             this.setData({
@@ -140,7 +149,7 @@ Page({
         })
     } else {
       wx.showToast({
-        title: '请先输入旧密码和修改后密码！',
+        title: this.data.language ? '请先输入旧密码和修改后密码！':'Please enter the old password and the modified password first!',
         icon: 'none'
       })
     }

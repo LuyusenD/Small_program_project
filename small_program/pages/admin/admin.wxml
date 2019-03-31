@@ -1,6 +1,6 @@
 <view class="main">
     <image class="bgimg" src="http://wapxiaochengxu.oss-cn-beijing.aliyuncs.com/assets/bj1@2x.png"></image>
-    <view class="headwz">后台管理</view>
+    <view class="headwz">{{language?'后台管理':'admin Login '}}</view>
     <image class="hdimg ab" mode="widthFix" src="http://wapxiaochengxu.oss-cn-beijing.aliyuncs.com/assets/bj2@2x.png"></image>
     <form bindsubmit="loginSubmit"><view class="resite border1">
         <view class="ab udlr">
@@ -10,7 +10,7 @@
                         <image class="ab udlr" src="http://wapxiaochengxu.oss-cn-beijing.aliyuncs.com/assets/account.png"></image>
                     </view>
                     <view>
-                        <input name="username" bindinput='getUserName' placeholder="请输入账号" value='{{uname}}'  placeholderStyle="font-size:30rpx;"></input>
+                        <input name="username" bindinput='getUserName' placeholder="{{language?'请输入账号':'Please enter your account number'}}" value='{{uname}}'  placeholderStyle="font-size:30rpx;"></input>
                     </view>
                 </view>
             </view>
@@ -20,13 +20,13 @@
                         <image class="ab udlr" src="http://wapxiaochengxu.oss-cn-beijing.aliyuncs.com/assets/password.png"></image>
                     </view>
                     <view>
-                        <input type='password' name="password" bindinput='getPassword' value="{{password}}" placeholder="请输入密码"></input>
+                        <input type='password' name="password" bindinput='getPassword' value="{{password}}" placeholder="{{language?'请输入密码':'Please input a password'}}"></input>
                     </view>
                 </view>
             </view>
         </view>
-        <view class='password' bindtap='forgetPassword'>忘记密码</view>
-        <button  bindtap="submit"style="background-color:{{__wechat_main_color}}">登录</button>
+        <view class='password' bindtap='forgetPassword'>{{language?'忘记密码':'Forget password'}}</view>
+        <button  bindtap="submit"style="background-color:{{__wechat_main_color}}">{{language?'登录':'Sign in'}}</button>
     </view>
      </form>
 

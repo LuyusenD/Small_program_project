@@ -7,7 +7,43 @@ Page({
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    // 语言 true==>中文
+    language:true,
+    list:[
+      {
+        img:'/image/order.png',
+        language:{
+          Englist: 'Order immediately',
+          Chinese: '立即下单'
+        },
+        url:"/pages/placeOrder/placeOrder"
+      },
+      {
+        img:'/image/seachOrder.png',
+        language:{
+          Englist: 'Enquiry order',
+          Chinese: '查询订单'
+        },
+        url:"/pages/search/search"
+      },
+      {
+        img:'/image/admin.png',
+        language:{
+          Englist: 'admin',
+          Chinese: '管理后台'
+        },
+        url:"/pages/admin/admin"
+      },
+      {
+        img:'/image/orderMine.png',
+        language:{
+          Englist: 'My order',
+          Chinese: '我的订单'
+        },
+        url:"/pages/orderList/orderList"
+      },
+    ]
   },
   //事件处理函数
   bindViewTap: function() {
@@ -19,6 +55,17 @@ Page({
 
    },
    onShow:function(){
+     if (wx.getStorageSync('language')){
+       console.log(wx.getStorageSync('language'))
+       this.setData({
+         language:true
+       })
+     }else{
+       this.setData({
+         language: false
+       });
+       console.log(wx.getStorageSync('language'))
+     }
      var _this = this;
      if (!wx.getStorageSync('info')) {
        wx.navigateTo({

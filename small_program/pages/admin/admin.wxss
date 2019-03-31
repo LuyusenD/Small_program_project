@@ -266,7 +266,7 @@ button::after {
     border-right: 1rpx solid #e5e5e5;
 }
 .password{
-  width:20%;
+  width:40%;
   text-align: right;
   float: right;
   font-size: 14px;
