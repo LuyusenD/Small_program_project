@@ -332,26 +332,27 @@ Page({
   makeAppointment(){
     // 判断是否为空
     // 修改服务类型
-      var obj={
-        oTel: this.data.obj.oTel,
-        oAddress: this.data.obj.oAddress,
-        oType: this.data.obj.oType,
-        oTime: this.data.obj.oTime,
-        oRemark: this.data.obj.oRemark,
-        openId:wx.getStorageSync("openid").openid,
-        oName:wx.getStorageSync("info").userInfo.nickName,
-        oTypeIndex: this.data.obj.oTypeIndex,
-        oName: this.data.obj.oName,
-      };
-      console.log(obj);
-      this.setData({
-        obj
-      });
+
     var arr = this.data.obj;
     arr.oType = this.data.obj.oTypeIndex;
     arr.oTime=new Date().getTime();
     if (arr.oTel != '' && arr.oAddress != '' && arr.oType != '' && arr.openId != '' && arr.oName!=''){
       if ((/^1[34578]\d{9}$/.test(arr.oTel))){
+        var obj = {
+          oTel: this.data.obj.oTel,
+          oAddress: this.data.obj.oAddress,
+          oType: this.data.obj.oType,
+          oTime: this.data.obj.oTime,
+          oRemark: this.data.obj.oRemark,
+          openId: wx.getStorageSync("openid").openid,
+          oName: wx.getStorageSync("info").userInfo.nickName,
+          oTypeIndex: this.data.obj.oTypeIndex,
+          oName: this.data.obj.oName,
+        };
+        console.log(obj);
+        this.setData({
+          obj
+        });
         var opt = {
           url: url.url + 'order/addOrder',
           method: "POST",

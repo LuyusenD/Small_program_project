@@ -3,8 +3,8 @@
         <view class="bw order_item">
           <navigator url="/pages/order_details2/details?id={{item.order_id}}" class="db plr30">
             <view class="flex_sb lh90 bdb font15">
-              <text>订单编号:{{item.oId}}</text>
-              <text class='{{item.status==3?"color3":"color2"}}'>{{item.status==1?"未支付":item.status==2?"已支付":item.status==3?"执行中":"已完成"}}</text>
+               <text>订单编号:{{item.oId}}</text>
+              <text class='{{item.oState==3?"color2":"color3"}}'>{{item.oState==0?"未支付":item.oState==1?"已支付":item.oState==2?"执行中":"已完成"}}</text>
             </view>
             <view class="goods">
               <view class="flex_a ptb30 goods_item" >

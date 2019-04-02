@@ -32,6 +32,7 @@ Page({
         })
       }).catch(() => {
         // on cancel
+        this.loginOut();
       });
     }else{
       wx.hideLoading();
@@ -177,5 +178,33 @@ Page({
     wx.navigateTo({
       url: '/pages/forgetPassword/forgetPassword',
     })
+  },
+  // 退出登录
+  loginOut() {
+    var user = wx.getStorageSync('user')
+    var opt = {
+      url: url.url + "user/out",
+      method: "POST",
+      header: {
+        "content-type": "application/x-www-form-urlencoded"
+      },
+      data: {
+        id: user.id,
+        username: user.username
+      }
+    };
+    url.ajax(opt)
+      .then((res) => {
+        if (res.code == 200) {
+          setTimeout(() => {
+            wx.removeStorage({
+              key: 'user',
+              success(res) {
+                console.log(res)
+              }
+            })
+          }, 1000)
+        }
+      })
   }
 })

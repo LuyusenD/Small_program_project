@@ -14,7 +14,7 @@ Page({
       {
         img:'/image/order.png',
         language:{
-          Englist: 'Order immediately',
+          Englist: 'immediately',
           Chinese: '立即下单'
         },
         url:"/pages/placeOrder/placeOrder"
@@ -22,7 +22,7 @@ Page({
       {
         img:'/image/seachOrder.png',
         language:{
-          Englist: 'Enquiry order',
+          Englist: 'Enquiry',
           Chinese: '查询订单'
         },
         url:"/pages/search/search"

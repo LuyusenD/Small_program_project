@@ -1,5 +1,15 @@
 <!--pages/placeOrder/placeOrder.wxml-->
   <van-cell-group>
+   <van-field
+    value="{{ obj.oName }}"
+    required
+    clearable
+    label="姓名"
+    left-icon="phone"
+    placeholder="请输入你的姓名"
+    border="{{ false }}"
+    bind:input='getName'
+  />
   <van-field
     value="{{ obj.oTel }}"
     required
@@ -12,16 +22,6 @@
     error-message="{{phoneerr}}"
     border="{{ false }}"
     bind:input='getPhone'
-  />
-  <van-field
-    value="{{ obj.oName }}"
-    required
-    clearable
-    label="姓名"
-    left-icon="phone"
-    placeholder="请输入你的姓名"
-    border="{{ false }}"
-    bind:input='getName'
   />
     <van-cell
       required

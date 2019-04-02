@@ -23,7 +23,7 @@ page{
 }
 .container>view>view{
   font-size: 14px;
-  width:60%;
+  width:40%;
   /* height: 150rpx; */
   margin: 0 auto;
   line-height: 83.5rpx;

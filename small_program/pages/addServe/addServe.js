@@ -87,15 +87,16 @@ Page({
           if(res.code==200){
             wx.showToast({
               title: '添加成功',
-              icon:'success'
+              icon:'success',
+              duration:2000
             });
             this.setData({
               oType:''
             });
-            this.getServeType();
             setTimeout(()=>{
               wx.navigateBack();
-            },1000)
+              this.getServeType();
+            },2000)
           }
         })
     }else{
