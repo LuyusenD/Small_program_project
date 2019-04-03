@@ -43,7 +43,8 @@ CREATE TABLE `admin` (
 
 CREATE TABLE `serve` (
   `id` INT NOT NULL COMMENT '编号' PRIMARY KEY AUTO_INCREMENT,
-  `name` varchar(8) NOT NULL COMMENT '服务名称'
+  `name` varchar(8) NOT NULL COMMENT '服务名称',
+  `icon` varchar(256) NOT NULL COMMENT '服务icon'
 );
 
 CREATE TABLE `state` (
@@ -59,11 +60,11 @@ INSERT INTO `state` (`name`) VALUES
 ('执行中'),
 ('完成');
 
-INSERT INTO `serve` (`name`) VALUES
-('机场接送'),
-('家具安装'),
-('清洁服务'),
-('搬家');
+-- INSERT INTO `serve` (`name`) VALUES
+-- ('机场接送'),
+-- ('家具安装'),
+-- ('清洁服务'),
+-- ('搬家');
 
 INSERT INTO `the_order` (`id`, `oId`, `oName`, `oTel`, `oAddress`, `createTime`, `deleteTime`, `oType`, `oState`, `oTime`, `oRemark`, `openId`) VALUES 
 (NULL, '13437024352606386584', '郏绮梅', '17075319386', '广东深圳', '0', '0', '1', '0', '0', '测试测试测试测试测试测试测试测试', '0'),

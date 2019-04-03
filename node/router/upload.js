@@ -8,6 +8,7 @@
 const express = require('express')
 const router = express.Router()
 const tools = require('../util/generate.js')
+const config = require('../config.js')
 const fs = require('fs')
 
 router.post('/',(req,res) => {
@@ -20,7 +21,7 @@ router.post('/',(req,res) => {
     if (err)
       console.log(err)
   })
-  res.write(JSON.stringify({code: 200, data: {url: `localhost:3000/${imgName}.png`}, msg: '上传成功'}))
+  res.write(JSON.stringify({code: 200, data: {url: `${config.host}${imgName}.png`}, msg: '上传成功'}))
   res.end()
 })
 

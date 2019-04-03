@@ -68,7 +68,7 @@ Page({
     let t = this;
     let s = e.detail;
     console.log(s);
-    // console.log(e)
+    console.log(e)
     var e = e.detail;
     var opt = {
       url: url.url + 'user/adduser',

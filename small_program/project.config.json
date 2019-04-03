@@ -13,8 +13,10 @@
 	"compileType": "miniprogram",
 	"libVersion": "1.9.98",
 	"appid": "wx95f9d0da92ac236f",
-	"projectname": "xm",
+	"projectname": "program",
 	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
