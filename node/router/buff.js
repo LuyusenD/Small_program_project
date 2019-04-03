@@ -29,15 +29,15 @@ router.get('/',(req,res) => {
 // 后台管理 - 添加服务类型
 router.get('/addserve',(req,res) => {
   let v = req.query,
-      sql = `INSERT INTO serve (name) VALUES (?)`,
-      parameter = tools.parameter(v,['str'])
+      sql = `INSERT INTO serve (name, icon) VALUES (?,?)`,
+      parameter = tools.parameter(v,['str','url'])
 
   if (parameter) {
     res.send(parameter)
     return
   }
 
-  pool.query(sql,[v.str],(err,result) => {
+  pool.query(sql,[v.str,v.url],(err,result) => {
     result.affectedRows > 0?
       res.send({code: 200, data: null, msg: '添加服务成功'})
     :

@@ -44,5 +44,6 @@
         "selectedIconPath": "image/ionic/userActive.png"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

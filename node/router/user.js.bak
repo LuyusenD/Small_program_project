@@ -37,7 +37,7 @@ router.get('/getopenid',(req,res) => {
 router.post('/adduser',(req,res) => {
   let v = req.body,
       sql = `INSERT INTO user (openId, img, name, sex, address) VALUES (?,?,?,?,?)`,
-      arr = ["openId","img","name","sex"],
+      arr = ["openId","img","name","sex","address"],
       parameter = tools.parameter(v,arr)
 
   if (parameter) {
@@ -215,7 +215,7 @@ router.post('/forget', (req,res) => {
     })
   })
   .then(id => {
-    let sql = `UPDATE admin SET password = ?, login = 0 WHERE id = ?`
+    let sql = `UPDATE admin SET password = ? WHERE id = ?`
     pool.query(sql,[v.newpassword,id],(err,result) => {
       if (result.affectedRows > 0) {
         res.send({code: 200, data: null, msg: '修改密码成功'})
