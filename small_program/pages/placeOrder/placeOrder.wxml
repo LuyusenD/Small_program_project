@@ -5,7 +5,7 @@
     required
     clearable
     label="姓名"
-    left-icon="phone"
+    left-icon="manager"
     placeholder="请输入你的姓名"
     border="{{ false }}"
     bind:input='getName'

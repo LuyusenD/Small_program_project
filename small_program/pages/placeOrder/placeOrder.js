@@ -232,6 +232,7 @@ Page({
   },
   // 选择服务变动时
   onChangeServeType(e){
+    console.log(e)
     var serveType = wx.getStorageSync('Serve')[e.detail.index].name;
     console.log(wx.getStorageSync('Serve')[e.detail.index]);
     var obj= {
@@ -332,27 +333,24 @@ Page({
   makeAppointment(){
     // 判断是否为空
     // 修改服务类型
-
-    var arr = this.data.obj;
+    console.log('1')
+    console.log(this.data.obj)
+    var arr = JSON.parse(JSON.stringify(this.data.obj));
     arr.oType = this.data.obj.oTypeIndex;
     arr.oTime=new Date().getTime();
+    arr.openId= wx.getStorageSync("openid").openid,
+    console.log('2')
+    console.log(this.data.obj)
+    console.log('arr')
+    console.log(arr)
+
     if (arr.oTel != '' && arr.oAddress != '' && arr.oType != '' && arr.openId != '' && arr.oName!=''){
       if ((/^1[34578]\d{9}$/.test(arr.oTel))){
-        var obj = {
-          oTel: this.data.obj.oTel,
-          oAddress: this.data.obj.oAddress,
-          oType: this.data.obj.oType,
-          oTime: this.data.obj.oTime,
-          oRemark: this.data.obj.oRemark,
-          openId: wx.getStorageSync("openid").openid,
-          oName: wx.getStorageSync("info").userInfo.nickName,
-          oTypeIndex: this.data.obj.oTypeIndex,
-          oName: this.data.obj.oName,
-        };
-        console.log(obj);
-        this.setData({
-          obj
-        });
+        console.log("______________________")
+        wx.showLoading({
+          title: '正在预约..',
+          mask:true
+        })
         var opt = {
           url: url.url + 'order/addOrder',
           method: "POST",
@@ -365,6 +363,7 @@ Page({
           .then((res) => {
             console.log(res)
             if(res.code==200){
+              wx.hideLoading();
               wx.showToast({
                 title: res.msg,
                 icon:'success'
@@ -375,7 +374,7 @@ Page({
             }else{
               wx.showToast({
                 title: res.msg,
-                icon: 'ionic'
+                icon: 'none'
               })
             }
           })
@@ -389,7 +388,9 @@ Page({
       wx.showToast({
         title: '亲。请完善基本信息！',
         icon: 'none'
-      })
+      });
+      console.log('3')
+      console.log(this.data.obj)
     }
   }
 })

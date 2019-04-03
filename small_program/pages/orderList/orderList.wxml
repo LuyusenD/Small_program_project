@@ -1,7 +1,7 @@
     <view class='container pt10'>
       <view class="order_list" wx:for='{{order}}' wx:key="{{index}}">
         <view class="bw order_item">
-          <navigator url="/pages/order_details2/details?id={{item.order_id}}" class="db plr30">
+          <navigator url="{{'/pages/orderListDetail/orderListDetail?oId='+item.oId}}" class="db plr30">
             <view class="flex_sb lh90 bdb font15">
                <text>订单编号:{{item.oId}}</text>
               <text class='{{item.oState==3?"color2":"color3"}}'>{{item.oState==0?"未支付":item.oState==1?"已支付":item.oState==2?"执行中":"已完成"}}</text>

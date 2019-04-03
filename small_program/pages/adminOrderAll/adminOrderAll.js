@@ -125,9 +125,6 @@ Page({
               }
             }
             this.setData({
-              order:[],
-            })
-            this.setData({
               orderList: res.data.data,
               order: this.nextData(res.data.data, this.data.pageSize, this.data.page)
             })
@@ -190,6 +187,12 @@ Page({
               message: '删除成功'
             }).then(() => {
               // on close
+              _this.setData({
+                // 用户所有订单
+                orderList: [],
+                // 当前分页显示订单个数
+                order: [],
+              })
               _this.getorderListAll();
             });
           } else {
@@ -231,6 +234,11 @@ Page({
               message: '删除成功'
             }).then(() => {
               // on close
+              this.setData({
+                page:1,
+                order:[],
+                orderList:[]
+              })
               _this.getorderListAll();
             });
           } else {
@@ -246,4 +254,11 @@ Page({
       // on cancel
     });
   },
+  // 页面跳转
+  jump(e){
+    var url=e.currentTarget.dataset.url;
+    wx.navigateTo({
+      url: url,
+    })
+  }
 })

@@ -5,7 +5,7 @@
   background: #fafafa;
   border-radius:15%; 
   margin: 0 auto;
-  padding: 10rpx;
+  padding: 40rpx 0;
 }
 .orderD{
   padding: 20rpx;

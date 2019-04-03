@@ -138,7 +138,7 @@ button::after {
 
 .resite {
     width: 90%;
-    height: 540rpx;
+    height: 565rpx;
     background: #fff;
     position: absolute;
     top: 31%;
@@ -271,7 +271,7 @@ button::after {
   text-align: right;
   float: right;
   font-size: 12px;
-  margin-top:400rpx;
+  margin-top:420rpx;
   margin-bottom:10rpx;
   color: gray
 }

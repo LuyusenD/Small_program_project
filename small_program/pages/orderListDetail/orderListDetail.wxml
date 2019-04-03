@@ -1,0 +1,85 @@
+<!--pages/orderListDetail/orderListDetail.wxml-->
+<view class='container pt10'>
+  <view class="order_list">
+    <view class="bw plr30">
+      <view class="ptb20 lh50">
+        <view>
+          <text class="col9">订单编号:</text>
+          <text>{{list.oId}}</text>
+        </view>
+        <view>
+          <text class="col9">姓名:</text>
+          <text>{{list.oName}}</text>
+        </view>
+        <view>
+          <text class="col9">手机号:</text>
+          <text>{{list.oTel}}</text>
+        </view>
+        <view>
+          <text class="col9">预约地点:</text>
+          <text>{{list.oAddress}}</text>
+        </view>
+        <view class="flex_sb">
+          <view>
+            <text class="col9">订单状态:</text>
+            <text>{{list.oState==0?"未支付":list.oState==1?"已支付":list.oState==2?"执行中":"已完成"}}</text>
+          </view>
+        </view>
+        <view>
+          <text class="col9">预约时间:</text>
+          <text>{{list.createTime}}</text>
+        </view>
+      </view>
+      <view class="goods">
+        <view class="flex_a ptb30 goods_item">
+          <view class="goods_bg flex_aj">
+            <image src="{{item.img}}" class="goods_img" mode="widthFix"></image>
+          </view>
+          <view class="ml20 flex1">
+            <view class="font15 fw">服务类型 ： {{list.oRemark}}</view>
+            <view class="mt20 color2 fw flex_sb">
+              <view>
+                ￥<text class="font17 mr10">1</text>x1
+              </view>
+              <navigator url='/pages/feedback/feedback' class='feedback' wx:if='{{index==0}}'>意见反馈</navigator>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="flex_sb ptb30 bdt" wx:if='{{info.discount_money==0}}'>
+        <text>共11件商品</text>
+        <text class="color2">￥{{info.total_price}}</text>
+      </view>
+      <view class="flex_sb ptb30 bdt" wx:else>
+        <view>
+          <view>共1件商品</view>
+          <view>优惠金额:11元</view>
+        </view>
+        <view>
+          <view>共计：
+            <text class="color2">11元</text>
+          </view>
+          <view>实付：
+            <text class="color2">11元</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="bw plr30 border-r1 mt30" wx:if='{{info.status==2}}'>
+      <navigator url='/pages/coupons/coupons?pay=1' class="flex_sb lh90 bdb">
+        <text>优惠券</text>
+        <view class="arrow_right flex_a ml20">
+          <text class="mr20 font15 color2">11</text>
+          <image src='/img/arrow_right_h.png' mode="widthFix"></image>
+        </view>
+      </navigator>
+      <view class="lh100 tae">
+        <text>已优惠11元</text>
+        <text class="ml30">小计<text class="color2 font17">￥{{(info.total_price-coupon_money)>0?(info.total_price-coupon_money):0}}</text></text>
+      </view>
+    </view>
+  </view>
+  <view class="plr40 mt60 pb20" wx:if='{{info.status==2}}'>
+    <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" bindtap='replenishment'>立即支付</view>
+  </view>
+</view>

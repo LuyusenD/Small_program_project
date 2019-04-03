@@ -75,7 +75,8 @@
          <van-col span="24">
           <van-col span="12" offset='12'>
             <van-col span="12">
-              <van-button size="small" data-value="{{item}}" 
+              <van-button data-url="{{'/pages/orderListDetail/orderListDetail?oId='+item.oId}}" size="small" data-value="{{item}}"
+              bindtap='jump' 
               >查看详情</van-button>
             </van-col>
             <van-col span="12">

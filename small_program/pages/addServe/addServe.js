@@ -7,6 +7,7 @@ Page({
    */
   data: {
     oType:'',
+    img:'/image/add.png'
   },
 
   /**
@@ -141,4 +142,32 @@ Page({
         }
       })
   },
+  uploadImg(){
+    wx.chooseImage({
+      count: 1,
+      success: (res) => {
+        const tempFilePaths = res.tempFilePaths;
+        console.log(tempFilePaths);
+        // console.log(res)
+        this.setData({
+          img: tempFilePaths[0]
+        });
+        wx.uploadFile({
+          url: url.url + 'upload', //仅为示例，非真实的接口地址
+          methods: "POST",
+          header: {
+            "content-type": "application/x-www-form-urlencoded"
+          },
+          filePath: tempFilePaths[0],
+          name: 'file',
+          formData: {
+            'user': 'JSON'
+          },
+          success: (res) => {
+            console.log(res)
+          }
+        })
+      }
+    })
+  }
 })
