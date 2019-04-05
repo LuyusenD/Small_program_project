@@ -73,13 +73,21 @@ Page({
   },
   addoType(){
     if (this.data.oType){
+      if (this.data.img =='/image/add.png'){
+        wx.showToast({
+          title: '亲,请上传图片!',
+          icon:'none'
+        })
+        return;
+      }
       var opt={
         url: url.url +"buff/addserve",
         header: {
           "content-type": "application/x-www-form-urlencoded"
         },
         data:{
-          str:this.data.oType
+          str:this.data.oType,
+          url: this.data.img
         }
       };
       url.ajax(opt)
@@ -142,32 +150,61 @@ Page({
         }
       })
   },
-  uploadImg(){
+  base64(){
+    var _this=this;
     wx.chooseImage({
       count: 1,
       success: (res) => {
         const tempFilePaths = res.tempFilePaths;
-        console.log(tempFilePaths);
+        var base64 = wx.arrayBufferToBase64(tempFilePaths);
+        console.log(base64);
         // console.log(res)
-        this.setData({
-          img: tempFilePaths[0]
-        });
-        wx.uploadFile({
-          url: url.url + 'upload', //仅为示例，非真实的接口地址
-          methods: "POST",
-          header: {
-            "content-type": "application/x-www-form-urlencoded"
-          },
-          filePath: tempFilePaths[0],
-          name: 'file',
-          formData: {
-            'user': 'JSON'
-          },
-          success: (res) => {
-            console.log(res)
+        console.log(tempFilePaths[0])
+        wx.request({
+          url: tempFilePaths[0],
+          method: 'GET',
+          responseType: 'arraybuffer',
+          success: function (res) {
+            var base64 = 'data:image/jpg;base64,'+wx.arrayBufferToBase64(res.data);
+            wx.showLoading({
+              title: '正在上传图片',
+              mask:true
+            })
+            _this.uploadImg(base64)
           }
-        })
+        });
+       
       }
     })
+  },
+  uploadImg(base64){
+    var opt={
+      url: url.url + 'upload', //仅为示例，非真实的接口地址
+      method: "POST",
+      header: {
+        "content-type": "application/x-www-form-urlencoded"
+      },
+      data:{
+        base: base64
+      }
+    };
+    url.ajax(opt)
+      .then((res)=>{
+        wx.hideLoading();
+        if(res.code==200){
+          wx.showToast({
+            title: '上传成功',
+            icon:'success'
+          });
+          this.setData({
+            img: res.data.url
+          });
+        }else{
+          wx.showToast({
+            title: '上传失败',
+            icon: 'none'
+          });
+        }
+      })
   }
 })

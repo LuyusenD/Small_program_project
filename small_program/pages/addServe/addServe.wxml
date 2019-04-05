@@ -2,7 +2,7 @@
 <view style='height:50rpx;'></view>
 <view class='ioic'>
   <text>上传icon</text>
-  <image bindtap='uploadImg' src='{{img}}'></image>
+  <image bindtap='base64' src='{{img}}'></image>
 </view>
 <van-cell-group>
   <van-field

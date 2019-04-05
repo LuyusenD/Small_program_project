@@ -83,11 +83,7 @@ router.post('/login',(req,res) => {
     })
   })
   .then(v => {
-<<<<<<< Updated upstream
     let {id,username} = v
-=======
-    console.log(v.id)
->>>>>>> Stashed changes
     let sql = `UPDATE admin SET ip = ?, login = ? WHERE id = ?;`
 
     pool.query(sql,[ip,1,id],(err,result) => {
@@ -128,7 +124,6 @@ router.post('/out',(req,res) => {
     })
   })
 })
-<<<<<<< Updated upstream
 
 router.post('/addadmin',(req,res) => {
   let v = req.body,
@@ -225,6 +220,4 @@ router.post('/forget', (req,res) => {
   })
   
 })
-=======
->>>>>>> Stashed changes
 module.exports = router
