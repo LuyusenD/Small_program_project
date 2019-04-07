@@ -28,8 +28,25 @@ Page({
   onShow: function () {
     var that = this;
     that.setData({
-      userInfo: app.globalData.userInfo
+      userInfo: wx.getStorageSync('info').userInfo
     });
+    if (wx.getStorageSync('language')) {
+      if (wx.getStorageSync('language').language) {
+        this.setData({
+          checked: true
+        })
+      } else {
+        this.setData({
+          checked: false
+        });
+        console.log(wx.getStorageSync('language'))
+      }
+    } else {
+      this.setData({
+        checked: false
+      });
+      console.log(wx.getStorageSync('language'))
+    }
   },
   onChange({ detail }) {
     var language,
@@ -51,7 +68,7 @@ Page({
       // on confirm
       this.setData({ checked: detail });
       // language true==>中文   false==>英文
-      wx.setStorageSync("language", this.data.checked)
+      wx.setStorageSync("language", {'language':this.data.checked})
     }).catch(() => {
       // on cancel
     });

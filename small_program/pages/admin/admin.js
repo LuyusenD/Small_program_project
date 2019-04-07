@@ -52,13 +52,21 @@ Page({
    */
   onShow: function () {
     if (wx.getStorageSync('language')) {
-      this.setData({
-        language: true
-      })
+      if (wx.getStorageSync('language').language) {
+        this.setData({
+          language: true
+        })
+      } else {
+        this.setData({
+          language: false
+        });
+        console.log(wx.getStorageSync('language'))
+      }
     } else {
       this.setData({
         language: false
-      })
+      });
+      console.log(wx.getStorageSync('language'))
     }
   },
 

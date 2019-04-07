@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    language:true
   },
 
   /**
@@ -29,6 +29,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if (wx.getStorageSync('language')) {
+      if (wx.getStorageSync('language').language) {
+        this.setData({
+          language: true
+        })
+      } else {
+        this.setData({
+          language: false
+        });
+        console.log(wx.getStorageSync('language'))
+      }
+    } else {
+      this.setData({
+        language: false
+      });
+      console.log(wx.getStorageSync('language'))
+    }
     var user=wx.getStorageSync('user');
     if(!user){
       Dialog.alert({

@@ -196,6 +196,7 @@ Page({
             title: '上传成功',
             icon:'success'
           });
+          console.log(res.data.url)
           this.setData({
             img: res.data.url
           });

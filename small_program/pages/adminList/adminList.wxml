@@ -19,31 +19,31 @@
   <view bindtap='jump' data-url='/pages/adminOrderAll/adminOrderAll'>
     <view>
       <image src='/image/seeOrderAll.png'></image>
-      <view>所有订单</view>
+      <view>{{language?'所有订单':'All Orders'}}</view>
     </view>
   </view>
   <view bindtap='jump' data-url='/pages/addServe/addServe'>
     <view>
       <image src='/image/addServe.png'></image>
-      <view>添加服务</view>
+      <view>{{language?'添加服务':'Add Serve'}}</view>
     </view>
   </view>
   <view bindtap='jump' data-url='/pages/adminAddUser/adminAddUser'>
   <!-- <view bindtap='jump' data-url='/pages/adminOrderAll/adminOrderAll'> -->
     <view>
       <image src='/image/addUser.png'></image>
-      <view>添加管理</view>
+      <view>{{language?'添加管理':'Add Admin'}}</view>
     </view>
   </view>
   <view bindtap='jump' data-url='/pages/adminSetPaddword/adminSetPassword'>
     <view>
       <image src='/image/setPassword.png'></image>
-      <view>修改密码</view>
+      <view>{{language?'修改密码':'Set PassWord'}}</view>
     </view>
   </view>
 </view>
 <view style='height:50rpx'></view>
 <view style='width:80%;margin:0 auto;'>
-  <van-button size="large" round  type="danger" bindtap='isloginOut'>退出登录</van-button>
+  <van-button size="large" round  type="danger" bindtap='isloginOut'>{{language?'退出登录':'Logout'}}</van-button>
 </view>
 <van-dialog id="van-dialog" />
