@@ -9,12 +9,12 @@
           <navigator url="{{'/pages/orderListDetail/orderListDetail?oId='+item.oId}}" class="db plr30">
             <view class="flex_sb lh90 bdb font15">
               <text>订单编号:{{item.oId}}</text>
-              <text class='{{item.oState==3?"color2":"color3"}}'>{{item.oState==0?"未支付":item.oState==1?"已支付":item.oState==2?"执行中":"已完成"}}</text>
+              <text class='{{item.oState==4?"color2":"color3"}}'>{{item.oState==1?"未支付":item.oState==2?"已支付":item.oState==3?"执行中":"已完成"}}</text>
             </view>
             <view class="goods">
               <view class="flex_a ptb30 goods_item" >
                 <view class="goods_bg flex_aj">
-                  <image src='{{good.img}}' class="goods_img" mode="widthFix"></image>
+                  <image src='{{item.img}}' class="goods_img" mode="widthFix"></image>
                 </view>
                 <view class="ml20">
                   <view class="font15 fw">服务类型 ： {{item.oType}}</view>

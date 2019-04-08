@@ -28,7 +28,9 @@ Page({
     maxHour: 20,
     minDate: new Date().getTime(),
     maxDate: new Date(2019, 10, 1).getTime(),
-    currentDate: new Date().getTime()
+    currentDate: new Date().getTime(),
+    // yuyan
+    language:true
   },
 
   /**
@@ -63,7 +65,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    if (wx.getStorageSync('language')) {
+      if (wx.getStorageSync('language').language) {
+        this.setData({
+          language: true
+        })
+      } else {
+        this.setData({
+          language: false
+        });
+        console.log(wx.getStorageSync('language'))
+      }
+    } else {
+      this.setData({
+        language: false
+      });
+      console.log(wx.getStorageSync('language'))
+    }
   },
 
   /**
@@ -119,8 +137,7 @@ Page({
       .then((res)=>{
         if (res.code == 200) {
           wx.hideLoading();
-          wx.setStorageSync('Serve', res.data.serve)
-          wx.setStorageSync('State', res.data.state)
+          wx.setStorageSync('Serve', res.data)
           var serveType = [];
           var arr = wx.getStorageSync('Serve');
           for (var i = 0; i < arr.length; i++) {

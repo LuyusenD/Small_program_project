@@ -22,7 +22,7 @@
         <view class="flex_sb">
           <view>
             <text class="col9">订单状态:</text>
-            <text>{{list.oState==0?"未支付":list.oState==1?"已支付":list.oState==2?"执行中":"已完成"}}</text>
+            <text>{{list.oState==1?"未支付":list.oState==2?"已支付":list.oState==3?"执行中":"已完成"}}</text>
           </view>
         </view>
         <view>
@@ -33,10 +33,10 @@
       <view class="goods">
         <view class="flex_a ptb30 goods_item">
           <view class="goods_bg flex_aj">
-            <image src="{{item.img}}" class="goods_img" mode="widthFix"></image>
+            <image src="{{list.img}}" class="goods_img" mode="widthFix"></image>
           </view>
           <view class="ml20 flex1">
-            <view class="font15 fw">服务类型 ： {{list.oRemark}}</view>
+            <view class="font15 fw">服务类型 ： {{list.oType}}</view>
             <view class="mt20 color2 fw flex_sb">
               <view>
                 ￥<text class="font17 mr10">1</text>x1

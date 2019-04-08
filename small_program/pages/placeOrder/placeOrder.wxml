@@ -4,9 +4,9 @@
     value="{{ obj.oName }}"
     required
     clearable
-    label="姓名"
+    label="{{language?'姓名':'Full name'}}"
     left-icon="manager"
-    placeholder="请输入你的姓名"
+    placeholder="{{language?'请输入你的姓名':'Please enter your name'}}"
     border="{{ false }}"
     bind:input='getName'
   />
@@ -14,10 +14,10 @@
     value="{{ obj.oTel }}"
     required
     clearable
-    label="电话"
+    label="{{language?'电话':'tel'}}"
     left-icon="phone"
     icon="question-o"
-    placeholder="请输入电话号码"
+    placeholder="{{language?'请输入电话号码':'Please enter your telephone number'}}"
     bind:click-icon="onClickIcon"
     error-message="{{phoneerr}}"
     border="{{ false }}"
@@ -26,31 +26,31 @@
     <van-cell
       required
       icon="location"
-      title="预约地址"
-      value="{{obj.oAddress==''?'请选择预约地址':obj.oAddress}}>"
+      title="{{language?'预约地址':'Reservation address'}}"
+      value="{{obj.oAddress==''&&language?'请选择预约地址':obj.oAddress!=''&&!language?'Please choose the reservation address':obj.oAddress}}>"
       bind:click='getAddress'
   />
     <van-cell
       required
       icon="clock"
-      title="预约时间"
-      value="{{obj.oTime==''?'请选择预约时间':obj.oTime}}>"
+      title="{{language?'预约时间':'Time of appointment'}}"
+      value="{{obj.oTime==''&&language?'请选择预约时间':obj.oTime!=''&&!language?'Please choose the appointment time':obj.oTime}}>"
       bind:click='getTime'
   />
     <van-cell
       required
       icon="friends"
-      title="服务类型"
-      value="{{obj.oType==''?'请选择服务类行':obj.oType}}>"
+      title="{{language?'服务类型':'Service type'}}"
+      value="{{obj.oType==''&&language?'请选择服务类行':obj.oType!='Please select the service line'&&!language?'':obj.oType}}>"
       bind:click='getType'
   />
 </van-cell-group>
 <van-cell-group>
   <van-field
     value="{{ obj.oRemark }}"
-    label="留言"
+    label="{{language?'留言':'message'}}"
     type="textarea"
-    placeholder="请输入留言"
+    placeholder="{{language?'请输入留言':'Please enter a message'}}"
     bind:change='leMessage'
     autosize
     border="{{ false }}"
@@ -89,11 +89,11 @@
 
   <van-picker
   show-toolbar
-  title="请选择服务类行"
+  title="{{language?'请选择服务类行':'Please select the service line'}}"
   columns="{{ serveType }}"
   bind:cancel="onCancelServeType"
   bind:confirm="onChangeServeType"
 />
 </van-popup>
 
-<van-button size="large" type="primary" bindtap='makeAppointment'>立即预约</van-button>
+<van-button size="large" type="primary" bindtap='makeAppointment'>{{language?'立即预约':'Immediate appointment'}}</van-button>

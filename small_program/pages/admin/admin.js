@@ -21,11 +21,28 @@ Page({
       title: '正在加载数据...',
       mask:true
     });
+    if (wx.getStorageSync('language')) {
+      if (wx.getStorageSync('language').language) {
+        this.setData({
+          language: true
+        })
+      } else {
+        this.setData({
+          language: false
+        });
+        console.log(wx.getStorageSync('language'))
+      }
+    } else {
+      this.setData({
+        language: false
+      });
+      console.log(wx.getStorageSync('language'))
+    }
     if(wx.getStorageSync("user")){
       wx.hideLoading();
       Dialog.confirm({
-        title: '登录提示',
-        message: '是否继续登录'+wx.getStorageSync('user').username
+        title: this.data.language ? '登录提示' :'Login prompt',
+        message: this.data.language ? '是否继续登录' :'Do you want to continue login?'+wx.getStorageSync('user').username
       }).then(() => {
         wx.navigateTo({
           url: '/pages/adminList/adminList',

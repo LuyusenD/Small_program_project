@@ -96,6 +96,28 @@ Page({
        console.log(wx.getStorageSync('openid'))
        console.log('本地有openid')
      }
+     if (!wx.getStorageSync('Serve')) {
+       // 获取code
+       var opt = {
+         url: url.url + 'buff',
+         method: "GET",
+         header: {
+           "content-type": "application/json"
+         },
+         data: {},
+       };
+       url.ajax(opt)
+         .then((res) => {
+           if (res.code == 200) {
+             wx.setStorageSync("Serve", res.data)
+           } else {
+             console.log('获取Serve失败')
+           }
+         })
+     } else {
+       console.log(wx.getStorageSync('Serve'))
+       console.log('本地有Serve')
+     }
    },
   getOpenid(code){
     var opt={
