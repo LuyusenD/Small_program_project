@@ -83,7 +83,11 @@ router.post('/login',(req,res) => {
     })
   })
   .then(v => {
+<<<<<<< Updated upstream
     let {id,username} = v
+=======
+    console.log(v.id)
+>>>>>>> Stashed changes
     let sql = `UPDATE admin SET ip = ?, login = ? WHERE id = ?;`
 
     pool.query(sql,[ip,1,id],(err,result) => {
