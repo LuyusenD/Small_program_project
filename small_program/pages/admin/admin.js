@@ -18,7 +18,7 @@ Page({
    */
   onLoad: function (options) {
     wx.showLoading({
-      title: '正在加载数据...',
+      title: this.data.language ?'正在加载数据...':'Loading...',
       mask:true
     });
     if (wx.getStorageSync('language')) {
@@ -151,20 +151,20 @@ Page({
     };
     if(this.data.uname==''){
       wx.showToast({
-        title: '亲，请输入账号哦！',
+        title: this.data.language ? '亲，请输入账号哦！' :'Kind, please enter the account number!',
         icon:'none'
       });
       return;
     }
     if(this.data.paddword==''){
       wx.showToast({
-        title: '亲，请输入密码哦！',
+        title: this.data.language ? '亲，请输入密码哦！' :'Kind, please enter the password!',
         icon:'none'
       });
       return;
     }
     wx.showLoading({
-      title: '正在加载..',
+      title: this.data.language ?'正在加载..':'Loading...',
       mask: true
     })
     url.ajax(opt)
@@ -173,7 +173,7 @@ Page({
         console.log(res)
         if(res.code==200){
           wx.showToast({
-            title: '登录成功!',
+            title: this.data.language ? '登录成功!' :'Login successfully!',
             icon:'success'
           });
           wx.setStorageSync('user', res.data);
@@ -190,7 +190,7 @@ Page({
          },1000)
         }else if(res.code==401){
           Dialog.alert({
-            title: '提示',
+            title: this.data.language ? '提示' :'Tips',
             message: res.msg
           }).then(() => {
             // on close
@@ -200,8 +200,12 @@ Page({
   },
   // 忘记密码
   forgetPassword(){
-    wx.navigateTo({
-      url: '/pages/forgetPassword/forgetPassword',
+    // wx.navigateTo({
+    //   url: '/pages/forgetPassword/forgetPassword',
+    // })
+    wx.showToast({
+      title: this.data.language ? '请联系管理员!' :'Please contact the administrator',
+      icon:'none'
     })
   },
   // 退出登录
@@ -221,14 +225,12 @@ Page({
     url.ajax(opt)
       .then((res) => {
         if (res.code == 200) {
-          setTimeout(() => {
             wx.removeStorage({
               key: 'user',
               success(res) {
                 console.log(res)
               }
-            })
-          }, 1000)
+            }) 
         }
       })
   }

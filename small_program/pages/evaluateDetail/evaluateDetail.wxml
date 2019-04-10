@@ -1,0 +1,16 @@
+<!--pages/evaluateDetail/evaluateDetail.wxml-->
+<view class="box"  bindtap='jump' data-url='/pages/order details/order details'>
+  <image src='{{list.img}}' class='img_1'></image>
+  <text class='txt1'>{{list.oType}}<text class='txt3'>未评价</text></text>
+  <text class='txt2'>于 {{list.oName}} 完成消费</text>
+   <view class='contion'>
+    <textarea placeholder='请输入你的宝贵意见！' value='{{content}}' bindinput='textValue' class='textarea'>
+    </textarea>
+      <view style='width:90%;margin:0 auto' class='flex'>
+        <text>打分</text><van-rate style='width:40%' value="{{value}}" bind:change="onChange" />
+      </view>
+   </view> 
+    <view class='button'>
+      <van-button bindtap='sub' round type="danger">提交评价</van-button>
+    </view>
+</view>

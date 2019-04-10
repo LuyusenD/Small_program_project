@@ -38,10 +38,10 @@ Page({
    */
   onLoad: function (options) {
   // 页面加载获取所有服务类型
-    if (wx.getStorageSync('Serve') && wx.getStorageSync('State')) {
+    if (wx.getStorageSync('Serve')) {
       // 本地缓存已有数据
       var serveType=[];
-      var arr = wx.getStorageSync('Serve');
+      var arr = wx.getStorageSync('Serve').serve;
       for (var i = 0; i < arr.length;i++){
         serveType.push(arr[i].name)
       }
@@ -139,7 +139,9 @@ Page({
           wx.hideLoading();
           wx.setStorageSync('Serve', res.data)
           var serveType = [];
-          var arr = wx.getStorageSync('Serve');
+          var arr = wx.getStorageSync('Serve').serve;
+          console.log(arr)
+          console.log('_________')
           for (var i = 0; i < arr.length; i++) {
             serveType.push(arr[i].name)
           }
@@ -250,8 +252,8 @@ Page({
   // 选择服务变动时
   onChangeServeType(e){
     console.log(e)
-    var serveType = wx.getStorageSync('Serve')[e.detail.index].name;
-    console.log(wx.getStorageSync('Serve')[e.detail.index]);
+    var serveType = wx.getStorageSync('Serve').serve[e.detail.index].name;
+    console.log(wx.getStorageSync('Serve').serve[e.detail.index]);
     var obj= {
       oTel: this.data.obj.oTel,
       oAddress: this.data.obj.oAddress,
@@ -259,7 +261,7 @@ Page({
       oTime: this.data.obj.oTime,
       oRemark: this.data.obj.oRemark,
       openId: this.data.obj.openId,
-      oTypeIndex:wx.getStorageSync('Serve')[e.detail.index].id,
+      oTypeIndex: wx.getStorageSync('Serve').serve[e.detail.index].id,
       oName: this.data.obj.oName
     };
     this.setData({
@@ -350,24 +352,22 @@ Page({
   makeAppointment(){
     // 判断是否为空
     // 修改服务类型
-    console.log('1')
-    console.log(this.data.obj)
+  
     var arr = JSON.parse(JSON.stringify(this.data.obj));
-    arr.oType = this.data.obj.oTypeIndex;
-    arr.oTime=new Date().getTime();
-    arr.openId= wx.getStorageSync("openid").openid,
-    console.log('2')
-    console.log(this.data.obj)
-    console.log('arr')
+    arr.openId = wx.getStorageSync("openid").openid,
     console.log(arr)
-
     if (arr.oTel != '' && arr.oAddress != '' && arr.oType != '' && arr.openId != '' && arr.oName!=''){
       if ((/^1[34578]\d{9}$/.test(arr.oTel))){
         console.log("______________________")
         wx.showLoading({
           title: '正在预约..',
           mask:true
-        })
+        });
+        console.log(this.data.obj)
+        arr.oType = this.data.obj.oTypeIndex;
+        arr.oTime = new Date().getTime();
+        console.log(this.data.obj)
+        console.log(arr)
         var opt = {
           url: url.url + 'order/addOrder',
           method: "POST",
@@ -406,8 +406,6 @@ Page({
         title: '亲。请完善基本信息！',
         icon: 'none'
       });
-      console.log('3')
-      console.log(this.data.obj)
     }
   }
 })

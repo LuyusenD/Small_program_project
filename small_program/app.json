@@ -17,7 +17,8 @@
     "pages/adminSetPaddword/adminSetPassword",
     "pages/forgetPassword/forgetPassword",
     "pages/evaluate/evaluate",
-    "pages/orderListDetail/orderListDetail"
+    "pages/orderListDetail/orderListDetail",
+    "pages/evaluateDetail/evaluateDetail"
   ],
   "permission": {
     "scope.userLocation": {

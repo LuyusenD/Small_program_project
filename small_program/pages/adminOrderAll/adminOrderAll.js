@@ -116,11 +116,15 @@ Page({
         wx.hideLoading();
         if (res.code == 200) {
           if (res.data) {
-            var oType = wx.getStorageSync("Serve");
-            for (var i = 0; i < oType.length;i++){
-              for (var j = 0; j < res.data.data.length;j++){
-                if (res.data.data[j].oType==oType[i].id){
-                  res.data.data[j].oType = oType[i].name
+            var arr = wx.getStorageSync('Serve').serve;
+            console.log(res.data.data.length)
+            console.log(arr)
+            for (var i = 0; i < arr.length; i++) {
+              for (var j = 0; j < res.data.data.length; j++) {
+                if (res.data.data[j].oType == arr[i].id) {
+                  res.data.data[j].oType = arr[i].name;
+                  res.data.data[j].img = 'http://' + arr[i].icon;
+                  continue;
                 }
               }
             }

@@ -30,5 +30,8 @@
           </navigator>
         </view>
       </view>
-      <view class='tac lh80 col9' wx:if='{{list.length<=0}}'>暂无更多数据</view>
+      <view class='center' wx:if="{{list.length<=0}}">
+        <image src='/image/noOrder.png' style='width:50px;height:50px'></image>
+        <!-- <view>还没有已完成订单呢</view> -->
+      </view>
     </view>

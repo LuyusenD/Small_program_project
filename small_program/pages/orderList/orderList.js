@@ -16,6 +16,7 @@ Page({
     page:1,
     // 当前页数显示个数
     pageSize:6,
+    language:true
   },
 
   /**
@@ -36,7 +37,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    if (wx.getStorageSync('language')) {
+      if (wx.getStorageSync('language').language) {
+        this.setData({
+          checked: true
+        })
+      } else {
+        this.setData({
+          checked: false
+        });
+        console.log(wx.getStorageSync('language'))
+      }
+    } else {
+      this.setData({
+        checked: false
+      });
+      console.log(wx.getStorageSync('language'))
+    }
   },
 
   /**
@@ -65,7 +82,7 @@ Page({
    */
   onReachBottom: function () {
     wx.showLoading({
-      title: '正在加载数据...',
+      title: this.data.language?'正在加载数据...':'Loading...',
       mask: true
     });
     console.log(this.data.orderList.length / this.data.pageSize)
@@ -80,7 +97,7 @@ Page({
           order: this.nextData(this.data.orderList, this.data.pageSize, this.data.page)
         });
         wx.showToast({
-          title: '订单刷新成功',
+          title: this.data.language ? '订单刷新成功' :'Successful order refresh',
           icon:'success'
         })
       }, 1500)
@@ -88,7 +105,7 @@ Page({
       setTimeout(() => {
         wx.hideLoading();
         wx.showToast({
-          title: '亲,没有更多订单了!',
+          title: this.data.language ? '亲,没有更多订单了!' :'No more orders, dear!',
           icon: 'none'
         })
       }, 1500)
@@ -104,7 +121,7 @@ Page({
   // 获取用户所有订单
   getOrderList(){
     wx.showLoading({
-      title: '正在加载数据...',
+      title: this.data.language?'正在加载数据...':'Loading...',
       mask:true
     })
     var opt={
@@ -120,9 +137,11 @@ Page({
         if(res.code==200){
           if(res.data){
             var arr = wx.getStorageSync('Serve').serve;
+            console.log(res.data.data.length)
+            console.log(arr)
             for (var i = 0; i < arr.length; i++) {
               for (var j = 0; j < res.data.data.length; j++) {
-                if (res.data.data[j].oType = arr[i].id) {
+                if (res.data.data[j].oType == arr[i].id) {
                   res.data.data[j].oType = arr[i].name;
                   res.data.data[j].img ='http://'+arr[i].icon;
                   continue;
@@ -135,7 +154,7 @@ Page({
             })
           }else{
             wx.showToast({
-              title: '你还没有订单，快起下单吧！',
+              title: this.data.language ? '你还没有订单，快起下单吧！' : 'You havent ordered yet.Quickly place your order.',
               icon: 'none'
             });
             this.setData({
@@ -145,7 +164,7 @@ Page({
           }
         }else{
           wx.showToast({
-            title: '获取订单信息失败,请稍后重试...',
+            title: this.data.language ? '获取订单信息失败,请稍后重试...' :'Failed to obtain order information. Please try again later.',
             icon:'none'
           })
         }
@@ -176,8 +195,8 @@ Page({
     var oId = e.currentTarget.dataset.value.oId;
     console.log(oId);
     Dialog.confirm({
-      title: '提示',
-      message: '你确定要删除该订单吗?'
+      title: this.data.language ? '提示' :'Tips',
+      message: this.data.language ? '你确定要删除该订单吗?' :'Are you sure you want to delete the order?'
     }).then(() => {
       var opt={
         url: url.url +'order/delorder',
@@ -193,7 +212,7 @@ Page({
         .then((res)=>{
           if(res.code==200){
             Dialog.alert({
-              message: '删除成功'
+              message: this.data.language ? '删除成功' :'Delete successful'
             }).then(() => {
               // on close
               _this.getOrderList();

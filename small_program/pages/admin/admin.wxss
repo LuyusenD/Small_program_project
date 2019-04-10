@@ -271,7 +271,7 @@ button::after {
   text-align: right;
   float: right;
   font-size: 12px;
-  margin-top:420rpx;
+  margin-top:440rpx;
   margin-bottom:10rpx;
   color: gray
 }

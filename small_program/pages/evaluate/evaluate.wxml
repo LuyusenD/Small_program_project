@@ -1,2 +1,12 @@
 <!--pages/evaluate/evaluate.wxml-->
-<text>pages/evaluate/evaluate.wxml</text>
+<block wx:for="{{order}}" wx:key="{{index}}">
+  <view class="box" wx:if="{{!item.evaluate&&item.oState>=2}}" data-url="{{'/pages/evaluateDetail/evaluateDetail?oId='+item.oId}}" bindtap='jump'>
+    <image src="{{item.img}}" class='img_1'></image>
+    <text class='txt1'>{{item.oType}}<text class='txt3'>未评价</text></text>
+    <text class='txt2'> {{item.oState==1?"未支付":item.oState==2?"已支付":item.oState==3?"执行中":"已完成"}}</text>
+  </view>
+</block>
+<view class='center' wx:if="{{order.length<=0}}">
+    <image src='/image/noOrder.png' style='width:50px;height:50px'></image>
+    <!-- <view>还没有已完成订单呢</view> -->
+</view>

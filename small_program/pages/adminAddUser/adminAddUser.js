@@ -8,7 +8,8 @@ Page({
    */
   data: {
     username:"",
-    password:''
+    password:'',
+    language:true
   },
 
   /**
@@ -29,7 +30,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (wx.getStorageSync('language')) {
+      if (wx.getStorageSync('language').language) {
+        this.setData({
+          language: true
+        })
+      } else {
+        this.setData({
+          language: false
+        });
+        console.log(wx.getStorageSync('language'))
+      }
+    } else {
+      this.setData({
+        language: false
+      });
+      console.log(wx.getStorageSync('language'))
+    }
   },
 
   /**
@@ -83,7 +100,7 @@ Page({
   // iocn 图标
   onClickIcon(){
     wx.showToast({
-      title: '用于登录后台的账号!',
+      title: this.data.language ? '用于登录后台的账号!' :'Account used to log in to the background',
       icon:'none'
     })
   },
@@ -108,7 +125,7 @@ Page({
           console.log(res);
           if(res.code==200){
             wx.showToast({
-              title: '注册成功！',
+              title:this.data.language? '注册成功！':'Successful registration!',
               icon:'success'
             })
             this.setData({
@@ -128,7 +145,7 @@ Page({
         })
     }else{
       wx.showToast({
-        title: '请先输入用户名和密码！',
+        title: this.data.language ? '请先输入用户名和密码！' :'Successful registration! Please enter your username and password first!',
         icon:'none'
       })
     }

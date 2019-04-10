@@ -46,7 +46,7 @@
           </view>
         </view>
       </view>
-      <view class="flex_sb ptb30 bdt" wx:if='{{info.discount_money==0}}'>
+      <view class="flex_sb ptb30 bdt" wx:if='{{list.oState>1}}'>
         <text>共11件商品</text>
         <text class="color2">￥{{info.total_price}}</text>
       </view>
@@ -65,21 +65,8 @@
         </view>
       </view>
     </view>
-    <view class="bw plr30 border-r1 mt30" wx:if='{{info.status==2}}'>
-      <navigator url='/pages/coupons/coupons?pay=1' class="flex_sb lh90 bdb">
-        <text>优惠券</text>
-        <view class="arrow_right flex_a ml20">
-          <text class="mr20 font15 color2">11</text>
-          <image src='/img/arrow_right_h.png' mode="widthFix"></image>
-        </view>
-      </navigator>
-      <view class="lh100 tae">
-        <text>已优惠11元</text>
-        <text class="ml30">小计<text class="color2 font17">￥{{(info.total_price-coupon_money)>0?(info.total_price-coupon_money):0}}</text></text>
-      </view>
-    </view>
   </view>
-  <view class="plr40 mt60 pb20" wx:if='{{info.status==2}}'>
+  <view class="plr40 mt60 pb20" wx:if='{{list.oState==1}}'>
     <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" bindtap='replenishment'>立即支付</view>
   </view>
 </view>

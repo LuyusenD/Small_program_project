@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "订单评价",
+  "usingComponents": {
+    "van-rate": "/vant-weapp/dist/rate/index",
+    "van-button": "/vant-weapp/dist/button/index"
+  }
+}

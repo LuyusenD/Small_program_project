@@ -81,44 +81,49 @@ Page({
        console.log(wx.getStorageSync('logs'))
        console.log('用户已授权')
      }
-     if (!wx.getStorageSync('openid')) {
-       // 获取code
-       wx.login({
-         success: function (res) {
-           if (res.code) {
-             _this.getOpenid(res.code)
-           } else {
-             console.log('登录失败！' + res.errMsg)
-           }
-         }
-       });
-     } else {
-       console.log(wx.getStorageSync('openid'))
-       console.log('本地有openid')
-     }
-     if (!wx.getStorageSync('Serve')) {
-       // 获取code
-       var opt = {
-         url: url.url + 'buff',
-         method: "GET",
-         header: {
-           "content-type": "application/json"
-         },
-         data: {},
-       };
-       url.ajax(opt)
-         .then((res) => {
-           if (res.code == 200) {
-             wx.setStorageSync("Serve", res.data)
-           } else {
-             console.log('获取Serve失败')
-           }
-         })
-     } else {
-       console.log(wx.getStorageSync('Serve'))
-       console.log('本地有Serve')
-     }
+     _this.isOpenid();
+     _this.getServe();
    },
+  //  判断本地是否有openid
+  isOpenid(){
+    var _this=this;
+    if (!wx.getStorageSync('openid')) {
+      // 获取code
+      wx.login({
+        success: function (res) {
+          if (res.code) {
+            _this.getOpenid(res.code)
+          } else {
+            console.log('登录失败！' + res.errMsg)
+          }
+        }
+      });
+    } else {
+      console.log(wx.getStorageSync('openid'))
+      console.log('本地有openid')
+    }
+  },
+  // 获取服务
+  getServe(){
+      // 获取serve
+      var opt = {
+        url: url.url + 'buff',
+        method: "GET",
+        header: {
+          "content-type": "application/json"
+        },
+        data: {},
+      };
+      url.ajax(opt)
+        .then((res) => {
+          if (res.code == 200) {
+            wx.setStorageSync("Serve", res.data)
+          } else {
+            console.log('获取Serve失败')
+          }
+        })
+
+  },
   getOpenid(code){
     var opt={
       url: url.url + 'user/getopenid',

@@ -5,7 +5,7 @@ const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
-function toDate(number) {
+function toDate(number) { 
 
   var n = number * 1000;
 

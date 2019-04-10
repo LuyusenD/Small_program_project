@@ -154,3 +154,15 @@ margin: 40rpx auto;
 .goods .goods_item + .goods_item {
     border-top: 1px solid #e5e5e5;
 }
+.center{
+  width: 13 0px;
+  height: 120px;
+  position: absolute;
+  top:0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  font-size: 14px;
+  text-align: center;
+}

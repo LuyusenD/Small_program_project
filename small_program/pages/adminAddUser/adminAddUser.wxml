@@ -4,9 +4,9 @@
     value="{{ username }}"
     required
     clearable
-    label="用户名"
+    label="{{language?'用户名':'User name'}}"
     icon="question-o"
-    placeholder="请输入用户名"
+    placeholder="{{language?'请输入用户名':'enter one user name'}}"
     bind:input='getUserName'
     bind:click-icon="onClickIcon"
   />
@@ -14,13 +14,13 @@
   <van-field
     value="{{ password }}"
     type="password"
-    label="密码"
-    placeholder="请输入密码"
+    label="{{language?'密码':'Password'}}"
+    placeholder="{{language?'请输入密码':'Please input a password'}}"
     required
     bind:input='getPassword'
     border="{{ false }}"
   />
 </van-cell-group>
 <view style='width:88%;margin:200rpx auto'>
-  <van-button size="large" type="primary" bindtap='register'>注册</van-button>
+  <van-button size="large" type="primary" bindtap='register'>{{language?'注册':'register'}}</van-button>
 </view>

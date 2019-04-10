@@ -1,18 +1,18 @@
 <!--pages/addServe/addServe.wxml-->
 <view style='height:50rpx;'></view>
 <view class='ioic'>
-  <text>上传icon</text>
+  <text>{{language?'上传icon':'upload icon'}}</text>
   <image bindtap='base64' src="{{img=='/image/add.png'?img:'http://'+img}}"></image>
 </view>
 <van-cell-group>
   <van-field
     value="{{ oType }}"
     type="text"
-    label="服务类型"
-    placeholder="请输入要添加的服务类型"
+    label="{{language?'服务类型':'Service type'}}"
+    placeholder="{{language?'请输入要添加的服务类型':'Please enter the type of service you want to add'}}"
     bind:input='getoType'
     border="{{ false }}"
   />
 </van-cell-group>
 <view style='height:100rpx;'></view>
-<van-button size="large" bindtap='addoType' type='primary'>添加服务</van-button>
+<van-button size="large" bindtap='addoType' type='primary'>{{language?'添加服务':'Add service'}}</van-button>

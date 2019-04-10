@@ -1,0 +1,59 @@
+/* pages/evaluateDetail/evaluateDetail.wxss */
+.box{margin:30rpx 0rpx;overflow:hidden;}
+.img_1{width: 150rpx;height: 150rpx;display: block;float:left; margin:0 50rpx; filter:brightness(70%);}
+.txt1{font-size:16px;color:#303030;display: block; margin: 25rpx 0;}
+.txt2{font-size: 12px;color:#ababab;display: block; margin: 20rpx 0;}
+.txt3{font-size: 12px;color: #b2d98e;float: right;margin: 0 40rpx;}
+.textarea{
+  display: inline-block;
+  font-size: 14px;
+  margin-top:50rpx;
+  width: 90%;
+  border: 1px solid #ababab;
+  margin-left:5% 
+}
+.contion{
+  width: 100%;
+  margin: 0 auto;
+}
+.textarea-placeholder{
+  margin-left: 20rpx;
+}
+.l-evalbox{
+    height: 100rpx;
+    padding: 0 3%;
+    margin-top: 10rpx;
+    background: #FFF;
+    line-height: 100rpx;
+}
+.l-evaltxt{
+    width: 120rpx;
+    display: block;
+    font-size: 26rpx;
+    color: #666666;
+}
+.l-evalist .icon{
+    background-position:  -77rpx -246rpx;
+    width: 40rpx;
+    height: 43rpx;
+    margin-right: 30rpx;
+}
+.l-evalist .cur{
+    background-position:  -128rpx -246rpx;
+}
+.l-evalist .icon:last-child{
+    margin: 0;
+}
+.flex{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap:nowrap; 
+  height:100rpx;
+  font-size: 14px;
+  line-height:100rpx
+}
+.button{
+  width: 100%;
+  margin:100rpx auto;
+  text-align: center
+}

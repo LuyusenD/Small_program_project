@@ -7,7 +7,8 @@ Page({
    */
   data: {
     oType:'',
-    img:'/image/add.png'
+    img:'/image/add.png',
+    language:true
   },
 
   /**
@@ -28,7 +29,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (wx.getStorageSync('language')) {
+      if (wx.getStorageSync('language').language) {
+        this.setData({
+          language: true
+        })
+      } else {
+        this.setData({
+          language: false
+        });
+        console.log(wx.getStorageSync('language'))
+      }
+    } else {
+      this.setData({
+        language: false
+      });
+      console.log(wx.getStorageSync('language'))
+    }
   },
 
   /**
@@ -82,6 +99,7 @@ Page({
       }
       var opt={
         url: url.url +"buff/addserve",
+        method:"POST",
         header: {
           "content-type": "application/x-www-form-urlencoded"
         },
@@ -156,24 +174,30 @@ Page({
       count: 1,
       success: (res) => {
         const tempFilePaths = res.tempFilePaths;
-        var base64 = wx.arrayBufferToBase64(tempFilePaths);
-        console.log(base64);
+        console.log(wx.getFileSystemManager().readFileSync(res.tempFilePaths[0], "base64"))
+        // var base64 = wx.arrayBufferToBase64(tempFilePaths);
+        // console.log(base64);
         // console.log(res)
-        console.log(tempFilePaths[0])
-        wx.request({
-          url: tempFilePaths[0],
-          method: 'GET',
-          responseType: 'arraybuffer',
-          success: function (res) {
-            var base64 = 'data:image/jpg;base64,'+wx.arrayBufferToBase64(res.data);
-            wx.showLoading({
-              title: '正在上传图片',
-              mask:true
-            })
-            _this.uploadImg(base64)
-          }
-        });
-       
+        // console.log(tempFilePaths[0])
+        // wx.request({
+        //   url: tempFilePaths[0],
+        //   method: 'GET',
+        //   responseType: 'arraybuffer',
+        //   success: function (res) {
+        //     var base64 = 'data:image/jpg;base64,'+wx.arrayBufferToBase64(res.data);
+        //     wx.showLoading({
+        //       title: '正在上传图片',
+        //       mask:true
+        //     })
+        //     _this.uploadImg(base64)
+        //   }
+        // });
+        var base64 = 'data:image/jpg;base64,' + wx.getFileSystemManager().readFileSync(res.tempFilePaths[0], "base64");
+        wx.showLoading({
+          title: '正在上传图片',
+          mask: true
+        })
+        _this.uploadImg(base64)
       }
     })
   },

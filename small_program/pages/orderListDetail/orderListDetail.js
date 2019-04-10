@@ -91,15 +91,16 @@ Page({
       .then((res)=>{
         wx.hideLoading();
         if (res.code==200){
+          
           console.log(res.data.data[0].createTime)
           var createTime = parseInt(res.data.data[0].createTime)
           res.data.data[0].createTime = res.data.data[0].createTime==0?'无': url.formatTime(createTime, 'Y-M-D h:m:s');
           var arr = wx.getStorageSync('Serve').serve;
-      
-            for (var j = 0; j < res.data.data.length; j++) {
-              if (res.data.data[0].oType = arr[j].id) {
+            for (var j = 0; j < arr.length; j++) {
+              if (res.data.data[0].oType == arr[j].id) {
                 res.data.data[0].oType = arr[j].name;
                 res.data.data[0].img = 'http://' + arr[j].icon;
+                console.log('http://' + arr[j].icon)
                 continue;
               }
           }

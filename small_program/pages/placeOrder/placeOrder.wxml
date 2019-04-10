@@ -27,21 +27,28 @@
       required
       icon="location"
       title="{{language?'预约地址':'Reservation address'}}"
-      value="{{obj.oAddress==''&&language?'请选择预约地址':obj.oAddress!=''&&!language?'Please choose the reservation address':obj.oAddress}}>"
+      value="{{obj.oAddress==''&&language?'请选择预约地址':obj.oAddress==''&&!language?'Please choose the reservation address':obj.oAddress}}>"
       bind:click='getAddress'
   />
     <van-cell
       required
       icon="clock"
       title="{{language?'预约时间':'Time of appointment'}}"
-      value="{{obj.oTime==''&&language?'请选择预约时间':obj.oTime!=''&&!language?'Please choose the appointment time':obj.oTime}}>"
+      value="{{obj.oTime==''&&language?'请选择预约时间':obj.oTime==''&&!language?'Please choose the appointment time':obj.oTime}}>"
       bind:click='getTime'
   />
     <van-cell
       required
       icon="friends"
       title="{{language?'服务类型':'Service type'}}"
-      value="{{obj.oType==''&&language?'请选择服务类行':obj.oType!='Please select the service line'&&!language?'':obj.oType}}>"
+      value="{{obj.oType==''&&language?'请选择服务类行':obj.oType==''&&!language?'Please select the service line':obj.oType}}>"
+      bind:click='getType'
+  />
+    <van-cell
+      required
+      icon="friends"
+      title="{{language?'服务类型':'Service type'}}"
+      value="{{obj.oType==''&&language?'请选择服务类行':obj.oType==''&&!language?'Please select the service line':obj.oType}}>"
       bind:click='getType'
   />
 </van-cell-group>
