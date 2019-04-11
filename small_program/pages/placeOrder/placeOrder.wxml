@@ -96,11 +96,15 @@
 
   <van-picker
   show-toolbar
-  title="{{language?'请选择服务类行':'Please select the service line'}}"
+  title="{{language?'请选择服务车辆':'Please select the service vehicle'}}"
   columns="{{ serveType }}"
   bind:cancel="onCancelServeType"
   bind:confirm="onChangeServeType"
 />
 </van-popup>
-
-<van-button size="large" type="primary" bindtap='makeAppointment'>{{language?'立即预约':'Immediate appointment'}}</van-button>
+<van-submit-bar
+  price="{{ price }}"
+  button-text="{{language?'立即预约':'Immediate appointment'}}"
+  bind:submit="makeAppointment"
+/>
+<!-- <van-button size="large" type="primary" bindtap='makeAppointment'>{{language?'立即预约':'Immediate appointment'}}</van-button> -->

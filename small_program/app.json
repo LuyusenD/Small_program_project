@@ -18,7 +18,8 @@
     "pages/forgetPassword/forgetPassword",
     "pages/evaluate/evaluate",
     "pages/orderListDetail/orderListDetail",
-    "pages/evaluateDetail/evaluateDetail"
+    "pages/evaluateDetail/evaluateDetail",
+    "pages/adminAddCar/adminAddCar"
   ],
   "permission": {
     "scope.userLocation": {

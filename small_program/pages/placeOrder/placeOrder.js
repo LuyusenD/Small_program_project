@@ -10,6 +10,7 @@ Page({
     phoneerr:'',
     // 底部弹框
     show: false,
+    showCar:false,
     // 时间底部弹框
     time:false,
     // 服务类型
@@ -278,6 +279,10 @@ Page({
   // 控制底部弹框
   onClose() {
     this.setData({ show: false });
+  },
+  // 控制底部弹框
+  onCloseCar() {
+    this.setData({ showCar: false });
   },
   // 留言触发事件
   leMessage(e){

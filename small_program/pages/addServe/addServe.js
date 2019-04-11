@@ -148,16 +148,7 @@ Page({
       .then((res) => {
         if (res.code == 200) {
           wx.hideLoading();
-          wx.setStorageSync('Serve', res.data.serve)
-          wx.setStorageSync('State', res.data.state)
-          var serveType = [];
-          var arr = wx.getStorageSync('Serve');
-          for (var i = 0; i < arr.length; i++) {
-            serveType.push(arr[i].name)
-          }
-          this.setData({
-            serveType
-          });
+          wx.setStorageSync('Serve', res.data)
         } else {
           wx.hideLoading();
           wx.showToast({
