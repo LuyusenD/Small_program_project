@@ -20,6 +20,16 @@
     bind:input='getPassword'
     border="{{ false }}"
   />
+
+  <van-field
+    value="{{ email}}"
+    type="email"
+    label="{{ language?'邮件':'Email' }}"
+    placeholder="{{ language?'Please enter your mailbox':'Please enter your mailbox' }}"
+    required
+    bind:input='getEmail'
+    border="{{ false }}"
+  />
 </van-cell-group>
 <view style='width:88%;margin:200rpx auto'>
   <van-button size="large" type="primary" bindtap='register'>{{language?'注册':'register'}}</van-button>

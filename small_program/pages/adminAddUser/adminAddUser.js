@@ -9,6 +9,7 @@ Page({
   data: {
     username:"",
     password:'',
+    email:'',
     language:true
   },
 
@@ -97,6 +98,13 @@ Page({
       password: e.detail
     })
   },
+  // email
+  getEmail(e){
+    console.log(e)
+    this.setData({
+      email: e.detail
+    })
+  },
   // iocn 图标
   onClickIcon(){
     wx.showToast({
@@ -116,10 +124,20 @@ Page({
         adminId: wx.getStorageSync('user').id,
         adminName: wx.getStorageSync('user').username,
         username: this.data.username,
-        password: this.data.password
+        password: this.data.password,
+        email: this.data.email
       }
     };
-    if(this.data.username&&this.data.password){
+    var re = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/; 
+    console.log(re.test(this.data.email));
+    if (this.data.username && this.data.password && this.data.email){
+      if (!re.test(this.data.email)){
+        wx.showToast({
+          title: this.data.language ? '请输入正确的邮箱?' : 'Please enter the correct mailbox?',
+          icon:'none'
+        })
+        return;
+      }
       url.ajax(opt)
         .then((res)=>{
           console.log(res);

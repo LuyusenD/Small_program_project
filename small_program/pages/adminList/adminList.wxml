@@ -48,7 +48,6 @@
     </view>
   </view>
 </view>
-<view style='height:50rpx'></view>
 <view style='width:80%;margin:0 auto;'>
   <van-button size="large" round  type="danger" bindtap='isloginOut'>{{language?'退出登录':'Logout'}}</van-button>
 </view>
