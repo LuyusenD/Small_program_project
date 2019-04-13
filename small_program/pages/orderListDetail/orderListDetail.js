@@ -104,6 +104,16 @@ Page({
                 continue;
               }
           }
+          var arr1 = wx.getStorageSync('Serve').vehicle;
+          for (var i = 0; i < arr1.length; i++) {
+            for (var j = 0; j < res.data.data.length; j++) {
+              if (res.data.data[j].oVehicle == arr1[i].id) {
+                res.data.data[j].oVehicle = arr1[i].name;
+                res.data.data[j].price = arr1[i].money;
+                continue;
+              }
+            }
+          }
           _this.setData({
             list:res.data.data[0]
           })

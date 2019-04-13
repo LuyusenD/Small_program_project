@@ -37,9 +37,10 @@
           </view>
           <view class="ml20 flex1">
             <view class="font15 fw">服务类型 ： {{list.oType}}</view>
+            <!-- <view class="font15 fw">服务车型 ： {{list.vehicle}}</view> -->
             <view class="mt20 color2 fw flex_sb">
               <view>
-                ￥<text class="font17 mr10">1</text>x1
+                ￥<text class="font17 mr10">{{list.price}}</text>x1
               </view>
               <navigator url='/pages/feedback/feedback' class='feedback' wx:if='{{index==0}}'>意见反馈</navigator>
             </view>
@@ -50,17 +51,17 @@
         <text>共11件商品</text>
         <text class="color2">￥{{info.total_price}}</text>
       </view>
-      <view class="flex_sb ptb30 bdt" wx:else>
+      <view class="flex_sb ptb30 bdt" wx:if='{{list.oState>1}}'>
         <view>
           <view>共1件商品</view>
-          <view>优惠金额:11元</view>
+          <view>优惠金额:0元</view>
         </view>
         <view>
           <view>共计：
-            <text class="color2">11元</text>
+            <text class="color2">{{list.price}}元</text>
           </view>
           <view>实付：
-            <text class="color2">11元</text>
+            <text class="color2">{{list.price}}元</text>
           </view>
         </view>
       </view>

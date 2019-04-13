@@ -10,11 +10,12 @@ Page({
     phoneerr:'',
     // 底部弹框
     show: false,
-    showCar:false,
+    vehicle:false,
     // 时间底部弹框
     time:false,
     // 服务类型
     serveType:[],
+    ServeVehicle:[],
     obj:{
       oTel: '',
       oAddress:'',
@@ -23,8 +24,12 @@ Page({
       oRemark:'',
       openId:'',
       oTypeIndex:1,
-      oName:''
-    },    
+      oName:'',
+      oVehicle:'',
+      oVehicleIndex: 1,
+    },  
+      //价格
+    price:0, 
     minHour: 10,
     maxHour: 20,
     minDate: new Date().getTime(),
@@ -42,14 +47,21 @@ Page({
     if (wx.getStorageSync('Serve')) {
       // 本地缓存已有数据
       var serveType=[];
+      var ServeVehicle=[];
       var arr = wx.getStorageSync('Serve').serve;
       for (var i = 0; i < arr.length;i++){
         serveType.push(arr[i].name)
       }
+      var arr1 = wx.getStorageSync('Serve').vehicle;
+      for (var i = 0; i < arr1.length;i++){
+        ServeVehicle.push(arr1[i].name)
+      }
       this.setData({
-        serveType
+        serveType,
+        ServeVehicle
       });
       console.log(this.data.serveType)
+      console.log(this.data.ServeVehicle)
     } else {
       this.getServeType();
     }
@@ -123,6 +135,15 @@ Page({
     // event.detail 为当前输入的值
     console.log(event.detail);
   },
+  // 点击车型
+  getVehicle(){
+    console.log('-')
+    this.setData({
+      vehicle: !this.data.vehicle,
+      time: false,
+      show: false
+    })
+  },
   // 获取服务类型
   getServeType(){
     wx.showLoading({
@@ -187,7 +208,9 @@ Page({
                 oRemark: that.data.obj.oRemark,
                 openId: that.data.obj.openId,
                 oTypeIndex: that.data.obj.oTypeIndex,
-                oName: that.data.obj.oName
+                oName: that.data.obj.oName,
+                oVehicle: that.data.obj.oVehicle,
+                oVehicleIndex: that.data.obj.oVehicleIndex
               };
               console.log(obj)
               that.setData({
@@ -210,6 +233,7 @@ Page({
   getTime(event){
     this.setData({
       time: !this.data.time,
+      vehicle:false,
       show: false
       // currentDate: event.detail.value
     });
@@ -228,7 +252,9 @@ Page({
       oRemark: this.data.obj.oRemark,
       openId: this.data.obj.openId,
       oTypeIndex: this.data.obj.oTypeIndex,
-      oName: this.data.obj.oName
+      oName: this.data.obj.oName,
+      oVehicle:this.data.obj.oVehicle,
+      oVehicleIndex: this.data.obj.oVehicleIndex
     };
     this.setData({
       time: false,
@@ -246,6 +272,7 @@ Page({
   // 选择服务类型
   getType(){
     this.setData({ 
+      vehicle: false,
       time: false,
       show: !this.data.show
     });
@@ -255,6 +282,7 @@ Page({
     console.log(e)
     var serveType = wx.getStorageSync('Serve').serve[e.detail.index].name;
     console.log(wx.getStorageSync('Serve').serve[e.detail.index]);
+    console.log(this.data.obj)
     var obj= {
       oTel: this.data.obj.oTel,
       oAddress: this.data.obj.oAddress,
@@ -263,13 +291,41 @@ Page({
       oRemark: this.data.obj.oRemark,
       openId: this.data.obj.openId,
       oTypeIndex: wx.getStorageSync('Serve').serve[e.detail.index].id,
-      oName: this.data.obj.oName
+      oName: this.data.obj.oName,
+      oVehicle: this.data.obj.oVehicle,
+      oVehicleIndex: this.data.obj.oVehicleIndex,
     };
     this.setData({
       obj
     })
     console.log(this.data.obj)
     this.setData({ show: false });
+  },
+  // 选择服务车辆变动时
+  onChangeVehicle(e){
+    var _that=this;
+    console.log(e)
+    var serveType = wx.getStorageSync('Serve').vehicle[e.detail.index].name;
+    console.log(wx.getStorageSync('Serve').vehicle[e.detail.index]);
+    console.log(this.data.obj)
+    var obj= {
+      oTel: _that.data.obj.oTel,
+      oAddress: _that.data.obj.oAddress,
+      oType: _that.data.obj.oType,
+      oTime: _that.data.obj.oTime,
+      oRemark: _that.data.obj.oRemark,
+      openId: _that.data.obj.openId,
+      oTypeIndex: _that.data.oTypeIndex,
+      oName: _that.data.obj.oName,
+      oVehicle: serveType,
+      oVehicleIndex: wx.getStorageSync('Serve').vehicle[e.detail.index].id
+    };
+    this.setData({
+      obj,
+      price: wx.getStorageSync('Serve').vehicle[e.detail.index].money*100
+    })
+    console.log(this.data.obj)
+    this.setData({ vehicle: false });
   },
   // 选择服务类型取消
   onCancelServeType(e){
@@ -295,7 +351,10 @@ Page({
       oRemark: e.detail,
       openId: this.data.obj.openId,
       oTypeIndex: this.data.obj.oTypeIndex,
-      oName: this.data.obj.oName
+      oName: this.data.obj.oName,
+      oVehicle: this.data.obj.oVehicle,
+      oVehicleIndex: this.data.obj.oVehicleIndex,
+
     };
     this.setData({
       obj,
@@ -312,7 +371,10 @@ Page({
         oRemark: this.data.obj.oRemark,
         openId: this.data.obj.openId,
         oTypeIndex: this.data.obj.oTypeIndex,
-        oName: this.data.obj.oName
+        oName: this.data.obj.oName,
+        oVehicle: this.data.obj.oVehicle,
+        oVehicleIndex: this.data.obj.oVehicleIndex,
+        
       };
       this.setData({
         obj,
@@ -327,7 +389,9 @@ Page({
         oRemark: this.data.obj.oRemark,
         openId: this.data.obj.openId,
         oTypeIndex: this.data.obj.oTypeIndex,
-        oName: this.data.obj.oName
+        oName: this.data.obj.oName,
+        oVehicle: this.data.obj.oVehicle,
+        oVehicleIndex: this.data.obj.oVehicleIndex,
       };
       this.setData({
         obj,
@@ -347,7 +411,10 @@ Page({
       oRemark: this.data.obj.oRemark,
       openId: this.data.obj.openId,
       oTypeIndex: this.data.obj.oTypeIndex,
-      oName: e.detail
+      oName: e.detail,
+      oVehicle: this.data.obj.oVehicle,
+      oVehicleIndex: this.data.obj.oVehicleIndex,
+
     };
     this.setData({
       obj
@@ -361,7 +428,7 @@ Page({
     var arr = JSON.parse(JSON.stringify(this.data.obj));
     arr.openId = wx.getStorageSync("openid").openid,
     console.log(arr)
-    if (arr.oTel != '' && arr.oAddress != '' && arr.oType != '' && arr.openId != '' && arr.oName!=''){
+    if (arr.oTel != '' && arr.oAddress != '' && arr.oType != '' && arr.openId != '' && arr.oName != '' && arr.oVehicle){
       if ((/^1[34578]\d{9}$/.test(arr.oTel))){
         console.log("______________________")
         wx.showLoading({
@@ -369,7 +436,8 @@ Page({
           mask:true
         });
         console.log(this.data.obj)
-        arr.oType = this.data.obj.oTypeIndex;
+        arr.oType = this.data.obj.oTypeIndex; 
+        arr.oVehicle = this.data.obj.oVehicleIndex;
         arr.oTime = new Date().getTime();
         console.log(this.data.obj)
         console.log(arr)

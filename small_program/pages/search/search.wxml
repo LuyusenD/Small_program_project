@@ -18,14 +18,15 @@
                 </view>
                 <view class="ml20">
                   <view class="font15 fw">服务类型 ： {{item.oType}}</view>
+                  <view class="font15 fw">服务车型 ： {{item.oVehicle?item.oVehicle:'未知'}}</view>
                   <view class="mt20 color2 fw">￥
-                    <text class="font17 mr10">1111</text></view>
+                    <text class="font17 mr10">{{item.price}}</text></view>
                 </view>
               </view>
             </view>
             <view class="flex_sb lh90 bdt">
               <text>共1件商品</text>
-              <text>共计：<text class='color2'>￥11</text></text>
+              <text>共计：<text class='color2'>￥{{item.price}}</text></text>
             </view>
           </navigator>
         </view>

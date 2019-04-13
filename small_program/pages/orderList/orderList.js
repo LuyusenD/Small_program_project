@@ -148,10 +148,21 @@ Page({
                 }
               }
             }
+            var arr1 = wx.getStorageSync('Serve').vehicle;
+            for (var i = 0; i < arr1.length; i++) {
+              for (var j = 0; j < res.data.data.length; j++) {
+                if (res.data.data[j].oVehicle == arr1[i].id) {
+                  res.data.data[j].oVehicle = arr1[i].name;
+                  res.data.data[j].price = arr1[i].money;
+                  continue;
+                }
+              }
+            }
             this.setData({
               orderList: res.data.data,
               order: this.nextData(res.data.data, this.data.pageSize, this.data.page)
             })
+            console.log(res.data.data)
           }else{
             wx.showToast({
               title: this.data.language ? '你还没有订单，快起下单吧！' : 'You havent ordered yet.Quickly place your order.',

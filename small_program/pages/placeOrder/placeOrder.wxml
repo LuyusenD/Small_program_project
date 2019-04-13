@@ -47,9 +47,9 @@
     <van-cell
       required
       icon="friends"
-      title="{{language?'服务类型':'Service type'}}"
-      value="{{obj.oType==''&&language?'请选择服务类行':obj.oType==''&&!language?'Please select the service line':obj.oType}}>"
-      bind:click='getType'
+      title="{{language?'服务车型':'Service vehicle'}}"
+      value="{{obj.oVehicle==''&&language?'请选择服务车型':obj.oVehicle==''&&!language?'Please choose the service model':obj.oVehicle}}>"
+      bind:click='getVehicle'
   />
 </van-cell-group>
 <van-cell-group>
@@ -100,6 +100,23 @@
   columns="{{ serveType }}"
   bind:cancel="onCancelServeType"
   bind:confirm="onChangeServeType"
+/>
+</van-popup>
+<!-- x选择车型 -->
+<van-popup
+  show="{{ vehicle }}"
+  position="bottom"
+  overlay="{{ false }}"
+  bind:close="onClose"
+  safe-area-inset-bottom
+>
+
+  <van-picker
+  show-toolbar
+  title="{{language?'请选择服务车辆':'Please select the service vehicle'}}"
+  columns="{{ ServeVehicle }}"
+  bind:cancel="onCancelVehicle"
+  bind:confirm="onChangeVehicle"
 />
 </van-popup>
 <van-submit-bar
