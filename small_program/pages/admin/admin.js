@@ -200,13 +200,13 @@ Page({
   },
   // 忘记密码
   forgetPassword(){
-    // wx.navigateTo({
-    //   url: '/pages/forgetPassword/forgetPassword',
-    // })
-    wx.showToast({
-      title: this.data.language ? '请联系管理员!' :'Please contact the administrator',
-      icon:'none'
+    wx.navigateTo({
+      url: '/pages/forgetPassword/forgetPassword',
     })
+    // wx.showToast({
+    //   title: this.data.language ? '请联系管理员!' :'Please contact the administrator',
+    //   icon:'none'
+    // })
   },
   // 退出登录
   loginOut() {

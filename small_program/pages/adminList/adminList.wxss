@@ -70,7 +70,7 @@ page{
 }
 .container{
   width: 96%;
-  margin: 80rpx auto ;
+  /* margin: 80rpx auto ; */
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;

@@ -32,13 +32,21 @@ Page({
    */
   onShow: function () {
     if (wx.getStorageSync('language')) {
-      this.setData({
-        language: true
-      })
+      if (wx.getStorageSync('language').language) {
+        this.setData({
+          language: true
+        })
+      } else {
+        this.setData({
+          language: false
+        });
+        console.log(wx.getStorageSync('language'))
+      }
     } else {
       this.setData({
         language: false
-      })
+      });
+      console.log(wx.getStorageSync('language'))
     }
   },
 
@@ -104,7 +112,7 @@ Page({
   setPassword() {
     var _this=this;
     var opt = {
-      url: url.url + "user/forget",
+      url: url.url + "user/changepassword",
       method: "POST",
       header: {
         "content-type": "application/x-www-form-urlencoded"
@@ -156,31 +164,14 @@ Page({
   },
   // 退出登录
   loginOut() {
-    var user = wx.getStorageSync('user')
-    var opt = {
-      url: url.url + "user/out",
-      method: "POST",
-      header: {
-        "content-type": "application/x-www-form-urlencoded"
-      },
-      data: {
-        id: user.id,
-        username: user.username
-      }
-    };
-    url.ajax(opt)
-      .then((res) => {
-        if (res.code == 200) {
-          setTimeout(() => {
-            wx.removeStorage({
-              key: 'user',
-              success(res) {
-                console.log(res)
-              }
-            })
-            wx.navigateBack();
-          }, 1000)
+    setTimeout(() => {
+      wx.removeStorage({
+        key: 'user',
+        success(res) {
+          console.log(res)
         }
       })
+      wx.navigateBack();
+    }, 1000)
   }
 })

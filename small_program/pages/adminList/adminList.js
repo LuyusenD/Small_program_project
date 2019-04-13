@@ -49,8 +49,8 @@ Page({
     var user=wx.getStorageSync('user');
     if(!user){
       Dialog.alert({
-        title: '提示',
-        message: '该账号已过期，请重新登录！'
+        title: this.data.language ? '提示' :'Tips',
+        message: this.data.language ? '该账号已过期，请重新登录！' :'This account has expired, please log in again!'
       }).then(() => {
         // on close
         wx.navigateBack();
