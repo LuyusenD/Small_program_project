@@ -219,7 +219,7 @@ button::after {
 }
 
 .mt20 {
-  margin-top: 20rpx;
+  margin-left: 20rpx;
 }
 
 .mt24 {
@@ -595,6 +595,7 @@ button::after {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: nowrap
 }
 
 .flex1 {

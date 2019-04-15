@@ -12,6 +12,7 @@
   />
   <van-field
     value="{{ obj.oTel }}"
+    type='number'
     required
     clearable
     label="{{language?'电话':'tel'}}"

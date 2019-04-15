@@ -315,7 +315,7 @@ Page({
       oTime: _that.data.obj.oTime,
       oRemark: _that.data.obj.oRemark,
       openId: _that.data.obj.openId,
-      oTypeIndex: _that.data.oTypeIndex,
+      oTypeIndex: _that.data.obj.oTypeIndex,
       oName: _that.data.obj.oName,
       oVehicle: serveType,
       oVehicleIndex: wx.getStorageSync('Serve').vehicle[e.detail.index].id
@@ -335,6 +335,9 @@ Page({
   // 控制底部弹框
   onClose() {
     this.setData({ show: false });
+  },
+  onCancelVehicle(){
+    this.setData({ vehicle: false });
   },
   // 控制底部弹框
   onCloseCar() {
@@ -432,7 +435,7 @@ Page({
       if ((/^1[34578]\d{9}$/.test(arr.oTel))){
         console.log("______________________")
         wx.showLoading({
-          title: '正在预约..',
+          title: '正在下单请稍等...',
           mask:true
         });
         console.log(this.data.obj)

@@ -99,7 +99,7 @@ Page({
             for (var j = 0; j < arr.length; j++) {
               if (res.data.data[0].oType == arr[j].id) {
                 res.data.data[0].oType = arr[j].name;
-                res.data.data[0].img = 'http://' + arr[j].icon;
+                res.data.data[0].img =   arr[j].icon;
                 console.log('http://' + arr[j].icon)
                 continue;
               }

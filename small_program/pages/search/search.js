@@ -94,7 +94,7 @@ Page({
               for (var j = 0; j < res.data.data.length; j++) {
                 if (res.data.data[j].oType == arr[i].id) {
                   res.data.data[j].oType = arr[i].name;
-                  res.data.data[j].img = 'http://' + arr[i].icon;
+                  res.data.data[j].img =  arr[i].icon;
                   continue;
                 }
               }
