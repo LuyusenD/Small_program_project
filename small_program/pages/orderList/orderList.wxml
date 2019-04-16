@@ -14,8 +14,9 @@
                 <view class="ml20">
                   <view class="font15 fw">服务类型 ： {{item.oType}}</view>
                   <view class="font15 fw">服务车型 ： {{item.oVehicle?item.oVehicle:'未知'}}</view>
-                  <view class="mt20 color2 fw">￥
-                    <text class="font17 mr10">{{item.price}}</text></view>
+                  <view class="font15 fw">价格 ：{{'￥'+item.price}}</view>
+                  <!-- <view class="mt20 color2 fw">￥
+                    <text class="font17 mr10">{{item.price}}</text></view> -->
                 </view>
               </view>
             </view>

@@ -191,7 +191,7 @@ Page({
         }else if(res.code==401){
           Dialog.alert({
             title: this.data.language ? '提示' :'Tips',
-            message: res.msg
+            message: this.data.language ?"账号或密码错误或已在别处登录" :'Account or password error or login elsewhere'
           }).then(() => {
             // on close
           });

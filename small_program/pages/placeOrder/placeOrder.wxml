@@ -67,6 +67,7 @@
 <view style='height:100rpx;'></view>
 <!-- 预约时间 -->
 <van-popup
+ style='z-index:100000'
   show="{{ time }}"
   position="bottom"
   overlay="{{ false }}"
@@ -85,6 +86,13 @@
   bind:confirm="onConfirmTime"
 
 />
+<van-row>
+  <van-col offset="1" span="3.8">年</van-col>
+  <van-col offset="2" span="3.8">月</van-col>
+  <van-col offset="2" span="3.8">日</van-col>
+  <van-col offset="2" span="3.8">时</van-col>
+  <van-col offset="2" span="3.8">分</van-col>
+</van-row>
 </van-popup>
 <!-- 服务类型 -->
 <van-popup

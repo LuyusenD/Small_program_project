@@ -10,6 +10,8 @@
     "van-popup": "/vant-weapp/dist/popup/index",
     "van-picker": "/vant-weapp/dist/picker/index",
     "van-datetime-picker": "/vant-weapp/dist/datetime-picker/index",
-    "van-submit-bar": "/vant-weapp/dist/submit-bar/index"
+    "van-submit-bar": "/vant-weapp/dist/submit-bar/index",
+    "van-row": "/vant-weapp/dist/row/index",
+    "van-col": "/vant-weapp/dist/col/index"
   }
 }

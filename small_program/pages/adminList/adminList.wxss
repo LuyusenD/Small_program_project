@@ -1,4 +1,8 @@
 /* pages/adminList/adminList.wxss */
+page{
+  position: fixed;
+  height: 100%;
+}
 .head{display:flex;flex-direction: column;background: #efefef;width:100%;padding: 100rpx 0rpx; align-items: center;  justify-content: space-between;background: #f4de3b}
 .head image{width:150rpx;height:150rpx;margin:0 auto;border-radius: 50%;}
 .list view{font-size:12pt;}
@@ -84,7 +88,7 @@ page{
 }
 .container>view>view{
   font-size: 14px;
-  width:61%;
+  width:50%;
   /* height: 150rpx; */
   margin: 0 auto;
   line-height: 83.5rpx;

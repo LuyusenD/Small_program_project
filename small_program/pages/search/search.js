@@ -7,7 +7,8 @@ Page({
    */
   data: {
     value:'',
-    list:[]
+    list:[],
+    language:true
   },
 
   /**
@@ -28,7 +29,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    if (wx.getStorageSync('language')) {
+      if (wx.getStorageSync('language').language) {
+        this.setData({
+          language: true
+        })
+      } else {
+        this.setData({
+          language: false
+        });
+        console.log(wx.getStorageSync('language'))
+      }
+    } else {
+      this.setData({
+        language: false
+      });
+      console.log(wx.getStorageSync('language'))
+    }
   },
 
   /**
@@ -115,7 +132,7 @@ Page({
             console.log(this.data.list)
           } else {
             wx.showToast({
-              title: '暂无查到相关订单!!',
+              title: this.data.language ? '暂无查到相关订单!!' :'No relevant orders have been found yet.',
               icon: 'none'
             })
           }
@@ -123,7 +140,7 @@ Page({
       })
   }else{
     wx.showToast({
-      title: '亲，亲输入订单号，或手机号',
+      title: this.language ? '亲，亲输入订单号，或手机号' :'Pro, Pro-Enter Order Number, or Mobile Phone Number',
       icon:'none'
     })
   }

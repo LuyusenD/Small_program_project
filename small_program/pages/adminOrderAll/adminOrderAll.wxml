@@ -1,95 +1,35 @@
-<!--pages/adminOrderAll/adminOrderAll.wxml-->
-<!-- <text>pages/adminOrderAll/adminOrderAll.wxml</text> -->
-<!-- 所有订单页面 -->
-<block wx:if="{{order.length>0}}">
-    <!-- <van-panel title="订单编号"
-      wx:for="{{order}}"
-      wx:key="{{item.id}}"
-      status="状态" use-footer-slot>
-    <view class='contion'>
-      <view class='name'>
-        <view>姓名</view>
-        <view>养成</view>
+    <view class='container pt10'>
+      <view class="order_list" wx:for='{{order}}' wx:key="{{index}}">
+        <view class="bw order_item">
+          <navigator url="{{'/pages/orderListDetail/orderListDetail?oId='+item.oId}}" class="db plr30">
+            <view class="flex_sb lh90 bdb font15">
+               <text>订单编号:{{item.oId}}</text>
+              <text class='{{item.oState==4?"color2":"color3"}}'>{{item.oState==1?"未支付":item.oState==2?"已支付":item.oState==3?"执行中":"已完成"}}</text>
+            </view>
+            <view class="goods">
+              <view class="flex_a ptb30 goods_item" >
+                <view class="goods_bg flex_aj">
+                  <image src='{{item.img}}' class="goods_img" mode="widthFix"></image>
+                </view>
+                <view class="ml20">
+                  <view class="font15 fw">服务类型 ： {{item.oType}}</view>
+                  <view class="font15 fw">服务车型 ： {{item.oVehicle?item.oVehicle:'未知'}}</view>
+                  <view class="mt20 color2 fw">￥
+                    <text class="font17 mr10">{{item.price}}</text></view>
+                </view>
+              </view>
+            </view>
+            <view class="flex_sb lh90 bdt">
+              <text>共1件商品</text>
+              <text>共计：<text class='color2'>￥{{item.price}}</text></text>
+            </view>
+          </navigator>
+        </view>
       </view>
-      <view class='tel'>
-        <view>电话</view>
-        <view>17603021918</view></view>
-      <view class='status'>
-        <view>订单状态</view>
-        <view>已完成</view>
+      <view class='center' wx:if="{{order.length<=0}}">
+        <image src='/image/noOrder.png' style='width:50px;height:50px'></image>
+        <!-- <view>还没有已完成订单呢</view> -->
       </view>
     </view>
-    <view slot="footer">
-      <van-button size="small">按钮</van-button>
-      <van-button size="small" type="danger">按钮</van-button>
-    </view>
-  </van-panel> -->
-  <view class='order'
-    wx:for="{{order}}"
-    wx:key="{{item.id}}"
-
-  >
-    <view class='orderD'>
-       <van-row custom-class='size'>
-        <van-col span="24">
-          <van-col span="12">订单编号</van-col>
-          <van-col span="12">{{item.oId}}</van-col>
-        </van-col>
-        <van-col span="24">
-          <van-col span="12">用户姓名</van-col>
-          <van-col span="12">{{item.oName}}</van-col>
-        </van-col>
-        <van-col span="24">
-          <van-col span="12">预约时间</van-col>
-          <van-col span="12">{{item.createTime}}</van-col>
-        </van-col>
-        <van-col span="24">
-          <van-col span="12">
-            <van-col span="12">服务类型</van-col>
-            <van-col span="12">{{item.oType}}</van-col>
-          </van-col>
-          <van-col span="12">
-            <van-col span="12">订单状态</van-col>
-            <van-col span="12">
-              <text wx:if="{{item.oState==4}}" class='success'>已完成</text>
-              <text wx:if="{{item.oState==3}}" class='danger'>执行中</text>
-              <text wx:if="{{item.oState==2}}" class='wang'>已支付</text>
-              <text wx:if="{{item.oState==1}}">未支付</text>
-              <text wx:if="{{item.oState!=1&&item.oState!=2&&item.oState!=3&&item.oState!=4}}">未支付</text>
-            </van-col>
-          </van-col>
-        </van-col>
-         <van-col span="24">
-          <van-col span="12" offset='17'>
-            <van-col span="24">
-              $24
-            </van-col>
-          </van-col>
-        </van-col>
-        <van-col span="24">
-          <van-col span="12">
-           </van-col>
-          <van-col span="12">
-           </van-col>
-        </van-col>
-         <van-col span="24">
-          <van-col span="12" offset='12'>
-            <van-col span="12">
-              <van-button data-url="{{'/pages/orderListDetail/orderListDetail?oId='+item.oId}}" size="small" data-value="{{item}}"
-              bindtap='jump' 
-              >查看详情</van-button>
-            </van-col>
-            <van-col span="12">
-              <van-button size="small" bindtap='cancelOrder' data-value="{{item}}" type="danger">删除订单</van-button>
-            </van-col>
-          </van-col>
-        </van-col>
-      </van-row>
-    </view>
-  </view>
-</block>
-<block wx:if="{{order.length<0}}">
-  <image src='imgNot' src='/image/noteOrder.png'></image>
-</block>
 <!-- 删除订单弹框 -->
 <van-dialog id="van-dialog" />

@@ -1,5 +1,6 @@
 var appid ='wx95f9d0da92ac236f';
-var url ='https://goodfriend.ngrok.xiaomiqiu.cn/';
+var url ='https://89655027.ngrok.io/';
+// var url ='http://localhost:3000/';
 
 const formatNumber = n => {
   n = n.toString()

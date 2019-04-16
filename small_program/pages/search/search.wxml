@@ -1,6 +1,6 @@
 <!--pages/search/search.wxml-->
         <view class='search'>
-            <input type='number' placeholder='输入你想要搜索的订单手机号' confirm-type='search' value="{{value}}" bindinput='onChageSearch' bindconfirm='query'></input>
+            <input type='number' placeholder="{{language?'输入你想要搜索的订单手机号':'Enter the phone number of the order you want to search for'}}" confirm-type='search' value="{{value}}" bindinput='onChageSearch' bindconfirm='query'></input>
             <image class="" src='/image/search.png' bindtap='onSearch'></image>
         </view>
     <view class='container pt10'>
