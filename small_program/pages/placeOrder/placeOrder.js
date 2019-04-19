@@ -11,11 +11,14 @@ Page({
     // 底部弹框
     show: false,
     vehicle:false,
+    LocationIs: false,
     // 时间底部弹框
     time:false,
     // 服务类型
     serveType:[],
     ServeVehicle:[],
+    // 选择所在区域
+    Location: '',
     obj:{
       oTel: '',
       oAddress:'',
@@ -28,6 +31,7 @@ Page({
       oVehicle:'',
       oVehicleIndex: 1,
     },  
+    items:{},
       //价格
     price:0, 
     minHour: 10,
@@ -36,7 +40,8 @@ Page({
     maxDate: new Date(2019, 10, 1).getTime(),
     currentDate: new Date().getTime(),
     // yuyan
-    language:true
+    language:true,
+
   },
 
   /**
@@ -60,6 +65,13 @@ Page({
       });
       console.log(wx.getStorageSync('language'))
     }
+    var item = [
+      this.data.language ? '中国' : 'China',
+      this.data.language ? '澳洲' : 'Australia',
+    ]
+    this.setData({
+      items: item
+    })
   // 页面加载获取所有服务类型
     if (wx.getStorageSync('Serve')) {
       // 本地缓存已有数据
@@ -152,13 +164,23 @@ Page({
     // event.detail 为当前输入的值
     console.log(event.detail);
   },
+  // 选择所在区域
+  getLocation(){
+    this.setData({
+      vehicle: false,
+      time: false,
+      show: false,
+      LocationIs:true
+    })
+  },
   // 点击车型
   getVehicle(){
     console.log('-')
     this.setData({
       vehicle: !this.data.vehicle,
       time: false,
-      show: false
+      show: false,
+      LocationIs:false
     })
   },
   // 获取服务类型
@@ -251,7 +273,9 @@ Page({
     this.setData({
       time: !this.data.time,
       vehicle:false,
-      show: false
+      show: false,
+      LocationIs:false
+
       // currentDate: event.detail.value
     });
   },
@@ -356,9 +380,24 @@ Page({
   onCancelVehicle(){
     this.setData({ vehicle: false });
   },
+  onCancelLocation(){
+    this.setData({ LocationIs: false });
+  },
+  onChangeLocation(e){
+    console.log(e);
+    this.setData({ LocationIs: false });
+    // 0中国 +86 澳洲 +61
+    // wx.setStorageSync('Location', e.detail.index)
+    this.setData({
+      Location: e.detail
+    });
+    console.log(this.data.Location)
+  },
   // 控制底部弹框
   onCloseCar() {
+    console.log(e)
     this.setData({ showCar: false });
+ 
   },
   // 留言触发事件
   leMessage(e){
@@ -449,50 +488,62 @@ Page({
     arr.openId = wx.getStorageSync("openid").openid,
     console.log(arr)
     if (arr.oTel != '' && arr.oAddress != '' && arr.oType != '' && arr.openId != '' && arr.oName != '' && arr.oVehicle){
-      if ((/^1[34578]\d{9}$/.test(arr.oTel))){
-        console.log("______________________")
-        wx.showLoading({
-          title: '正在下单请稍等...',
-          mask:true
-        });
-        console.log(this.data.obj)
-        arr.oType = this.data.obj.oTypeIndex; 
-        arr.oVehicle = this.data.obj.oVehicleIndex;
-        arr.oTime = new Date().getTime();
-        console.log(this.data.obj)
-        console.log(arr)
-        var opt = {
-          url: url.url + 'order/addOrder',
-          method: "POST",
-          header: {
-            "content-type": "application/x-www-form-urlencoded"
-          },
-          data: arr
-        };
-        url.ajax(opt)
-          .then((res) => {
-            console.log(res)
-            if(res.code==200){
-              wx.hideLoading();
-              wx.showToast({
-                title: res.msg,
-                icon:'success'
-              });
-              setTimeout(()=>{
-                wx.navigateBack();
-              },1000)
-            }else{
-              wx.showToast({
-                title: res.msg,
-                icon: 'none'
-              })
-            }
-          })
-      }else{
+      if(!this.data.Location){
         wx.showToast({
-          title: '请输入正确手机号！！',
+          title: this.data.language ? '请选择所在区域' :'Please select the area',
           icon:'none'
         })
+      }else{
+        if ((/^1[34578]\d{9}$/.test(arr.oTel))) {
+          console.log("______________________")
+          wx.showLoading({
+            title: '正在下单请稍等...',
+            mask: true
+          });
+          console.log(this.data.obj)
+          arr.oType = this.data.obj.oTypeIndex;
+          arr.oVehicle = this.data.obj.oVehicleIndex;
+          arr.oTime = new Date().getTime();
+          if (this.data.Location.index == 0) {
+            arr.oTel = "+86" + arr.oTel
+          } else {
+            arr.oTel = "+61" + arr.oTel
+          }
+          console.log(this.data.obj)
+          console.log(arr)
+          var opt = {
+            url: url.url + 'order/addOrder',
+            method: "POST",
+            header: {
+              "content-type": "application/x-www-form-urlencoded"
+            },
+            data: arr
+          };
+          url.ajax(opt)
+            .then((res) => {
+              console.log(res)
+              if (res.code == 200) {
+                wx.hideLoading();
+                wx.showToast({
+                  title: res.msg,
+                  icon: 'success'
+                });
+                setTimeout(() => {
+                  wx.navigateBack();
+                }, 1000)
+              } else {
+                wx.showToast({
+                  title: res.msg,
+                  icon: 'none'
+                })
+              }
+            })
+        } else {
+          wx.showToast({
+            title: '请输入正确手机号！！',
+            icon: 'none'
+          })
+        }
       }
     }else{
       wx.showToast({

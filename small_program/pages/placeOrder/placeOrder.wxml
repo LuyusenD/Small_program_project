@@ -10,6 +10,13 @@
     border="{{ false }}"
     bind:input='getName'
   />
+  <van-cell
+      required
+      icon="location"
+      title="{{language?'所在区域':'Location'}}"
+      value="{{Location==''&&language?'请选择所在区域':Location==''&&!language?'Please select the area.':Location.value}}>"
+      bind:click='getLocation'
+  />
   <van-field
     value="{{ obj.oTel }}"
     type='number'
@@ -126,6 +133,22 @@
   columns="{{ ServeVehicle }}"
   bind:cancel="onCancelVehicle"
   bind:confirm="onChangeVehicle"
+/>
+</van-popup>
+<van-popup
+  show="{{ LocationIs }}"
+  position="bottom"
+  overlay="{{ false }}"
+  bind:close="onClose"
+  safe-area-inset-bottom
+>
+
+  <van-picker
+  show-toolbar
+  title="{{language?'请选择所在区域':'Please select the area.'}}"
+  columns="{{ items }}"
+  bind:cancel="onCancelLocation"
+  bind:confirm="onChangeLocation"
 />
 </van-popup>
 <van-submit-bar
