@@ -15,6 +15,7 @@ Page({
     page: 1,
     // 当前页数显示个数
     pageSize: 6,
+    language:true
   },
 
   /**
@@ -34,6 +35,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if (wx.getStorageSync('language')) {
+      if (wx.getStorageSync('language').language) {
+        this.setData({
+          language: true
+        })
+      } else {
+        this.setData({
+          language: false
+        });
+        console.log(wx.getStorageSync('language'))
+      }
+    } else {
+      this.setData({
+        language: false
+      });
+      console.log(wx.getStorageSync('language'))
+    }
     this.setData({
       // 用户所有订单
       orderList: [],
@@ -73,7 +91,7 @@ Page({
    */
   onReachBottom: function () {
     wx.showLoading({
-      title: '正在加载数据...',
+      title: this.data.language?'正在加载数据...':'Loading...',
       mask: true
     });
     console.log(this.data.orderList.length / this.data.pageSize)
@@ -89,7 +107,7 @@ Page({
         });
       
         wx.showToast({
-          title: '订单刷新成功',
+          title: this.data.language ? '订单刷新成功' :'Successful order refresh',
           icon: 'success'
         })
       }, 1500)
@@ -97,7 +115,7 @@ Page({
       setTimeout(() => {
         wx.hideLoading();
         wx.showToast({
-          title: '亲,没有更多订单了!',
+          title: this.data.language ? '亲,没有更多订单了!' :'No more orders, dear!',
           icon: 'none'
         })
       }, 1500)
@@ -113,7 +131,7 @@ Page({
   // 获取用户未评价所有订单
   getOrderList() {
     wx.showLoading({
-      title: '正在加载数据...',
+      title: this.data.language?'正在加载数据...':'Loading...',
       mask: true
     })
     var opt = {
@@ -148,7 +166,7 @@ Page({
             console.log(this.data.order)
           } else {
             wx.showToast({
-              title: '你还没有订单，快起下单吧！',
+              title: this.data.language ? '你还没有订单完成呢！' :"You haven't finished the order yet.",
               icon: 'none'
             });
             this.setData({
@@ -158,7 +176,7 @@ Page({
           }
         } else {
           wx.showToast({
-            title: '获取订单信息失败,请稍后重试...',
+            title: this.data.language ? '获取订单信息失败,请稍后重试...' :'Failed to obtain order information. Please try again later.',
             icon: 'none'
           })
         }

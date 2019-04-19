@@ -104,8 +104,8 @@ Page({
   isloginOut(){
     var _this=this;
     Dialog.confirm({
-      title: '提示',
-      message: '是否确认退出该账号？'
+      title: this.data.language ? '提示' :'Tips',
+      message: this.data.language ? '是否确认退出该账号？' :'Do you confirm withdrawal from this account?'
     }).then(() => {
       console.log('弹框后点取消');
       _this.loginOut()
@@ -131,7 +131,7 @@ Page({
       .then((res)=>{
         if(res.code==200){
           wx.showLoading({
-            title: '正在退出登录..',
+            title: this.data.language ? '正在退出登录..' :'Logging out',
           })
           setTimeout(()=>{
             wx.hideLoading();

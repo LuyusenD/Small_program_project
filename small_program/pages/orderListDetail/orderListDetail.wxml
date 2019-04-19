@@ -5,7 +5,7 @@
       <view class="ptb20 lh50">
         <view>
           <text class="col9">订单编号:</text>
-          <text>{{list.oId}}</text>
+          <text selectable='true'>{{list.oId}}</text>
         </view>
         <view>
           <text class="col9">姓名:</text>

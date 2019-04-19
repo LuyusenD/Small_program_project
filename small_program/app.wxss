@@ -335,3 +335,5 @@ page:after{content:" "; display: block;height: 100rpx;}
     justify-content: flex-end;
     align-items: center;
 }
+page
+{background:white;}

@@ -30,7 +30,7 @@
           {{checked?language.Chinese:language.Englist}}
           <view >
           China
-          <van-switch checked="{{checked}}"bind:change="onChange"/>
+         <switch checked bindchange="onChange" />
           English
           </view>
         </view>

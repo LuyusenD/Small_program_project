@@ -82,7 +82,7 @@ page{
 }
 .container>view{
   margin-bottom: 2%;
-  width: 48%;
+  width: 50%;
   height: 300rpx;
   /* border: 1px solid yellowgreen */
 }

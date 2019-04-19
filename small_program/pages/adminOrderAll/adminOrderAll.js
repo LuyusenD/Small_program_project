@@ -17,6 +17,7 @@ Page({
     page: 1,
     // 当前页数显示个数
     pageSize: 6,
+    language:true
   },
 
   /**
@@ -37,7 +38,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if (wx.getStorageSync('language')) {
+      if (wx.getStorageSync('language').language) {
+        this.setData({
+          language: true
+        })
+      } else {
+        this.setData({
+          language: false
+        });
+        console.log(wx.getStorageSync('language'))
+      }
+    } else {
+      this.setData({
+        language: false
+      });
+      console.log(wx.getStorageSync('language'))
+    }
   },
 
   /**
@@ -66,7 +83,7 @@ Page({
    */
   onReachBottom: function () {
     wx.showLoading({
-      title: '正在加载数据...',
+      title: this.data.language?'正在加载数据...':'Loading...',
       mask: true
     });
     console.log(this.data.orderList.length / this.data.pageSize)
@@ -81,7 +98,7 @@ Page({
           order: this.nextData(this.data.orderList, this.data.pageSize, this.data.page)
         });
         wx.showToast({
-          title: '订单刷新成功',
+          title: this.data.language ? '订单刷新成功' :'Successful order refresh',
           icon: 'success'
         })
       }, 1500)
@@ -89,7 +106,7 @@ Page({
       setTimeout(() => {
         wx.hideLoading();
         wx.showToast({
-          title: '亲,没有更多订单了!',
+          title: this.data.language ? '亲,没有更多订单了!' :'No more orders, dear!',
           icon: 'none'
         })
       }, 1500)
@@ -105,7 +122,7 @@ Page({
   // 所有订单页面
   getorderListAll(){
     wx.showLoading({
-      title: '正在加载数据...',
+      title: this.data.language?'正在加载数据...':'Loadin...',
       mask: true
     })
     var opt = {
@@ -144,13 +161,13 @@ Page({
             })
           } else {
             wx.showToast({
-              title: '获取订单信息失败,请稍后重试...',
+              title: this.data.language ? '获取订单信息失败,请稍后重试...' :'Failed to obtain order information. Please try again later.',
               icon: 'none'
             })
           }
         } else {
           wx.showToast({
-            title: '获取订单信息失败,请稍后重试...',
+            title: this.data.language ? '获取订单信息失败,请稍后重试...' : 'Failed to obtain order information. Please try again later.',
             icon: 'none'
           })
         }
@@ -181,8 +198,8 @@ Page({
     var oId = e.currentTarget.dataset.value.oId;
     console.log(oId);
     Dialog.confirm({
-      title: '提示',
-      message: '你确定要删除该订单吗?'
+      title: this.data.language ? '提示' :'Tips',
+      message: this.data.language ? '你确定要删除该订单吗?' :'Are you sure you want to delete the order?'
     }).then(() => {
       var opt = {
         url: url.url + 'order/delorder',
@@ -198,7 +215,7 @@ Page({
         .then((res) => {
           if (res.code == 200) {
             Dialog.alert({
-              message: '删除成功'
+              message: this.data.language ? '删除成功' :'Delete successful'
             }).then(() => {
               // on close
               _this.setData({
@@ -211,7 +228,7 @@ Page({
             });
           } else {
             Dialog.alert({
-              message: '删除失败' + res.msg
+              message: this.data.language ? '删除失败' :'Delete failed'
             }).then(() => {
               // on close
             });
@@ -225,11 +242,12 @@ Page({
   cancelOrder(e) {
     var _this = this;
     // 订单编号
-    var oId = e.currentTarget.dataset.value.oId;
+    console.log(e)
+    var oId = e.currentTarget.dataset.value;
     console.log(oId);
     Dialog.confirm({
-      title: '提示',
-      message: '你确定要删除该订单吗?'
+      title: this.data.language ? '提示' :'Tips',
+      message: this.data.language ? '你确定要删除该订单吗?' :'Are you sure you want to delete the order?'
     }).then(() => {
       var opt = {
         url: url.url + 'order/delorder',
@@ -245,7 +263,7 @@ Page({
         .then((res) => {
           if (res.code == 200) {
             Dialog.alert({
-              message: '删除成功'
+              message: this.data.language ? '删除成功' :'Delete successful'
             }).then(() => {
               // on close
               this.setData({
@@ -257,7 +275,7 @@ Page({
             });
           } else {
             Dialog.alert({
-              message: '删除失败' + res.msg
+              message: this.data.language ? '删除失败' :'Delete failed'
             }).then(() => {
               // on close
             });

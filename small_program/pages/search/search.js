@@ -134,7 +134,12 @@ Page({
             wx.showToast({
               title: this.data.language ? '暂无查到相关订单!!' :'No relevant orders have been found yet.',
               icon: 'none'
-            })
+            });
+            this.setData({
+              list: []
+            });
+            console.log('..........................')
+            console.log(this.data.list)
           }
         }
       })
@@ -142,7 +147,8 @@ Page({
     wx.showToast({
       title: this.language ? '亲，亲输入订单号，或手机号' :'Pro, Pro-Enter Order Number, or Mobile Phone Number',
       icon:'none'
-    })
+    });
+   
   }
   }
 })

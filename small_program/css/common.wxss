@@ -592,7 +592,9 @@ button::after {
 }
 
 .flex_sb {
+  width:90%;
   display: flex;
+  margin: 0 auto;
   align-items: center;
   justify-content: space-between;
   flex-wrap: nowrap

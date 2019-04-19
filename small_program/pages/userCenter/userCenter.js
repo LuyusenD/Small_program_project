@@ -48,10 +48,11 @@ Page({
       console.log(wx.getStorageSync('language'))
     }
   },
-  onChange({ detail }) {
+  onChange(e) {
+    console.log(e)
     var language,
         title;
-    if (this.data.checked){
+    if (e.detail.value){
       console.log('中文');
       language='你确定要切换为English语言吗?';
       title = "提示";
@@ -66,7 +67,9 @@ Page({
       message: language
     }).then(() => {
       // on confirm
-      this.setData({ checked: detail });
+      this.setData({
+        checked: e.detail.value
+      })
       // language true==>中文   false==>英文
       wx.setStorageSync("language", {'language':this.data.checked})
     }).catch(() => {

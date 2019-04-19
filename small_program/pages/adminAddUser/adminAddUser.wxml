@@ -25,7 +25,7 @@
     value="{{ email}}"
     type="email"
     label="{{ language?'邮件':'Email' }}"
-    placeholder="{{ language?'Please enter your mailbox':'Please enter your mailbox' }}"
+    placeholder="{{ language?'请输入你的邮箱':'Please enter your mailbox' }}"
     required
     bind:input='getEmail'
     border="{{ false }}"
