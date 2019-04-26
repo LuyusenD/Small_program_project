@@ -1,37 +1,77 @@
 /**index.wxss**/
 page{
-  position: fixed;
+  /* position: fixed; */
+  /* height: 100%; */
+  margin: 0 auto;
+}
+/* 轮播图样式 */
+
+.carousel_div {
+  position: relative;
+  width: 100%;
+  height: 414rpx;
+}
+
+.swiper {
+  position: absolute;
   height: 100%;
+  width: 100%;
+}
+
+.swiper image {
+  height: 100%;
+  width: 100%;
 }
 .loginImg{
   width: 100%;
   height: 400rpx;
 }
+.fw{
+  /* margin-top:30rpx;  */
+  margin-left:4%; 
+  display: flex;
+  justify-content: space-between;
+  width: 92%;
+  flex-wrap: nowrap;
+  /* height: 30rpx; */
+}
+.fw>text{
+  font-size: 12px;
+  line-height: 12rpx
+}
+/* .fw>view{
+  line-height: 30rpx;
+  height: 1px;
+  width:45%;
+  background: black;
+} */
+.fw>view{
+  line-height: 30rpx;
+  height: 1px;
+  width:100%;
+  background: #EBECF2;
+}
 .container{
-  width: 96%;
-  margin: 80rpx auto ;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  /* border:  1px solid red  */
+  margin-top: 60rpx;
 }
 .container>view{
-  margin-bottom: 2%;
-  width: 48%;
-  height: 300rpx;
-  /* border: 1px solid yellowgreen */
+  width: 30%;
+  margin-bottom:60rpx ;
 }
-.container>view>view{
-  font-size: 14px;
-  width:40%;
-  /* height: 150rpx; */
-  margin: 0 auto;
-  line-height: 83.5rpx;
+.container>view>image{
+  display: block;
+  width: 70%;
+  margin: 30rpx auto;
+  height: 100rpx;
 }
-.container>view>view>image{
-  width:100%;
-  height: 150rpx;
-}
-.container>view>view>view{
+.container>view>text{
+  display: inline-block;
+  width: 100%;
   text-align: center;
+  font-size: 14px;
+
 }

@@ -1,12 +1,38 @@
 <!--index.wxml-->
 <!--login 图片  -->
-<image src='/image/login.jpg' class='loginImg'></image>
-<!-- 立即下单  查询订单 管理后台 我的订单  -->
-<view class='container'>
-  <view wx:for="{{list}}" wx:key="{{index}}" bindtap='jump' data-url="{{item.url}}">
-    <view>
-      <image src="{{item.img}}"></image>
-      <view>{{language?item.language.Chinese:item.language.Englist}}</view>
-    </view>
+<!-- <image src='/image/login.jpg' class='loginImg'></image> -->
+<view class='carousel_div'>
+    <swiper class="swiper" indicator-dots="true" autoplay="true" interval="5000" duration="1000">
+      <block wx:for="{{login}}" wx:for-index="index" wx:key="">
+
+        <swiper-item>
+          <image src="{{item}}" class="slide-image" mode='aspectFill' />
+        </swiper-item>
+      </block>
+    </swiper>
   </view>
+<!-- 立即下单  查询订单 管理后台 我的订单  -->
+<!-- 服务 -->
+<!-- <view class='fw'>
+  <view></view>
+    <text>服务</text>
+  <view></view>
+</view> -->
+<view class='container'>
+ <view wx:for="{{serve}}" wx:key="{{index}}" bindtap='jump' data-url="{{item.url}}">
+  <image src='{{item.img}}'></image>
+  <text>{{language?item.language.Chinese:item.language.Englist}}</text>
+ </view>
+</view>
+<!-- 功能 -->
+<view class='fw'>
+  <view></view>
+    <!-- <text>功能</text> -->
+  <!-- <view></view> -->
+</view>
+<view class='container'>
+ <view wx:for="{{list}}" wx:key="{{index}}" bindtap='jump' data-url="{{item.url}}">
+  <image src='{{item.img}}'></image>
+  <text>{{language?item.language.Chinese:item.language.Englist}}</text>
+ </view>
 </view>

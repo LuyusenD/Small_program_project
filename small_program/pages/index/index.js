@@ -10,40 +10,65 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     // 语言 true==>中文
     language:true,
-    list:[
+    serve:[
       {
-        img:'/image/order.png',
-        language:{
+        img: '/image/aircraft.jpg',
+        language: {
           Englist: 'immediately',
-          Chinese: '立即下单'
+          Chinese: '机场接送'
         },
-        url:"/pages/placeOrder/placeOrder"
+        url: "/pages/placeOrder/placeOrder"
       },
       {
-        img:'/image/seachOrder.png',
-        language:{
+        img: '/image/Tourism.jpg',
+        language: {
+          Englist: 'Chartered Tour',
+          Chinese: '包车旅游'
+        },
+        url: "/pages/placeOrder/placeOrder"
+      },
+      {
+        img: '/image/moving.jpg',
+        language: {
+          Englist: 'Small piece moving',
+          Chinese: '小件搬家'
+        },
+        url: "/pages/placeOrder/placeOrder"
+      },
+    ],
+    list:[
+      {
+        img: '/image/seachOrder.png',
+        language: {
           Englist: 'Enquiry',
           Chinese: '查询订单'
         },
-        url:"/pages/search/search"
+        url: "/pages/search/search"
       },
       {
-        img:'/image/admin.png',
-        language:{
+        img: '/image/admin.png',
+        language: {
           Englist: 'admin',
           Chinese: '管理后台'
         },
-        url:"/pages/admin/admin"
+        url: "/pages/admin/admin"
       },
       {
-        img:'/image/orderMine.png',
-        language:{
+        img: '/image/orderMine.png',
+        language: {
           Englist: 'My order',
           Chinese: '我的订单'
         },
-        url:"/pages/orderList/orderList"
+        url: "/pages/orderList/orderList"
       },
-    ]
+    ],
+    login: [
+      '/image/login.jpg',
+      '/image/login.jpg',
+      '/image/login.jpg',
+      '/image/login.jpg',
+      '/image/login.jpg',
+      ]
   },
   //事件处理函数
   bindViewTap: function() {
