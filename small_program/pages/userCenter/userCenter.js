@@ -67,8 +67,9 @@ Page({
       message: language
     }).then(() => {
       // on confirm
+      console.log(e.detail.value)
       this.setData({
-        checked: e.detail.value
+        checked: !e.detail.value
       })
       // language true==>中文   false==>英文
       wx.setStorageSync("language", {'language':this.data.checked})

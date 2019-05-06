@@ -14,5 +14,15 @@
     border="{{ false }}"
   />
 </van-cell-group>
+<van-cell-group>
+  <van-field
+    value="{{ money }}"
+    type="number"
+    label="{{language?'服务金额':'Service amount'}}"
+    placeholder="{{language?'请输入要添加的服务类型':'Please enter the amount of service you want to add'}}"
+    bind:input='getoMoney'
+    border="{{ false }}"
+  />
+</van-cell-group>
 <view style='height:100rpx;'></view>
 <van-button size="large" bindtap='addoType' type='primary'>{{language?'添加服务':'Add service'}}</van-button>

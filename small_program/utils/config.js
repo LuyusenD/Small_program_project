@@ -1,13 +1,13 @@
-var appid ='wx95f9d0da92ac236f';
+var appid = 'wx95f9d0da92ac236f';
 // var url ='https://3aaaa0b6.ngrok.io/';
-// var url ='http://localhost:3000/';
-var url ='http://192.168.1.104:3000/';
+var url = 'http://localhost:3000/';
+// var url ='http://192.168.1.104:3000/';
 
 const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
-function toDate(number) { 
+function toDate(number) {
 
   var n = number * 1000;
 
@@ -83,7 +83,7 @@ function ajax(options = {}) {
 }
 module.exports = {
   appid: appid,
-  url:url,
+  url: url,
   formatTime: formatTime,
   toDate: toDate,
   ajax: ajax

@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp()
-import url from'../../utils/config.js'
+import url from '../../utils/config.js'
 Page({
   data: {
     motto: 'Hello World',
@@ -9,8 +9,8 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     // 语言 true==>中文
-    language:true,
-    serve:[
+    language: true,
+    serve: [
       {
         img: '/image/aircraft.jpg',
         language: {
@@ -36,7 +36,7 @@ Page({
         url: "/pages/placeOrder/placeOrder"
       },
     ],
-    list:[
+    list: [
       {
         img: '/image/seachOrder.png',
         language: {
@@ -68,50 +68,50 @@ Page({
       '/image/login.jpg',
       '/image/login.jpg',
       '/image/login.jpg',
-      ]
+    ]
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
   onLoad: function () {
-
-   },
-   onShow:function(){
-     if (wx.getStorageSync('language')){
-       if (wx.getStorageSync('language').language) {
-         this.setData({
-           language: true
-         })
-       } else {
-         this.setData({
-           language: false
-         });
-         console.log(wx.getStorageSync('language'))
-       }
-     }else{
-       this.setData({
-         language: false
-       });
-       console.log(wx.getStorageSync('language'))
-     }
-     var _this = this;
-     if (!wx.getStorageSync('info')) {
-       wx.navigateTo({
-         url: "/pages/userInfo/userInfo"
-       })
-     } else {
-       console.log(wx.getStorageSync('logs'))
-       console.log('用户已授权')
-     }
-     _this.isOpenid();
-     _this.getServe();
-   },
+    console.log(wx.getStorageSync('Serve').serve)
+  },
+  onShow: function () {
+    if (wx.getStorageSync('language')) {
+      if (wx.getStorageSync('language').language) {
+        this.setData({
+          language: true
+        })
+      } else {
+        this.setData({
+          language: false
+        });
+        console.log(wx.getStorageSync('language'))
+      }
+    } else {
+      this.setData({
+        language: false
+      });
+      console.log(wx.getStorageSync('language'))
+    }
+    var _this = this;
+    if (!wx.getStorageSync('info')) {
+      wx.navigateTo({
+        url: "/pages/userInfo/userInfo"
+      })
+    } else {
+      console.log(wx.getStorageSync('logs'))
+      console.log('用户已授权')
+    }
+    _this.isOpenid();
+    _this.getServe();
+  },
   //  判断本地是否有openid
-  isOpenid(){
-    var _this=this;
+  isOpenid() {
+    var _this = this;
     if (!wx.getStorageSync('openid')) {
       // 获取code
       wx.login({
@@ -129,28 +129,28 @@ Page({
     }
   },
   // 获取服务
-  getServe(){
-      // 获取serve
-      var opt = {
-        url: url.url + 'buff',
-        method: "GET",
-        header: {
-          "content-type": "application/json"
-        },
-        data: {},
-      };
-      url.ajax(opt)
-        .then((res) => {
-          if (res.code == 200) {
-            wx.setStorageSync("Serve", res.data)
-          } else {
-            console.log('获取Serve失败')
-          }
-        })
+  getServe() {
+    // 获取serve
+    var opt = {
+      url: url.url + 'buff',
+      method: "GET",
+      header: {
+        "content-type": "application/json"
+      },
+      data: {},
+    };
+    url.ajax(opt)
+      .then((res) => {
+        if (res.code == 200) {
+          wx.setStorageSync("Serve", res.data)
+        } else {
+          console.log('获取Serve失败')
+        }
+      })
 
   },
-  getOpenid(code){
-    var opt={
+  getOpenid(code) {
+    var opt = {
       url: url.url + 'user/getopenid',
       method: "GET",
       header: {
@@ -162,7 +162,7 @@ Page({
       },
     };
     url.ajax(opt)
-      .then((res)=>{
+      .then((res) => {
         if (res.code == 200) {
           wx.setStorageSync("openid", res.data)
         } else {
@@ -170,7 +170,7 @@ Page({
         }
       })
   },
-  getUserInfo: function(e) {
+  getUserInfo: function (e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
@@ -178,10 +178,12 @@ Page({
       hasUserInfo: true
     })
   },
-  jump(e){
+  jump(e) {
     var url = e.currentTarget.dataset.url;
+    var index = e.currentTarget.dataset.index;
+    console.log(index)
     wx.navigateTo({
-      url: url,
+      url: url + '?index=' + index,
     })
   }
 })

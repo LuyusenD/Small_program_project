@@ -1,4 +1,8 @@
 <!--pages/placeOrder/placeOrder.wxml-->
+<van-tabs wx:if='{{obj.oTypeIndex<3}}' active="{{ active }}" bind:change="activeonChange">
+  <van-tab title="接机"></van-tab>
+  <van-tab title="送机"></van-tab>
+</van-tabs>
   <van-cell-group>
    <van-field
     value="{{ obj.oName }}"
@@ -10,14 +14,35 @@
     border="{{ false }}"
     bind:input='getName'
   />
-  <van-cell
+  <!-- <van-cell
       required
       icon="location"
       title="{{language?'所在区域':'Location'}}"
       value="{{Location==''&&language?'请选择所在区域':Location==''&&!language?'Please select the area.':Location.value}}>"
       bind:click='getLocation'
-  />
+  /> -->
+</van-cell-group>
+<van-cell-group>
   <van-field
+    value="{{ oTel }}"
+    left-icon="phone"
+    required
+    right
+    clearable
+    label="{{language?'电话':'tel'}}"
+    placeholder="{{language?'请输入电话号码':'Please enter your telephone number'}}"
+    border="{{ false }}"
+    use-button-slot
+    bind:click-icon="onClickIcon"
+    error-message="{{phoneerr}}"
+    border="{{ false }}"
+    bind:input='getPhone'
+  >
+    <van-button slot="button" size="mini" bind:click="formCountry" type="default">{{Country}}</van-button>
+  </van-field>
+</van-cell-group>
+<van-cell-group>
+  <!-- <van-field
     value="{{ obj.oTel }}"
     type='number'
     required
@@ -30,7 +55,9 @@
     error-message="{{phoneerr}}"
     border="{{ false }}"
     bind:input='getPhone'
-  />
+  >
+  
+  </van-field> -->
     <van-cell
       required
       icon="location"
@@ -45,13 +72,13 @@
       value="{{obj.oTime==''&&language?'请选择预约时间':obj.oTime==''&&!language?'Please choose the appointment time':obj.oTime}}>"
       bind:click='getTime'
   />
-    <van-cell
+    <!-- <van-cell
       required
       icon="friends"
       title="{{language?'服务类型':'Service type'}}"
       value="{{obj.oType==''&&language?'请选择服务类行':obj.oType==''&&!language?'Please select the service line':obj.oType}}>"
       bind:click='getType'
-  />
+  /> -->
     <van-cell
       required
       icon="friends"
@@ -151,9 +178,25 @@
   bind:confirm="onChangeLocation"
 />
 </van-popup>
+<van-popup
+  show="{{ CountryIsShow }}"
+  position="bottom"
+  overlay="{{ false }}"
+  bind:close="onClose"
+  safe-area-inset-bottom
+>
+
+  <van-picker
+  show-toolbar
+  columns="{{  CountryList }}"
+  bind:cancel="onCancelCountry"
+  bind:confirm="onChangeCountry"
+/>
+</van-popup>
 <van-submit-bar
   price="{{ price }}"
   button-text="{{language?'立即预约':'Immediate appointment'}}"
   bind:submit="makeAppointment"
 />
 <!-- <van-button size="large" type="primary" bindtap='makeAppointment'>{{language?'立即预约':'Immediate appointment'}}</van-button> -->
+

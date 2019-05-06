@@ -6,9 +6,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    oType:'',
-    img:'/image/add.png',
-    language:true
+    oType: '',
+    img: '/image/add.png',
+    money: '',
+    language: true
   },
 
   /**
@@ -82,61 +83,69 @@ Page({
   onShareAppMessage: function () {
 
   },
-  getoType(e){
+  getoType(e) {
     console.log(e.detail);
     this.setData({
-      oType:e.detail
+      oType: e.detail
     });
   },
-  addoType(){
-    if (this.data.oType){
-      if (this.data.img =='/image/add.png'){
+  addoType() {
+    if (this.data.oType) {
+      if (this.data.img == '/image/add.png') {
         wx.showToast({
-          title: '亲,请上传图片!',
-          icon:'none'
+          title: this.data.language ? '亲,请上传图片!' : 'Please enter the amount of service you want to add.',
+          icon: 'none'
         })
         return;
       }
-      var opt={
-        url: url.url +"buff/addserve",
-        method:"POST",
+      if (!this.data.money) {
+        wx.showToast({
+          title: this.data.language ? '亲,请输入要添加的服务金额' : 'Kind, please upload pictures!',
+          icon: 'none'
+        })
+        return;
+      }
+      var opt = {
+        url: url.url + "buff/addserve",
+        method: "POST",
         header: {
           "content-type": "application/x-www-form-urlencoded"
         },
-        data:{
-          str:this.data.oType,
-          url: this.data.img
+        data: {
+          str: this.data.oType,
+          url: this.data.img,
+          money: this.data.money
         }
       };
       url.ajax(opt)
-        .then((res)=>{
+        .then((res) => {
           console.log(res);
-          if(res.code==200){
+          if (res.code == 200) {
             wx.showToast({
-              title: '添加成功',
-              icon:'success',
-              duration:2000
+              title: this.data.language ? '添加成功' : 'Add success',
+              icon: 'success',
+              duration: 2000
             });
             this.setData({
-              oType:''
+              oType: ''
             });
-            setTimeout(()=>{
+            setTimeout(() => {
               wx.navigateBack();
               this.getServeType();
-            },2000)
+            }, 2000)
           }
         })
-    }else{
+    } else {
       wx.showToast({
-        title: '亲,请输入要添加的服务类型',
-        icon:'none'
+        title: this.data.language ? '亲,请输入要添加的服务类型' : 'Pro, enter the type of service you want to add',
+        icon: 'none'
       })
     }
   },
   // 获取服务类型
   getServeType() {
     wx.showLoading({
-      title: '正在加载数据...',
+      title: this.data.language ? '正在加载数据...' : 'Loading...',
       mask: true
     })
     var opt = {
@@ -152,15 +161,22 @@ Page({
         } else {
           wx.hideLoading();
           wx.showToast({
-            title: '数据加载失败,清扫后重试!',
+            title: this.data.language ? '数据加载失败,清扫后重试!' : 'Data loading failed, clean up and try again!',
             icon: 'none'
           });
           console.log('获取数据失败..')
         }
       })
   },
-  base64(){
-    var _this=this;
+  // 价格
+  getoMoney(e) {
+    console.log(e.detail);
+    this.setData({
+      money: e.detail
+    });
+  },
+  base64() {
+    var _this = this;
     wx.chooseImage({
       count: 1,
       success: (res) => {
@@ -185,39 +201,39 @@ Page({
         // });
         var base64 = 'data:image/jpg;base64,' + wx.getFileSystemManager().readFileSync(res.tempFilePaths[0], "base64");
         wx.showLoading({
-          title: '正在上传图片',
+          title: this.data.language ? '正在上传图片' : 'Uploading pictures',
           mask: true
         })
         _this.uploadImg(base64)
       }
     })
   },
-  uploadImg(base64){
-    var opt={
+  uploadImg(base64) {
+    var opt = {
       url: url.url + 'upload', //仅为示例，非真实的接口地址
       method: "POST",
       header: {
         "content-type": "application/x-www-form-urlencoded"
       },
-      data:{
+      data: {
         base: base64
       }
     };
     url.ajax(opt)
-      .then((res)=>{
+      .then((res) => {
         wx.hideLoading();
-        if(res.code==200){
+        if (res.code == 200) {
           wx.showToast({
-            title: '上传成功',
-            icon:'success'
+            title: this.data.language ? '上传成功' : 'Upload success',
+            icon: 'success'
           });
           console.log(res.data.url)
           this.setData({
             img: res.data.url
           });
-        }else{
+        } else {
           wx.showToast({
-            title: '上传失败',
+            title: this.data.language ? '上传失败' : 'Upload failure',
             icon: 'none'
           });
         }

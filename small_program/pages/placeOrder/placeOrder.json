@@ -12,6 +12,8 @@
     "van-datetime-picker": "/vant-weapp/dist/datetime-picker/index",
     "van-submit-bar": "/vant-weapp/dist/submit-bar/index",
     "van-row": "/vant-weapp/dist/row/index",
-    "van-col": "/vant-weapp/dist/col/index"
+    "van-col": "/vant-weapp/dist/col/index",
+    "van-tab": "/vant-weapp/dist/tab/index",
+    "van-tabs": "/vant-weapp/dist/tabs/index"
   }
 }
