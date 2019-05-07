@@ -127,7 +127,9 @@ Page({
               duration: 2000
             });
             this.setData({
-              oType: ''
+              oType: '',
+              img:'/image/add.png',
+              money:''
             });
             setTimeout(() => {
               wx.navigateBack();
@@ -229,7 +231,7 @@ Page({
           });
           console.log(res.data.url)
           this.setData({
-            img: res.data.url
+            img: url.url+ res.data.url
           });
         } else {
           wx.showToast({

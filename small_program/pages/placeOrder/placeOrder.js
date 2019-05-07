@@ -575,7 +575,7 @@ Page({
       if ((/^1[34578]\d{9}$/.test(arr.oTel))) {
         console.log("______________________")
         wx.showLoading({
-          title: '正在下单请稍等...',
+          title: this.data.language ? '正在下单请稍等...' :'Just a moment, please...',
           mask: true
         });
         console.log(this.data.obj)
@@ -599,7 +599,7 @@ Page({
             if (res.code == 200) {
               wx.hideLoading();
               wx.showToast({
-                title: res.msg,
+                title: this.data.language ? '下单成功' :'checkout success',
                 icon: 'success'
               });
               setTimeout(() => {

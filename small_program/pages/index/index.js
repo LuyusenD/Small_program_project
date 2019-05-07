@@ -78,8 +78,12 @@ Page({
   },
   onLoad: function () {
     console.log(wx.getStorageSync('Serve').serve)
+
   },
   onShow: function () {
+    this.setData({
+      serve:wx.getStorageSync('Serve').serve
+    })
     if (wx.getStorageSync('language')) {
       if (wx.getStorageSync('language').language) {
         this.setData({
@@ -185,5 +189,28 @@ Page({
     wx.navigateTo({
       url: url + '?index=' + index,
     })
-  }
+  },
+  getSelectItem: function (e) {
+    var that = this;
+    var itemWidth = e.detail.scrollWidth / that.data.proList.length;//每个商品的宽度
+    var scrollLeft = e.detail.scrollLeft;//滚动宽度
+    var curIndex = Math.round(scrollLeft / itemWidth);//通过Math.round方法对滚动大于一半的位置进行进位
+    for (var i = 0, len = that.data.proList.length; i < len; ++i) {
+      that.data.proList[i].selected = false;
+    }
+    that.data.proList[curIndex].selected = true;
+    that.setData({
+      proList: that.data.proList,
+      giftNo: this.data.proList[curIndex].id
+    });
+  },
+  handleChange: function (e) {
+
+    this.setData({
+
+      currentIndex: e.detail.current
+
+    })
+
+  },
 })
