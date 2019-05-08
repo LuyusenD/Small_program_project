@@ -505,7 +505,7 @@ Page({
   },
   // 输入手机号出发事件
   getPhone(e) {
-    if ((/^1[34578]\d{9}$/.test(e.detail))) {
+    if ((/^[1][3-8]\d{9}$|^([6|9])\d{7}$|^[0][9]\d{8}$|^[6]([8|6])\d{5}$/.test(e.detail))) {
       var obj = {
         oTel: e.detail,
         oAddress: this.data.obj.oAddress,

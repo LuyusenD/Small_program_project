@@ -18,7 +18,9 @@
         <swiper-item class="item">
 
           <image class="itemImg {{currentIndex == index ? 'active': ''}}" src="{{item}}"></image>
-
+            <view class='title'>
+              
+            </view>
         </swiper-item>
 
       </block>
@@ -46,8 +48,8 @@
   <!-- <view></view> -->
 </view>
 <view class='container'>
-  <block wx:for="{{list}}" wx:key="{{index}}" bindtap='jump' data-index='{{index}}' data-url="{{item.url}}">
-      <view wx:if="index!=1">
+  <block wx:for="{{list}}" wx:key="{{index}}" >
+      <view  bindtap='jump' data-index='{{index}}' data-url="{{item.url}}">
         <image src='{{item.img}}'></image>
         <text>{{language?item.language.Chinese:item.language.Englist}}</text>
       </view>

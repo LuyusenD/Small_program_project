@@ -19,7 +19,8 @@
     "pages/evaluate/evaluate",
     "pages/orderListDetail/orderListDetail",
     "pages/evaluateDetail/evaluateDetail",
-    "pages/adminAddCar/adminAddCar"
+    "pages/adminAddCar/adminAddCar",
+    "pages/Set/Set"
   ],
   "permission": {
     "scope.userLocation": {

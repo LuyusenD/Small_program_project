@@ -1,0 +1,5 @@
+<!--pages/Set/Set.wxml-->
+<van-tabs active="{{ active }}" bind:change="activeonChange">
+  <van-tab title="{{language?'车':'Car'}}"></van-tab>
+  <van-tab title="{{language?'服务':'Serve'}}"></van-tab>
+</van-tabs>

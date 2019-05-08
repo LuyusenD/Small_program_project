@@ -81,9 +81,6 @@ Page({
 
   },
   onShow: function () {
-    this.setData({
-      serve:wx.getStorageSync('Serve').serve
-    })
     if (wx.getStorageSync('language')) {
       if (wx.getStorageSync('language').language) {
         this.setData({
@@ -112,6 +109,25 @@ Page({
     }
     _this.isOpenid();
     _this.getServe();
+    var list = []
+    let serve = wx.getStorageSync('Serve').serve;
+    for(var i=0;i<serve.length;i++){
+      console.log(serve[i])
+      if(serve[i].id!=1){
+        if(this.data.language){
+          serve[i].name = serve[i].name.split('(')[0];
+          console.log(serve[i].name)
+          list.push(serve[i])
+        }else{
+          serve[i].name = serve[i].name.split('(')[1].split(')')[0];
+          console.log(serve[i].name)
+          list.push(serve[i])
+        }
+      }
+    }
+    this.setData({
+      serve:list
+    })
   },
   //  判断本地是否有openid
   isOpenid() {

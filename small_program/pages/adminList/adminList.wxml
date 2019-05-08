@@ -47,6 +47,12 @@
       <view>{{language?'修改密码':'Set PassWord'}}</view>
     </view>
   </view>
+  <view bindtap='jump' data-url='/pages/Set/Set'>
+    <view>
+      <image src='/image/setPassword.png'></image>
+      <view>{{language?'修改':'Set'}}</view>
+    </view>
+  </view>
 </view>
 <view style='width:80%;margin:0 auto;'>
   <van-button size="large" round  type="danger" bindtap='isloginOut'>{{language?'退出登录':'Logout'}}</van-button>

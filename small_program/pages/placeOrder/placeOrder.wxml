@@ -1,7 +1,7 @@
 <!--pages/placeOrder/placeOrder.wxml-->
 <van-tabs wx:if='{{obj.oTypeIndex<3}}' active="{{ active }}" bind:change="activeonChange">
-  <van-tab title="接机"></van-tab>
-  <van-tab title="送机"></van-tab>
+  <van-tab title="{{language?'接机':'Airport pickup'}}"></van-tab>
+  <van-tab title="{{language?'送机':'send to Airport'}}"></van-tab>
 </van-tabs>
   <van-cell-group>
    <van-field
