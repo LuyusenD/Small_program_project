@@ -111,6 +111,7 @@ Page({
     _this.getServe();
     var list = []
     let serve = wx.getStorageSync('Serve').serve;
+    console.log(serve)
     for(var i=0;i<serve.length;i++){
       console.log(serve[i])
       if(serve[i].id!=1){
