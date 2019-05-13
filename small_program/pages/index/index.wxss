@@ -54,13 +54,13 @@ page{
 .container{
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: start  ;
   flex-wrap: wrap;
   margin-top: 33rpx;
 }
 .container>view{
   width: 30%;
-  /* margin-bottom:60rpx ; */
+  margin:0 10rpx ;
 }
 .container>view>image{
   display: block;

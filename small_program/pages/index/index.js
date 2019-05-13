@@ -68,7 +68,8 @@ Page({
       '/image/login.jpg',
       '/image/login.jpg',
       '/image/login.jpg',
-    ]
+    ],
+    url:url.url
   },
   //事件处理函数
   bindViewTap: function () {
@@ -114,6 +115,7 @@ Page({
     console.log(serve)
     for(var i=0;i<serve.length;i++){
       console.log(serve[i])
+      // serve[i].icon=url.url+serve[i].icon;
       if(serve[i].id!=1){
         if(this.data.language){
           serve[i].name = serve[i].name.split('(')[0];

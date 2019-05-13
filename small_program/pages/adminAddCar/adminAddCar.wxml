@@ -1,24 +1,45 @@
 <!--pages/adminAddCar/adminAddCar.wxml-->
-<view style='height:50rpx;'></view>
-<van-cell-group>
-  <van-field
-    value="{{ oType }}"
-    type="text"
-    label="{{language?'类型':'Type'}}"
-    placeholder="{{language?'请输入要添加的类型':'Please enter the type you want to add'}}"
-    bind:input='getoType'
-    border="{{ false }}"
-  />
-</van-cell-group>
-<van-cell-group>
-  <van-field
-    value="{{ money }}"
-    type="text"
-    label="{{language?'价格':'Money'}}"
-    placeholder="{{language?'请输入价格':'Please enter the price'}}"
-    bind:input='getMoeny'
-    border="{{ false }}"
-  />
-</van-cell-group>
-<view style='height:50rpx;'></view>
-<van-button size="large" bindtap='addSub' type='primary'>{{language?'添加服务':'Add service'}}</van-button>
+<van-tabs active="{{ active }}" bind:change="activeonChange">
+  <van-tab title="{{language?'添加':'add'}}"></van-tab>
+  <van-tab title="{{language?'修改':'set'}}"></van-tab>
+</van-tabs>
+<view wx:if="{{active==0}}">
+  <view style='height:50rpx;'></view>
+  <van-cell-group>
+    <van-field
+      value="{{ oType }}"
+      type="text"
+      label="{{language?'类型':'Type'}}"
+      placeholder="{{language?'请输入要添加的类型':'Please enter the type you want to add'}}"
+      bind:input='getoType'
+      border="{{ false }}"
+    />
+  </van-cell-group>
+  <van-cell-group>
+    <van-field
+      value="{{ money }}"
+      type="text"
+      label="{{language?'价格':'Money'}}"
+      placeholder="{{language?'请输入价格':'Please enter the price'}}"
+      bind:input='getMoeny'
+      border="{{ false }}"
+    />
+  </van-cell-group>
+  <view style='height:50rpx;'></view>
+  <van-button size="large" bindtap='addSub' type='primary'>{{language?'添加车型':'Add Car'}}</van-button>
+</view>
+<view wx:else>
+  <view wx:if="{{serve.length>0}}">
+    <view wx:for="{{serve}}" wx:key="{{item.id}}">
+      <van-row>
+        <van-col span="10">{{language?'类型：'+item.name:'Type：'+item.name}}</van-col>
+        <van-col span="10">{{language?'价格：'+item.money:'Money：'+item.money}}</van-col>
+        <van-col span="4"><van-button size="small" data-detail="{{item}}" bindtap='SetCar' type='info'>修改</van-button></van-col>
+      </van-row>
+    </view>
+  </view>
+  <view class='center' wx:else>
+     <image src='/image/noOrder.png' style='width:50px;height:50px'></image>
+    <!-- <view>还没有已完成订单呢</view> -->
+  </view>
+</view>

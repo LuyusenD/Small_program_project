@@ -6,16 +6,18 @@ Page({
    * 页面的初始数据
    */
   data: {
+    active:0,
     oType: '',
     money: '',
-    language: true
+    language: true,
+    serve:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    
   },
 
   /**
@@ -24,11 +26,18 @@ Page({
   onReady: function () {
 
   },
-
+  getServe() {
+    console.log(wx.getStorageSync("Serve"))
+    this.setData({
+      serve: wx.getStorageSync("Serve").vehicle
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    // this.getServe();
+    this.getServeType();
     if (wx.getStorageSync('language')) {
       if (wx.getStorageSync('language').language) {
         this.setData({
@@ -147,8 +156,8 @@ Page({
             money:'',
           });
           setTimeout(() => {
-            wx.navigateBack();
             this.getServeType();
+            wx.navigateBack();
           }, 2000)
         }
       })
@@ -167,6 +176,12 @@ Page({
       .then((res) => {
         if (res.code == 200) {
           wx.hideLoading();
+          console.log(111111111111111)
+          console.log(111111111111111)
+          this.setData({
+            serve: res.data.vehicle
+          })
+          console.log(this.data.vehicle)
           wx.setStorageSync('Serve', res.data)
         } else {
           wx.hideLoading();
@@ -178,4 +193,24 @@ Page({
         }
       })
   },
+  // 用户选择状态
+  activeonChange(e) {
+    // console.log(e)
+    if (e.detail.index == 0) {
+      console.log('添加');
+      this.setData({
+        active: e.detail.index
+      })
+    } else {
+      console.log('修改');
+      this.setData({
+        active: e.detail.index
+      })
+    }
+  },
+  SetCar(e){
+    wx.navigateTo({
+      url: '/pages/SetCar/SetCar?id=' + e.currentTarget.dataset.detail.id,
+    })
+  }
 })

@@ -6,17 +6,21 @@ Page({
    * 页面的初始数据
    */
   data: {
+    active:0,
     oType: '',
     img: '/image/add.png',
     money: '',
-    language: true
+    language: true,
+    // serve
+    serve:[],
+    url:url.url
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // this.getServe();
   },
 
   /**
@@ -25,11 +29,11 @@ Page({
   onReady: function () {
 
   },
-
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.getServeType();
     if (wx.getStorageSync('language')) {
       if (wx.getStorageSync('language').language) {
         this.setData({
@@ -83,6 +87,12 @@ Page({
   onShareAppMessage: function () {
 
   },
+  getServe(){
+    console.log(wx.getStorageSync("Serve"))
+    this.setData({
+      serve: wx.getStorageSync("Serve").serve
+    })
+  },
   getoType(e) {
     console.log(e.detail);
     this.setData({
@@ -132,8 +142,8 @@ Page({
               money:''
             });
             setTimeout(() => {
-              wx.navigateBack();
               this.getServeType();
+              wx.navigateBack();
             }, 2000)
           }
         })
@@ -159,6 +169,12 @@ Page({
       .then((res) => {
         if (res.code == 200) {
           wx.hideLoading();
+          console.log(111111111111111)
+          console.log(111111111111111)
+          this.setData({
+            serve:res.data.serve
+          })
+          console.log(this.data.serve)
           wx.setStorageSync('Serve', res.data)
         } else {
           wx.hideLoading();
@@ -231,7 +247,7 @@ Page({
           });
           console.log(res.data.url)
           this.setData({
-            img: url.url+ res.data.url
+            img: res.data.url
           });
         } else {
           wx.showToast({
@@ -240,5 +256,29 @@ Page({
           });
         }
       })
+  },
+  // 用户选择状态
+  activeonChange(e) {
+    // console.log(e)
+    if(e.detail.index==0){
+      console.log('添加');
+      this.setData({
+        active: e.detail.index
+      })
+    }else{
+      console.log('修改');
+      this.setData({
+        active: e.detail.index
+      })
+    }
+  },
+  setServe(e){
+    console.log(e.currentTarget.dataset.detail)
+    wx.navigateTo({
+      url: '/pages/SetServe/setServe?id=' + e.currentTarget.dataset.detail.id,
+    })
+  },
+  delServe(e){
+    console.log(e.currentTarget.dataset.detail)
   }
 })

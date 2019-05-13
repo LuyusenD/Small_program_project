@@ -1,5 +1,32 @@
 <!--pages/Set/Set.wxml-->
 <van-tabs active="{{ active }}" bind:change="activeonChange">
-  <van-tab title="{{language?'车':'Car'}}"></van-tab>
-  <van-tab title="{{language?'服务':'Serve'}}"></van-tab>
+  <van-tab title="{{language?'添加':'add'}}"></van-tab>
+  <van-tab title="{{language?'删除':'del'}}"></van-tab>
 </van-tabs>
+<view wx:if="{{active==0}}">
+  <view style='height:50rpx;'></view>
+  <view class='ioic'>
+    <image bindtap='base64' src="{{img=='/image/add.png'?img:url+img}}"></image>
+  </view>
+  <view style='height:400rpx;'></view>
+  <view style='clear:both'>
+    <van-button size="large" bindtap='addoType' type='primary'>{{language?'上传图片':'Upload pictures'}}</van-button>
+  </view>
+</view>
+<block wx:if="{{active==1}}">
+  <!-- <van-swipe-cell wx:for="{{serve}}" wx:key="{{index}}"  id="swipe-cell" right-width="{{ 65 }}"  async-close bind:close="onClose">
+    <van-cell-group >
+    <image bindtap='set' data-detail='{{item}}' style='width:80rpx;height:80rpx;margin-left:4%' src='{{url+item.url}}'></image>
+    </van-cell-group>
+    <view slot="right" data-detail='{{item}}' bindtap='Del'>删除</view>
+  </van-swipe-cell> -->
+  
+  <van-swipe-cell  wx:for="{{serve}}" wx:key="{{index}}"  right-width="{{ 65 }}" left-width="{{ 65 }}" >
+    <van-cell-group>
+    <image  data-detail='{{item}}' style='width:80rpx;height:80rpx;margin-left:4%' src='{{url+item.url}}'></image>
+    </van-cell-group>
+    <view slot="right" data-detail='{{item}}'  bindtap='Del'>删除</view>
+  </van-swipe-cell>
+</block>
+  
+<van-dialog id="van-dialog" />

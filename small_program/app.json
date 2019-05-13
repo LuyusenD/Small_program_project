@@ -20,7 +20,9 @@
     "pages/orderListDetail/orderListDetail",
     "pages/evaluateDetail/evaluateDetail",
     "pages/adminAddCar/adminAddCar",
-    "pages/Set/Set"
+    "pages/Set/Set",
+    "pages/SetCar/SetCar",
+    "pages/SetServe/setServe"
   ],
   "permission": {
     "scope.userLocation": {

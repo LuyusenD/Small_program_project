@@ -6,5 +6,5 @@
     "van-tabs": "/vant-weapp/dist/tabs/index",
     "van-card": "/vant-weapp/dist/card/index"
   },
-  "navigationBarTitleText": "添加服务类型"
+  "navigationBarTitleText": "修改车型"
 }

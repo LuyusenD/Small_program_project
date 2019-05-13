@@ -1,0 +1,27 @@
+<view style='height:50rpx;'></view>
+  <view class='ioic'>
+    <text>{{language?'上传icon':'upload icon'}}</text>
+    <image bindtap='base64' src="{{img=='/image/add.png'?img:url+img}}"></image>
+  </view>
+  <van-cell-group>
+    <van-field
+      value="{{ oType }}"
+      type="text"
+      label="{{language?'服务类型':'Service type'}}"
+      placeholder="{{language?'请输入要添加的服务类型':'Please enter the type of service you want to add'}}"
+      bind:input='getoType'
+      border="{{ false }}"
+    />
+  </van-cell-group>
+  <van-cell-group>
+    <van-field
+      value="{{ money }}"
+      type="number"
+      label="{{language?'服务金额':'Service amount'}}"
+      placeholder="{{language?'请输入要添加的服务类型':'Please enter the amount of service you want to add'}}"
+      bind:input='getoMoney'
+      border="{{ false }}"
+    />
+  </van-cell-group>
+  <view style='height:100rpx;'></view>
+  <van-button size="large" bindtap='addoType' type='primary'>{{language?'修改服务':'Set service'}}</van-button>

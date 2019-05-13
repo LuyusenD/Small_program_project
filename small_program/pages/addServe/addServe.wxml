@@ -1,28 +1,55 @@
 <!--pages/addServe/addServe.wxml-->
-<view style='height:50rpx;'></view>
-<view class='ioic'>
-  <text>{{language?'上传icon':'upload icon'}}</text>
-  <image bindtap='base64' src="{{img=='/image/add.png'?img:img}}"></image>
+<van-tabs active="{{ active }}" bind:change="activeonChange">
+  <van-tab title="{{language?'添加':'add'}}"></van-tab>
+  <van-tab title="{{language?'修改':'set'}}"></van-tab>
+</van-tabs>
+<view wx:if="{{active==0}}">
+  <view style='height:50rpx;'></view>
+  <view class='ioic'>
+    <text>{{language?'上传icon':'upload icon'}}</text>
+    <image bindtap='base64' src="{{img=='/image/add.png'?img:url+img}}"></image>
+  </view>
+  <van-cell-group>
+    <van-field
+      value="{{ oType }}"
+      type="text"
+      label="{{language?'服务类型':'Service type'}}"
+      placeholder="{{language?'请输入要添加的服务类型':'Please enter the type of service you want to add'}}"
+      bind:input='getoType'
+      border="{{ false }}"
+    />
+  </van-cell-group>
+  <van-cell-group>
+    <van-field
+      value="{{ money }}"
+      type="number"
+      label="{{language?'服务金额':'Service amount'}}"
+      placeholder="{{language?'请输入要添加的服务类型':'Please enter the amount of service you want to add'}}"
+      bind:input='getoMoney'
+      border="{{ false }}"
+    />
+  </van-cell-group>
+  <view style='height:100rpx;'></view>
+  <van-button size="large" bindtap='addoType' type='primary'>{{language?'添加服务':'Add service'}}</van-button>
 </view>
-<van-cell-group>
-  <van-field
-    value="{{ oType }}"
-    type="text"
-    label="{{language?'服务类型':'Service type'}}"
-    placeholder="{{language?'请输入要添加的服务类型':'Please enter the type of service you want to add'}}"
-    bind:input='getoType'
-    border="{{ false }}"
-  />
-</van-cell-group>
-<van-cell-group>
-  <van-field
-    value="{{ money }}"
-    type="number"
-    label="{{language?'服务金额':'Service amount'}}"
-    placeholder="{{language?'请输入要添加的服务类型':'Please enter the amount of service you want to add'}}"
-    bind:input='getoMoney'
-    border="{{ false }}"
-  />
-</van-cell-group>
-<view style='height:100rpx;'></view>
-<van-button size="large" bindtap='addoType' type='primary'>{{language?'添加服务':'Add service'}}</van-button>
+<view wx:else>
+  <view wx:if="{{serve.length>0}}">
+    <view wx:for="{{serve}}" wx:key="{{item.id}}">
+      <van-card
+        price="{{item.money}}"
+        desc="11111"
+        title="{{item.name}}"
+        thumb="{{ url+item.icon }}"
+      >
+        <view slot="footer">
+          <van-button size="mini" type='primary' bindtap='setServe' data-detail='{{item}}'>修改</van-button>
+          <!-- <van-button size="mini" type='danger' bindtap='delServe' data-detail='{{item}}'>删除</van-button> -->
+        </view>
+      </van-card>
+    </view>
+  </view>
+  <view class='center' wx:else>
+     <image src='/image/noOrder.png' style='width:50px;height:50px'></image>
+    <!-- <view>还没有已完成订单呢</view> -->
+  </view>
+</view>

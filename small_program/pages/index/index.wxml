@@ -37,7 +37,7 @@
 <view class='container container-server-icon'>
 
  <view wx:for="{{serve}}" wx:key="{{index}}" bindtap='jump' data-index='{{index==0?index+1:index+2}}' data-url="/pages/placeOrder/placeOrder">
-  <image src='{{item.icon}}'></image>
+  <image src='{{url+item.icon}}'></image>
   <!-- <text>{{language?item.language.Chinese:item.language.Englist}}</text> -->
   <text>{{item.name}}</text>
  </view>

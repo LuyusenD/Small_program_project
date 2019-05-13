@@ -16,7 +16,8 @@ Page({
     page:1,
     // 当前页数显示个数
     pageSize:6,
-    language:true
+    language:true,
+    url:url.url
   },
 
   /**
@@ -159,7 +160,7 @@ Page({
             for (var i = 0; i < arr.length; i++) {
               for (var j = 0; j < res.data.data.length; j++) {
                 if (res.data.data[j].oType == arr[i].id) {
-                  res.data.data[j].oType = arr[i].name;
+                  res.data.data[j].oType = arr[i].name.split('(')[0];
                   res.data.data[j].img =arr[i].icon;
                   continue;
                 }

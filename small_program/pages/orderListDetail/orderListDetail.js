@@ -98,8 +98,8 @@ Page({
           var arr = wx.getStorageSync('Serve').serve;
             for (var j = 0; j < arr.length; j++) {
               if (res.data.data[0].oType == arr[j].id) {
-                res.data.data[0].oType = arr[j].name;
-                res.data.data[0].img =   arr[j].icon;
+                res.data.data[0].oType = arr[j].name.split('(')[0];
+                res.data.data[0].img = url.url+  arr[j].icon;
                 console.log('http://' + arr[j].icon)
                 continue;
               }
