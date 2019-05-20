@@ -141,7 +141,7 @@ Page({
         },
         data: {
           id:this.data.id,
-          type:'server',
+          type:'serve',
           // str: this.data.oType,
           // url: this.data.img,
           money: this.data.money
@@ -152,7 +152,7 @@ Page({
           console.log(res);
           if (res.code == 200) {
             wx.showToast({
-              title: this.data.language ? '添加成功' : 'Add success',
+              title: this.data.language ? '修改成功' : 'set success',
               icon: 'success',
               duration: 2000
             });

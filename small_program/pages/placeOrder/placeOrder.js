@@ -6,6 +6,29 @@ Page({
    * 页面的初始数据
    */
   data: {
+    date1: '',
+    datePickerValue: [ '', ''],
+    datePickerIsShow: false,
+    date:'',
+    year: new Date().getFullYear(),      // 年份
+    month: new Date().getMonth() + 1,    // 月份
+    day: new Date().getDate(),           // 日期
+
+    header: true,                        // 日历标题
+    lunar: true,                         // 显示农历
+    more: false,                          // 显示非当前月日期                
+    week_title: true,                    // 显示周标题
+    next: true,                          // 显示下个月
+    prev: true,                          // 显示上个月
+
+    cs: 30,                              // 单元格大小
+    title_type: 'en',                    // 周标题类型
+    titleType: ['英文单字母', '英语简写', '中文简写'],
+    title_index: 0,
+
+    style: [],
+    activeType: 'rounded', // 日期背景效果
+    days_addon: [],        // 日期
     active: 0,
     icon: {
       normal: '//img.yzcdn.cn/icon-normal.png',
@@ -56,6 +79,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    this.distance(121.48941, 31.40527, 113.88308, 22.55329)
     console.log(options.index)
     let obj = {
       oTel: '',
@@ -293,6 +318,14 @@ Page({
   },
   // 显示选择地址
   getAddress() {
+    this.setData({
+      time: false,
+      vehicle: false,
+      show: false,
+      LocationIs: false
+
+      // currentDate: event.detail.value
+    });
     var that = this;
     wx.getLocation({
       type: 'gcj02', //返回可以用于wx.openLocation的经纬度
@@ -332,6 +365,36 @@ Page({
         })
       }
     })
+  },
+  focusname(){
+    this.setData({
+      time: false,
+      vehicle: false,
+      show: false,
+      LocationIs: false
+
+      // currentDate: event.detail.value
+    });
+  },
+  focusphone(){
+    this.setData({
+      time: false,
+      vehicle: false,
+      show: false,
+      LocationIs: false
+
+      // currentDate: event.detail.value
+    });
+  },
+  focusly(){
+    this.setData({
+      time: false,
+      vehicle: false,
+      show: false,
+      LocationIs: false
+
+      // currentDate: event.detail.value
+    });
   },
   // 选择预约时间
   getTime(event) {
@@ -505,9 +568,9 @@ Page({
   },
   // 输入手机号出发事件
   getPhone(e) {
-    if ((/^[1][3-8]\d{9}$|^([6|9])\d{7}$|^[0][9]\d{8}$|^[6]([8|6])\d{5}$/.test(e.detail))) {
+    if ((/^[1][3-8]\d{9}$|^([6|9])\d{7}$|^[0][9]\d{8}$|^[6]([8|6])\d{5}$/.test(e.detail.value))) {
       var obj = {
-        oTel: e.detail,
+        oTel: e.detail.value,
         oAddress: this.data.obj.oAddress,
         oType: this.data.obj.oType,
         oTime: this.data.obj.oTime,
@@ -525,7 +588,7 @@ Page({
       })
     } else {
       var obj = {
-        oTel: e.detail,
+        oTel: e.detail.value,
         oAddress: this.data.obj.oAddress,
         oType: this.data.obj.oType,
         oTime: this.data.obj.oTime,
@@ -624,5 +687,100 @@ Page({
         icon: 'none'
       });
     }
+  },
+  dayClick: function (event) {
+    const year = event.detail.year;
+    const month = event.detail.month;
+    const day = event.detail.day;
+    const color = event.detail.color;
+    const lunarMonth = event.detail.lunarMonth;
+    const lunarDay = event.detail.lunarDay;
+    const background = event.detail.background;
+    console.log(background)
+    var data = new Date(year + '-' + month + '-' +day).getTime();
+    console.log(data)
+    if(new Date().getTime()>data){
+      wx.showToast({
+        title: '不能小于今日',
+        icon:'none'
+      })
+    }else{
+      this.setData({
+        style: [
+          { month: 'current', day: day, color: 'white', background: '#58cc69' },
+        ],
+        time:false,
+        date1: year + '-' + month + '-' + day,
+        datePickerIsShow:true
+      });
+      console.log(this.data.datePickerIsShow)
+    }
+  },
+    nextMonth: function (event) {
+    const currentYear = event.detail.currentYear;
+    const currentMonth = event.detail.currentMonth;
+    const prevMonth = event.detail.prevMonth;
+    const prevYear = event.detail.prevYear;
+      this.setData({
+        style: [
+          
+        ]
+      });
+  },
+  datePickerOnSureClick: function (e) {
+    var _this=this;
+    console.log('datePickerOnSureClick');
+    console.log(e);
+    this.setData({
+      date: ` ${_this.data.date1} ${e.detail.value[0]} : ${e.detail.value[1]}`,
+      datePickerValue: e.detail.value,
+      datePickerIsShow: false,
+    });
+    var obj = {
+      oTel: this.data.obj.oTel,
+      oAddress: this.data.obj.oAddress,
+      oType: this.data.obj.oType,
+      oTime:` ${_this.data.date1} ${e.detail.value[0]} : ${e.detail.value[1]}`,
+      oRemark: this.data.obj.oRemark,
+      openId: this.data.obj.openId,
+      oTypeIndex: this.data.obj.oTypeIndex,
+      oName: this.data.obj.oName,
+      oVehicle: this.data.obj.oVehicle,
+      oVehicleIndex: this.data.obj.oVehicleIndex
+    };
+    this.setData({
+      time: false,
+      currentDate: ` ${_this.data.date1} ${e.detail.value[0]} : ${e.detail.value[1]}`,
+      obj
+    });
+  },
+
+  datePickerOnCancelClick: function (event) {
+    console.log('datePickerOnCancelClick');
+    console.log(event);
+    this.setData({
+      datePickerIsShow: false,
+    });
+  },
+  distance: function (la1, lo1, la2, lo2) {
+
+    var La1 = la1 * Math.PI / 180.0;
+
+    var La2 = la2 * Math.PI / 180.0;
+
+    var La3 = La1 - La2;
+
+    var Lb3 = lo1 * Math.PI / 180.0 - lo2 * Math.PI / 180.0;
+
+    var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(La3 / 2), 2) + Math.cos(La1) * Math.cos(La2) * Math.pow(Math.sin(Lb3 / 2), 2)));
+
+    s = s * 6378.137;//地球半径
+
+    s = Math.round(s * 10000) / 10000;
+    console.log("计算结果", s)
+
+    return s
+
+
   }
 })

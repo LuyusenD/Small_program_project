@@ -13,6 +13,7 @@
     placeholder="{{language?'请输入你的姓名':'Please enter your name'}}"
     border="{{ false }}"
     bind:input='getName'
+    bind:focus='focusname'
   />
   <!-- <van-cell
       required
@@ -22,7 +23,18 @@
       bind:click='getLocation'
   /> -->
 </van-cell-group>
-<van-cell-group>
+<view class='input'>
+  <view class='input-l'>
+    <image src='/image/1558331389.jpg' style='padding-left:12rpx; width:36rpx;height:30rpx'></image>
+    <text style='font-size:28rpx;padding:22rpx;'>{{language?'电话':'tel'}}</text>
+      <van-button slot="button" size="mini" bind:click="formCountry" type="default">{{Country}}</van-button>
+  </view>
+  <view class='input-r'>
+    <input bindinput='getPhone' bindfocus='focusphone' placeholder="{{language?'请输入电话号码':'Please enter your telephone number'}}" style='font-size:12px;'></input>
+    <text wx:if="{{phoneerr!=''}}" style='width:100%;font-size:12px;color:red'>{{phoneerr}}</text>
+  </view>
+</view>
+<!-- <van-cell-group>
   <van-field
     value="{{ oTel }}"
     left-icon="phone"
@@ -37,10 +49,11 @@
     error-message="{{phoneerr}}"
     border="{{ false }}"
     bind:input='getPhone'
+    bind:focus='focusphone'
   >
     <van-button slot="button" size="mini" bind:click="formCountry" type="default">{{Country}}</van-button>
   </van-field>
-</van-cell-group>
+</van-cell-group> -->
 <van-cell-group>
   <!-- <van-field
     value="{{ obj.oTel }}"
@@ -71,7 +84,8 @@
       title="{{language?'预约时间':'Time of appointment'}}"
       value="{{obj.oTime==''&&language?'请选择预约时间':obj.oTime==''&&!language?'Please choose the appointment time':obj.oTime}}>"
       bind:click='getTime'
-  />
+  >
+  </van-cell>
     <!-- <van-cell
       required
       icon="friends"
@@ -96,11 +110,12 @@
     bind:change='leMessage'
     autosize
     border="{{ false }}"
+    bind:focus="focusly"
   />
 </van-cell-group>
-<view style='height:100rpx;'></view>
+<!-- <view style='height:100rpx;'></view> -->
 <!-- 预约时间 -->
-<van-popup
+<!-- <van-popup
  style='z-index:100000'
   show="{{ time }}"
   position="bottom"
@@ -127,7 +142,37 @@
   <van-col offset="2" span="3.8">时</van-col>
   <van-col offset="2" span="3.8">分</van-col>
 </van-row>
-</van-popup>
+</van-popup> -->
+<view wx:if='{{time}}' class='rl'>
+  <calendar 
+    year="{{year}}"
+    month="{{month}}" 
+    day="{{day}}" 
+    start-date="2001-10" 
+    end-date="2028-09" 
+    
+    header="{{header}}" 
+    next="{{next}}" 
+    prev="{{prev}}" 
+    addon="mixed"
+    days-addon="{{days_addon}}"
+    
+    weeks="{{week_title}}"
+    weeks-type="{{title_type}}" 
+    show-more-days="{{more}}" 
+    
+
+    cell-size="{{cs}}"    
+    
+    days-color="{{style}}"
+    active-type="{{activeType}}"
+    next-month='hi'
+    
+    bindnextMonth='nextMonth'                
+    bindprevMonth='prevMonth'
+    binddateChange='dateChange'
+    binddayClick='dayClick' />
+</view>
 <!-- 服务类型 -->
 <van-popup
   show="{{ show }}"
@@ -192,6 +237,7 @@
   bind:cancel="onCancelCountry"
   bind:confirm="onChangeCountry"
 />
+
 </van-popup>
 <van-submit-bar
   price="{{ price }}"
@@ -200,3 +246,9 @@
 />
 <!-- <van-button size="large" type="primary" bindtap='makeAppointment'>{{language?'立即预约':'Immediate appointment'}}</van-button> -->
 
+<date-picker
+    id="date-picker"
+    value="{{datePickerValue}}" 
+    isShow="{{datePickerIsShow}}"
+    bindsureclick="datePickerOnSureClick"
+    bindcancelclick="datePickerOnCancelClick" />

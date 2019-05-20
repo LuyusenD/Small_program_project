@@ -82,6 +82,7 @@ Page({
 
   },
   onShow: function () {
+    this.getbanner();
     if (wx.getStorageSync('language')) {
       if (wx.getStorageSync('language').language) {
         this.setData({
@@ -130,6 +131,26 @@ Page({
     }
     this.setData({
       serve:list
+    })
+  },
+  // 获取轮播图
+  getbanner(){
+    // 获取轮播图
+    var opt = {
+      url: url.url + 'banner/getbanner',
+      method: "GET",
+      header: {
+        "content-type": "application/json"
+      },
+      data: {},
+    };
+    url.ajax(opt).then((res)=>{
+      console.log(res)
+      if(res.code==200){
+        this.setData({
+          login:res.data.list
+        })
+      }
     })
   },
   //  判断本地是否有openid

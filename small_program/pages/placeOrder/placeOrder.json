@@ -14,6 +14,8 @@
     "van-row": "/vant-weapp/dist/row/index",
     "van-col": "/vant-weapp/dist/col/index",
     "van-tab": "/vant-weapp/dist/tab/index",
-    "van-tabs": "/vant-weapp/dist/tabs/index"
+    "van-tabs": "/vant-weapp/dist/tabs/index",
+    "calendar": "../../components/calendar/calendar",
+    "date-picker": "../../components/date-picker/date-picker"
   }
 }
