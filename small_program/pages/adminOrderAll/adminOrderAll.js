@@ -38,8 +38,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (uni.getStorageSync('language')) {
-      if (uni.getStorageSync('language').language) {
+    if (wx.getStorageSync('language')) {
+      if (wx.getStorageSync('language').language) {
         this.setData({
           language: true
         })
@@ -47,13 +47,13 @@ Page({
         this.setData({
           language: false
         });
-        console.log(uni.getStorageSync('language'))
+        console.log(wx.getStorageSync('language'))
       }
     } else {
       this.setData({
         language: false
       });
-      console.log(uni.getStorageSync('language'))
+      console.log(wx.getStorageSync('language'))
     }
   },
 
@@ -82,7 +82,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    uni.showLoading({
+    wx.showLoading({
       title: this.data.language?'正在加载数据...':'Loading...',
       mask: true
     });
@@ -93,19 +93,19 @@ Page({
         page: this.data.page + 1
       });
       setTimeout(() => {
-        uni.hideLoading();
+        wx.hideLoading();
         this.setData({
           order: this.nextData(this.data.orderList, this.data.pageSize, this.data.page)
         });
-        uni.showToast({
+        wx.showToast({
           title: this.data.language ? '订单刷新成功' :'Successful order refresh',
           icon: 'success'
         })
       }, 1500)
     } else {
       setTimeout(() => {
-        uni.hideLoading();
-        uni.showToast({
+        wx.hideLoading();
+        wx.showToast({
           title: this.data.language ? '亲,没有更多订单了!' :'No more orders, dear!',
           icon: 'none'
         })
@@ -121,7 +121,7 @@ Page({
   },
   // 所有订单页面
   getorderListAll(){
-    uni.showLoading({
+    wx.showLoading({
       title: this.data.language?'正在加载数据...':'Loadin...',
       mask: true
     })
@@ -130,10 +130,10 @@ Page({
     };
     url.ajax(opt)
       .then((res) => {
-        uni.hideLoading();
+        wx.hideLoading();
         if (res.code == 200) {
           if (res.data) {
-            var arr = uni.getStorageSync('Serve').serve;
+            var arr = wx.getStorageSync('Serve').serve;
             console.log(res.data.data.length)
             console.log(arr)
             for (var i = 0; i < arr.length; i++) {
@@ -145,7 +145,7 @@ Page({
                 }
               }
             }
-            var arr1 = uni.getStorageSync('Serve').vehicle;
+            var arr1 = wx.getStorageSync('Serve').vehicle;
             for (var i = 0; i < arr1.length; i++) {
               for (var j = 0; j < res.data.data.length; j++) {
                 if (res.data.data[j].oVehicle == arr1[i].id) {
@@ -160,13 +160,13 @@ Page({
               order: this.nextData(res.data.data, this.data.pageSize, this.data.page)
             })
           } else {
-            uni.showToast({
+            wx.showToast({
               title: this.data.language ? '获取订单信息失败,请稍后重试...' :'Failed to obtain order information. Please try again later.',
               icon: 'none'
             })
           }
         } else {
-          uni.showToast({
+          wx.showToast({
             title: this.data.language ? '获取订单信息失败,请稍后重试...' : 'Failed to obtain order information. Please try again later.',
             icon: 'none'
           })
@@ -289,7 +289,7 @@ Page({
   // 页面跳转
   jump(e){
     var url=e.currentTarget.dataset.url;
-    uni.navigateTo({
+    wx.navigateTo({
       url: url,
     })
   }

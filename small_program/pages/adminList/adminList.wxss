@@ -88,7 +88,7 @@ page{
 }
 .container>view>view{
   font-size: 14px;
-  width:50%;
+  width:60%;
   /* height: 150rpx; */
   margin: 0 auto;
   line-height: 83.5rpx;
