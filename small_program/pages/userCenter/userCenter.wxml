@@ -30,7 +30,7 @@
           {{checked?language.Chinese:language.Englist}}
           <view >
           China
-         <switch checked bindchange="onChange" />
+         <switch checked="{{checked}}" bindchange="onChange" />
           English
           </view>
         </view>

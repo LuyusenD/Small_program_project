@@ -50,7 +50,7 @@
   <view bindtap='jump' data-url='/pages/Set/Set'>
     <view>
       <image src='/image/lubo.png'></image>
-      <view>{{language?'修改':'Set'}}</view>
+      <view>{{language?'图片':'banner'}}</view>
     </view>
   </view>
 </view>

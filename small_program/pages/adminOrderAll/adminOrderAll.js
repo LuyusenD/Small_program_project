@@ -17,7 +17,8 @@ Page({
     page: 1,
     // 当前页数显示个数
     pageSize: 6,
-    language:true
+    language:true,
+    url:url.url
   },
 
   /**

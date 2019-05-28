@@ -4,7 +4,7 @@ var util = require('../../utils/util.js');
 import Dialog from '../../vant-weapp/dist/dialog/dialog';
 Page({
   data:{
-    checked: true,
+    checked: false,
     order:
       {
         Englist:'My order',
@@ -69,7 +69,7 @@ Page({
       // on confirm
       console.log(e.detail.value)
       this.setData({
-        checked: !e.detail.value
+        checked: e.detail.value
       })
       // language true==>中文   false==>英文
       wx.setStorageSync("language", {'language':this.data.checked})

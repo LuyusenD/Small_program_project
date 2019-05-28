@@ -17,9 +17,13 @@
         </view>
         <view>
           <text class="col9">预约地点:</text>
-          <text>{{list.oAddress}}</text>
+          <text>{{list.startAddress}}</text>
         </view>
-        <view class="flex_sb">
+        <view>
+          <text class="col9">终点:</text>
+          <text>{{list.endAddress}}</text>
+        </view>
+        <view >
           <view>
             <text class="col9">订单状态:</text>
             <text>{{list.oState==1?"未支付":list.oState==2?"已支付":list.oState==3?"执行中":"已完成"}}</text>

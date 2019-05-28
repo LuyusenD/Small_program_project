@@ -226,9 +226,45 @@ Page({
     var url = e.currentTarget.dataset.url;
     var index = e.currentTarget.dataset.index;
     console.log(index)
-    wx.navigateTo({
-      url: url + '?index=' + index,
-    })
+    if(index<=2){
+      wx.navigateTo({
+        url: '/pages/Transfer/transfer' + '?index=' + index,
+      })
+    }else if(index==5){
+      wx.navigateTo({
+        url: '/pages/HouseMoving/HouseMoving' + '?index=' + index,
+      })
+    }else{
+      wx.navigateTo({
+        url: '/pages/placeOrder/placeOrder' + '?index=' + index,
+      })
+    }
+    // console.log(url)
+    // wx.navigateTo({
+    //   url: url + '?index=' + index,
+    // })
+  },
+  jump1(e) {
+    var url = e.currentTarget.dataset.url;
+    var index = e.currentTarget.dataset.index;
+    console.log(index)
+    // if(index<=2){
+    //   wx.navigateTo({
+    //     url: '/pages/Transfer/transfer' + '?index=' + index,
+    //   })
+    // }else if(index==5){
+    //   wx.navigateTo({
+    //     url: '/pages/HouseMoving/HouseMoving' + '?index=' + index,
+    //   })
+    // }else{
+      wx.navigateTo({
+        url: url + '?index=' + index,
+      })
+    // }
+    // console.log(url)
+    // wx.navigateTo({
+    //   url: url + '?index=' + index,
+    // })
   },
   getSelectItem: function (e) {
     var that = this;

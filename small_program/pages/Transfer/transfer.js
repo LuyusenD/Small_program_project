@@ -7,10 +7,9 @@ Page({
    */
   data: {
     date1: '',
-    startAddress: '',
-    datePickerValue: [ '', ''],
+    datePickerValue: ['', ''],
     datePickerIsShow: false,
-    date:'',
+    date: '',
     year: new Date().getFullYear(),      // 年份
     month: new Date().getMonth() + 1,    // 月份
     day: new Date().getDate(),           // 日期
@@ -28,6 +27,9 @@ Page({
     title_index: 0,
 
     style: [],
+    endarr:[],
+    endarr1:[],
+    startAddress:'',
     activeType: 'rounded', // 日期背景效果
     days_addon: [],        // 日期
     active: 0,
@@ -44,6 +46,8 @@ Page({
     show: false,
     vehicle: false,
     LocationIs: false,
+    endAddress: '',
+    end:false,
     // 时间底部弹框
     time: false,
     // 服务类型
@@ -62,6 +66,7 @@ Page({
       oName: '',
       oVehicle: '',
       oVehicleIndex: 1,
+      endAddress:''
     },
     items: {},
     //价格
@@ -80,7 +85,37 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log(this.data.obj.endAddress=='')
+    this.setData({
+      endarr:[
+        "悉尼机场",
+        "布里斯班机场",
+        "珀斯机场",
+        "黄金海岸机场",
+        "阿德莱德机场",
+        "霍巴特国际机场",
+        "达尔文国际机场",
+        "Melbourne Airport",
+        "坎培拉国际机场",
+        "爱丽斯泉机场",
+        "凯恩斯机场",
+        "爱华隆机场",
+      ],
+      endarr1:[
+        "151.17516, -33.940048",
+        "153.121824,-27.394165",
+        "115.967243,-31.938538",
+        "153.510009,-28.165597",
+        "138.53323,-34.946141",
+        "147.507464,-42.836349",
+        "130.877543,-12.411218",
+        "144.841024,-37.669013",
+        "149.193381,-35.305231",
+        "133.902299,-23.804873",
+        "145.749938,-16.877762",
+        "144.468887,-38.038629",
+      ]
+    })
     this.distance(121.48941, 31.40527, 113.88308, 22.55329)
     console.log(options.index)
     let obj = {
@@ -93,7 +128,8 @@ Page({
       oTypeIndex: options.index,
       oName: '',
       oVehicle: '',
-      oVehicleIndex: 1
+      oVehicleIndex: 1,
+      endAddress:''
     };
     this.setData({
       obj
@@ -243,7 +279,8 @@ Page({
       vehicle: !this.data.vehicle,
       time: false,
       show: false,
-      LocationIs: false
+      LocationIs: false,
+      end:false
     })
   },
   activeonChange(event) {
@@ -255,10 +292,11 @@ Page({
       oTime: '',
       oRemark: '',
       openId: '',
-      oTypeIndex: parseInt(event.detail.index)+1,
+      oTypeIndex: parseInt(event.detail.index) + 1,
       oName: '',
       oVehicle: '',
-      oVehicleIndex: 1
+      oVehicleIndex: 1,
+      endAddress:''
     };
     console.log(obj)
     this.setData({
@@ -271,7 +309,8 @@ Page({
       time: false,
       show: false,
       LocationIs: false,
-      CountryIsShow: !this.data.CountryIsShow
+      CountryIsShow: !this.data.CountryIsShow,
+      end:false
     })
   },
   // 获取服务类型
@@ -317,6 +356,16 @@ Page({
       icon: 'none'
     })
   },
+  getendAddress() {
+    this.setData({
+      time: false,
+      vehicle: false,
+      show: false,
+      LocationIs: false,
+      end: !this.data.end
+      // currentDate: event.detail.value
+    });
+  },
   // 显示选择地址
   getAddress() {
     this.setData({
@@ -335,10 +384,10 @@ Page({
         var longitude = res.longitude
         wx.chooseLocation({
           success: function (res) {
-            console.log(res)
             that.setData({
               startAddress: res.latitude + ',' + res.longitude
             })
+            console.log(res)
             if (res.address) {
               console.log(that.data.obj.oTime)
               var obj = {
@@ -351,7 +400,8 @@ Page({
                 oTypeIndex: that.data.obj.oTypeIndex,
                 oName: that.data.obj.oName,
                 oVehicle: that.data.obj.oVehicle,
-                oVehicleIndex: that.data.obj.oVehicleIndex
+                oVehicleIndex: that.data.obj.oVehicleIndex,
+                endAddress: that.data.obj.endAddress
               };
               console.log(obj)
               that.setData({
@@ -370,27 +420,27 @@ Page({
       }
     })
   },
-  focusname(){
+  focusname() {
     this.setData({
       time: false,
       vehicle: false,
       show: false,
-      LocationIs: false
-
+      LocationIs: false,
+      end:false
       // currentDate: event.detail.value
     });
   },
-  focusphone(){
+  focusphone() {
     this.setData({
       time: false,
       vehicle: false,
       show: false,
-      LocationIs: false
-
+      LocationIs: false,
+      end:false
       // currentDate: event.detail.value
     });
   },
-  focusly(){
+  focusly() {
     this.setData({
       time: false,
       vehicle: false,
@@ -406,8 +456,8 @@ Page({
       time: !this.data.time,
       vehicle: false,
       show: false,
-      LocationIs: false
-
+      LocationIs: false,
+      end:false,
       // currentDate: event.detail.value
     });
   },
@@ -435,6 +485,11 @@ Page({
       obj
     });
     console.log(this.data.obj)
+  },
+  onCancel(event){
+    this.setData({
+      end:false
+    })
   },
   // 时间取消
   onCancelTime(event) {
@@ -510,7 +565,8 @@ Page({
       oTypeIndex: _that.data.obj.oTypeIndex,
       oName: _that.data.obj.oName,
       oVehicle: serveType,
-      oVehicleIndex: wx.getStorageSync('Serve').vehicle[e.detail.index].id
+      oVehicleIndex: wx.getStorageSync('Serve').vehicle[e.detail.index].id,
+      endAddress: _that.data.obj.endAddress
     };
     this.setData({
       obj,
@@ -518,6 +574,41 @@ Page({
     })
     console.log(this.data.obj)
     this.setData({ vehicle: false });
+  },
+  // 
+  onChangeendAddress(e) {
+    var _that = this;
+    // console.log(e)
+    // var serveType = wx.getStorageSync('Serve').vehicle[e.detail.index].name;
+    // console.log(wx.getStorageSync('Serve').vehicle[e.detail.index]);
+    // console.log(this.data.obj)
+    var obj = {
+      oTel: _that.data.obj.oTel,
+      startAddress: _that.data.obj.startAddress,
+      oType: _that.data.obj.oType,
+      oTime: _that.data.obj.oTime,
+      oRemark: _that.data.obj.oRemark,
+      openId: _that.data.obj.openId,
+      oTypeIndex: _that.data.obj.oTypeIndex,
+      oName: _that.data.obj.oName,
+      oVehicle: _that.data.obj.oVehicle,
+      oVehicleIndex: _that.data.obj.oVehicleIndex,
+      endAddress:e.detail.value
+    };
+    console.log(obj)
+    // this.setData({
+    //   obj,
+    //   price: wx.getStorageSync('Serve').vehicle[e.detail.index].money * 100
+    // })
+    // console.log(this.data.obj)
+    // this.setData({ vehicle: false });
+    console.log(e);
+    this.setData({
+      end: false,
+      endAddress: this.data.endarr1[e.detail.index],
+      obj
+    });
+    console.log(this.data.endAddress)
   },
   // 选择服务类型取消
   onCancelServeType(e) {
@@ -564,7 +655,7 @@ Page({
       oName: this.data.obj.oName,
       oVehicle: this.data.obj.oVehicle,
       oVehicleIndex: this.data.obj.oVehicleIndex,
-
+      endAddress: this.data.obj.endAddress
     };
     this.setData({
       obj,
@@ -584,7 +675,7 @@ Page({
         oName: this.data.obj.oName,
         oVehicle: this.data.obj.oVehicle,
         oVehicleIndex: this.data.obj.oVehicleIndex,
-
+        endAddress: this.data.obj.endAddress
       };
       this.setData({
         obj,
@@ -602,6 +693,7 @@ Page({
         oName: this.data.obj.oName,
         oVehicle: this.data.obj.oVehicle,
         oVehicleIndex: this.data.obj.oVehicleIndex,
+        endAddress: this.data.obj.endAddress
       };
       this.setData({
         obj,
@@ -624,7 +716,7 @@ Page({
       oName: e.detail,
       oVehicle: this.data.obj.oVehicle,
       oVehicleIndex: this.data.obj.oVehicleIndex,
-
+      endAddress: this.data.obj.endAddress
     };
     this.setData({
       obj
@@ -634,15 +726,16 @@ Page({
   makeAppointment() {
     // 判断是否为空
     // 修改服务类型
-
+console.log(this.data.obj)
     var arr = JSON.parse(JSON.stringify(this.data.obj));
     arr.openId = wx.getStorageSync("openid").openid,
       console.log(arr)
-    if (arr.oTel != '' && arr.startAddress != '' && arr.oTypeIndex != '' && arr.openId != '' && arr.oName != '' && arr.oVehicle) {
+    if (arr.oTel != '' && arr.startAddress != '' && arr.oTypeIndex != '' && arr.openId != '' && arr.oName != '' && arr.oVehicle && arr.endAddress!='') {
+      
       if ((/^1[34578]\d{9}$/.test(arr.oTel))) {
         console.log("______________________")
         wx.showLoading({
-          title: this.data.language ? '正在下单请稍等...' :'Just a moment, please...',
+          title: this.data.language ? '正在下单请稍等...' : 'Just a moment, please...',
           mask: true
         });
         console.log(this.data.obj)
@@ -650,8 +743,7 @@ Page({
         arr.oVehicle = this.data.obj.oVehicleIndex;
         arr.oTime = new Date().getTime();
         arr.oTel = this.data.Country + arr.oTel
-        arr.endAddress = this.data.obj.startAddress;
-        arr.kilometre = this.distance(this.data.startAddress.split(',')[0], this.data.startAddress.split(',')[1], this.data.startAddress.split(',')[0], this.data.startAddress.split(',')[1])
+        arr.kilometre = this.distance(this.data.startAddress.split(',')[0], this.data.startAddress.split(',')[1], this.data.endAddress.split(',')[0], this.data.endAddress.split(',')[1])
         console.log(this.data.obj)
         console.log(arr)
         var opt = {
@@ -668,7 +760,7 @@ Page({
             if (res.code == 200) {
               wx.hideLoading();
               wx.showToast({
-                title: this.data.language ? '下单成功' :'checkout success',
+                title: this.data.language ? '下单成功' : 'checkout success',
                 icon: 'success'
               });
               setTimeout(() => {
@@ -703,38 +795,38 @@ Page({
     const lunarDay = event.detail.lunarDay;
     const background = event.detail.background;
     console.log(background)
-    var data = new Date(year + '-' + month + '-' +day).getTime();
+    var data = new Date(year + '-' + month + '-' + day).getTime();
     console.log(data)
-    if(new Date().getTime()>data){
+    if (new Date().getTime() > data) {
       wx.showToast({
         title: '不能小于今日',
-        icon:'none'
+        icon: 'none'
       })
-    }else{
+    } else {
       this.setData({
         style: [
           { month: 'current', day: day, color: 'white', background: '#58cc69' },
         ],
-        time:false,
+        time: false,
         date1: year + '-' + month + '-' + day,
-        datePickerIsShow:true
+        datePickerIsShow: true
       });
       console.log(this.data.datePickerIsShow)
     }
   },
-    nextMonth: function (event) {
+  nextMonth: function (event) {
     const currentYear = event.detail.currentYear;
     const currentMonth = event.detail.currentMonth;
     const prevMonth = event.detail.prevMonth;
     const prevYear = event.detail.prevYear;
-      this.setData({
-        style: [
-          
-        ]
-      });
+    this.setData({
+      style: [
+
+      ]
+    });
   },
   datePickerOnSureClick: function (e) {
-    var _this=this;
+    var _this = this;
     console.log('datePickerOnSureClick');
     console.log(e);
     this.setData({
@@ -746,13 +838,14 @@ Page({
       oTel: this.data.obj.oTel,
       startAddress: this.data.obj.startAddress,
       oType: this.data.obj.oType,
-      oTime:` ${_this.data.date1} ${e.detail.value[0]} : ${e.detail.value[1]}`,
+      oTime: ` ${_this.data.date1} ${e.detail.value[0]} : ${e.detail.value[1]}`,
       oRemark: this.data.obj.oRemark,
       openId: this.data.obj.openId,
       oTypeIndex: this.data.obj.oTypeIndex,
       oName: this.data.obj.oName,
       oVehicle: this.data.obj.oVehicle,
-      oVehicleIndex: this.data.obj.oVehicleIndex
+      oVehicleIndex: this.data.obj.oVehicleIndex,
+      endAddress: this.data.obj.endAddress
     };
     this.setData({
       time: false,

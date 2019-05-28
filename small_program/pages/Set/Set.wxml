@@ -3,13 +3,12 @@
   <van-tab title="{{language?'添加':'add'}}"></van-tab>
   <van-tab title="{{language?'删除':'del'}}"></van-tab>
 </van-tabs>
-<view wx:if="{{active==0}}">
+<view wx:if="{{active==0}}" style='height:100%'>
   <view style='height:50rpx;'></view>
   <view class='ioic'>
     <image bindtap='base64' src="{{img=='/image/add.png'?img:url+img}}"></image>
   </view>
-  <view style='height:400rpx;'></view>
-  <view style='clear:both'>
+  <view style='clear:both; margin-top:10%'>
     <van-button size="large" bindtap='addoType' type='primary'>{{language?'上传图片':'Upload pictures'}}</van-button>
   </view>
 </view>

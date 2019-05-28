@@ -34,26 +34,7 @@
     <text wx:if="{{phoneerr!=''}}" style='width:100%;font-size:12px;color:red'>{{phoneerr}}</text>
   </view>
 </view>
-<!-- <van-cell-group>
-  <van-field
-    value="{{ oTel }}"
-    left-icon="phone"
-    required
-    right
-    clearable
-    label="{{language?'电话':'tel'}}"
-    placeholder="{{language?'请输入电话号码':'Please enter your telephone number'}}"
-    border="{{ false }}"
-    use-button-slot
-    bind:click-icon="onClickIcon"
-    error-message="{{phoneerr}}"
-    border="{{ false }}"
-    bind:input='getPhone'
-    bind:focus='focusphone'
-  >
-    <van-button slot="button" size="mini" bind:click="formCountry" type="default">{{Country}}</van-button>
-  </van-field>
-</van-cell-group> -->
+
 <van-cell-group>
   <!-- <van-field
     value="{{ obj.oTel }}"
@@ -71,11 +52,11 @@
   >
   
   </van-field> -->
-    <van-cell
+      <van-cell
       required
       icon="location"
-      title="{{language?'预约地址':'Reservation address'}}"
-      value="{{obj.startAddress==''&&language?'请选择预约地址':obj.startAddress==''&&!language?'Please choose the reservation address':obj.startAddress}}>"
+      title="{{language?'起点':'starting point'}}"
+      value="{{obj.startAddress==''&&language?'请选择起点':obj.startAddress==''&&!language?'Please choose the starting point.':obj.startAddress}}>"
       bind:click='getAddress'
   />
     <van-cell
@@ -93,7 +74,14 @@
       value="{{obj.oType==''&&language?'请选择服务类行':obj.oType==''&&!language?'Please select the service line':obj.oType}}>"
       bind:click='getType'
   /> -->
-     
+    
+      <van-cell
+      required
+      icon="location"
+      title="{{language?'终点':'starting point'}}"
+      value="{{obj.endAddress==''&&language?'请选择终点':obj.endAddress==''&&!language?'Please choose the end point.':obj.endAddress}}>"
+      bind:click='onChangeendAddress'
+  />
     <van-cell
       required
       icon="friends"
@@ -208,6 +196,23 @@
   bind:confirm="onChangeVehicle"
 />
 </van-popup>
+<!-- 终点 -->
+<van-popup
+  show="{{ end }}"
+  position="bottom"
+  overlay="{{ false }}"
+  bind:close="onClose"
+  safe-area-inset-bottom
+>
+
+  <van-picker
+  show-toolbar
+  title="{{language?'请选择机场位置':'Please choose the service address.'}}"
+  columns="{{ endarr }}"
+  bind:cancel="onCancel"
+  bind:confirm="onChangeendAddress"
+/>
+</van-popup>
 <van-popup
   show="{{ LocationIs }}"
   position="bottom"
@@ -238,7 +243,6 @@
   bind:cancel="onCancelCountry"
   bind:confirm="onChangeCountry"
 />
-
 </van-popup>
 <van-submit-bar
   price="{{ price }}"

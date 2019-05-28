@@ -9,7 +9,7 @@
             <view class="goods">
               <view class="flex_a ptb30 goods_item" >
                 <view class="goods_bg flex_aj">
-                  <image src='{{item.img}}' class="goods_img" mode="widthFix"></image>
+                  <image src='{{url+item.img}}' class="goods_img" mode="widthFix"></image>
                 </view>
                 <view class="ml20">
                   <view class="font15 fw">服务类型 ： {{item.oType}}</view>

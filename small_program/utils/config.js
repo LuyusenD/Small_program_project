@@ -1,4 +1,4 @@
-var appid = 'wx95f9d0da92ac236f';
+var appid = 'wx2d3d236276937400';
 // var url ='https://995de706.ngrok.io/';
 // var url = 'http://localhost:8080/';
 var url ='https://www.webbok.cn:3000/';
