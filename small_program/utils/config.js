@@ -1,6 +1,6 @@
-var appid = 'wx2d3d236276937400';
+var appid = 'wx95f9d0da92ac236f';
 // var url ='https://995de706.ngrok.io/';
-// var url = 'http://localhost:8080/';
+// var url = 'http://localhost:3000/';
 var url ='https://www.webbok.cn:3000/';
 
 const formatNumber = n => {
