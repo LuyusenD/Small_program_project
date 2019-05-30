@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    kilometre:null,
     date1: '',
     datePickerValue: ['', ''],
     datePickerIsShow: false,
@@ -407,6 +408,12 @@ Page({
               that.setData({
                 obj
               });
+              if (that.data.endAddress) {
+                console.log('jksm,hfnasjnf hnajksfhasmfbnl;')
+                that.setData({
+                  kilometre: that.distance(that.data.startAddress.split(',')[0], that.data.startAddress.split(',')[1], that.data.endAddress.split(',')[0], that.data.endAddress.split(',')[1])
+                })
+              }
             } else {
               if (!that.data.obj.startAddress) {
                 wx.showToast({
@@ -595,6 +602,8 @@ Page({
       oVehicleIndex: _that.data.obj.oVehicleIndex,
       endAddress:e.detail.value
     };
+
+
     console.log(obj)
     // this.setData({
     //   obj,
@@ -608,6 +617,11 @@ Page({
       endAddress: this.data.endarr1[e.detail.index],
       obj
     });
+    if (this.data.startAddress) {
+      this.setData({
+        kilometre: this.distance(this.data.startAddress.split(',')[0], this.data.startAddress.split(',')[1], this.data.endAddress.split(',')[0], this.data.endAddress.split(',')[1])
+      })
+    }
     console.log(this.data.endAddress)
   },
   // 选择服务类型取消
@@ -697,7 +711,7 @@ Page({
       };
       this.setData({
         obj,
-        phoneerr: this.data.language ? '亲，请输入正确手机号码！' : 'Please enter the correct mobile phone number！'
+        // phoneerr: this.data.language ? '亲，请输入正确手机号码！' : 'Please enter the correct mobile phone number！'
       });
       console.log(e)
     }

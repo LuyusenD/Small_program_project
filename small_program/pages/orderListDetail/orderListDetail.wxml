@@ -33,6 +33,10 @@
           <text class="col9">预约时间:</text>
           <text>{{list.createTime}}</text>
         </view>
+        <view>
+          <text class="col9"> 公里:</text>
+          <text>{{list.kilometre}}</text>
+        </view>
       </view>
       <view class="goods">
         <view class="flex_a ptb30 goods_item">

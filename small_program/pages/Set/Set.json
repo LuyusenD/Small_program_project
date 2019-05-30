@@ -8,7 +8,9 @@
     "van-swipe-cell": "/vant-weapp/dist/swipe-cell/index",
     "van-cell": "/vant-weapp/dist/cell/index",
     "van-cell-group": "/vant-weapp/dist/cell-group/index",
-    "van-dialog": "/vant-weapp/dist/dialog/index"
+    "van-dialog": "/vant-weapp/dist/dialog/index",
+    "van-row": "/vant-weapp/dist/row/index",
+    "van-col": "/vant-weapp/dist/col/index"
   },
   "navigationBarTitleText": "banner图"
 }

@@ -309,22 +309,31 @@ Page({
         id: e.currentTarget.dataset.detail.id
       }
     };
-    url.ajax(opt)
-      .then((res) => {
-        wx.hideLoading();
-        if (res.code == 200) {
-          wx.showToast({
-            title: this.data.language ? '删除成功' : 'Delete successful',
-            icon: 'success'
-          });
-          this.getServeType();
-        } else {
-          wx.showToast({
-            title: this.data.language ? '删除失败' : 'Delete failed',
-            icon: 'none'
-          });
-        }
-      })
+   
+    Dialog.confirm({
+      title: this.data.language ? '提示' :'Tips',
+      message: this.data.language ? '确定要删除该图片吗?' : 'Are you sure you want to delete the picture?'
+    }).then(() => {
+      // on confirm
+      url.ajax(opt)
+        .then((res) => {
+          wx.hideLoading();
+          if (res.code == 200) {
+            wx.showToast({
+              title: this.data.language ? '删除成功' : 'Delete successful',
+              icon: 'success'
+            });
+            this.getServeType();
+          } else {
+            wx.showToast({
+              title: this.data.language ? '删除失败' : 'Delete failed',
+              icon: 'none'
+            });
+          }
+        })
+    }).catch(() => {
+      // on cancel
+    });
   },
   onClose(event) {
     const { position, instance } = event.detail;

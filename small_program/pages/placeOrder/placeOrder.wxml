@@ -240,11 +240,13 @@
 />
 
 </van-popup>
-<van-submit-bar
+<view wx:if="{{!time}}">
+  <van-submit-bar
   price="{{ price }}"
   button-text="{{language?'立即预约':'Immediate appointment'}}"
   bind:submit="makeAppointment"
 />
+</view>
 <!-- <van-button size="large" type="primary" bindtap='makeAppointment'>{{language?'立即预约':'Immediate appointment'}}</van-button> -->
 
 <date-picker

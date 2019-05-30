@@ -605,7 +605,7 @@ Page({
       };
       this.setData({
         obj,
-        phoneerr: this.data.language ? '亲，请输入正确手机号码！' : 'Please enter the correct mobile phone number！'
+        // phoneerr: this.data.language ? '亲，请输入正确手机号码！' : 'Please enter the correct mobile phone number！'
       });
       console.log(e)
     }
