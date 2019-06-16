@@ -265,13 +265,13 @@
 </van-popup>
 <view wx:if="{{!time}}">
   <van-submit-bar
-  price="{{ price }}"
   button-text="{{language?'立即预约':'Immediate appointment'}}"
   bind:submit="makeAppointment"
 />
 </view>
 <!-- <van-button size="large" type="primary" bindtap='makeAppointment'>{{language?'立即预约':'Immediate appointment'}}</van-button> -->
 <view wx:if="{{kilometre}}" class='kilometre'>  起点到终点预计{{kilometre}}km</view>
+<view wx:if="{{kilometre==null&&kilometre!=''}}" class='kilometre'> 提示: 国内-国外无法计算距离 </view>
 <date-picker
     id="date-picker"
     value="{{datePickerValue}}" 

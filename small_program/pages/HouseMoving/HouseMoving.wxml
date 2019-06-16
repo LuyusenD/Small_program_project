@@ -244,6 +244,7 @@
   bind:confirm="onChangeCountry"
 />
 </van-popup>
+<view wx:if="{{kilometre}}" class='kilometre'>  起点到终点预计{{kilometre}}km</view>
 <view wx:if="{{!time}}">
   <van-submit-bar
   price="{{ price }}"

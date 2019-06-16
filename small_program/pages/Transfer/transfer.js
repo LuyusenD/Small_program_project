@@ -1,12 +1,15 @@
 // pages/placeOrder/placeOrder.js
 import url from '../../utils/config.js'
+var QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
+var qqmapsdk;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    kilometre:null,
+    money:0,
+    kilometre:'',
     date1: '',
     datePickerValue: ['', ''],
     datePickerIsShow: false,
@@ -86,6 +89,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    qqmapsdk = new QQMapWX({
+      key: 'QL6BZ-FFXWX-WWR4F-7UGKF-7VM5E-5WBLM'
+    });
     console.log(this.data.obj.endAddress=='')
     this.setData({
       endarr:[
@@ -103,7 +109,7 @@ Page({
         "爱华隆机场",
       ],
       endarr1:[
-        "151.17516, -33.940048",
+        "151.17516,-33.940048",
         "153.121824,-27.394165",
         "115.967243,-31.938538",
         "153.510009,-28.165597",
@@ -117,7 +123,7 @@ Page({
         "144.468887,-38.038629",
       ]
     })
-    this.distance(121.48941, 31.40527, 113.88308, 22.55329)
+    
     console.log(options.index)
     let obj = {
       oTel: '',
@@ -276,6 +282,7 @@ Page({
   // 点击车型
   getVehicle() {
     console.log('-')
+    console.log(this.data.price)
     this.setData({
       vehicle: !this.data.vehicle,
       time: false,
@@ -286,6 +293,15 @@ Page({
   },
   activeonChange(event) {
     console.log(event.detail);
+    if (event.detail.index==0){
+      for (var i = 0; i < wx.getStorageSync('Serve').money.length; i++) {
+        if (wx.getStorageSync('Serve').money[i].name == '每公里') {
+          this.setData({
+            money: wx.getStorageSync('Serve').money[i].mpney
+         })
+        }
+      }
+    }
     let obj = {
       oTel: '',
       startAddress: '',
@@ -388,12 +404,11 @@ Page({
             that.setData({
               startAddress: res.latitude + ',' + res.longitude
             })
-            console.log(res)
-            if (res.address) {
-              console.log(that.data.obj.oTime)
+            // if (res.address || res.name) {
+            console.log(that.data.startAddress)
               var obj = {
                 oTel: that.data.obj.oTel,
-                startAddress: res.address,
+                startAddress:'',
                 oType: that.data.obj.oType,
                 oTime: that.data.obj.oTime,
                 oRemark: that.data.obj.oRemark,
@@ -405,23 +420,28 @@ Page({
                 endAddress: that.data.obj.endAddress
               };
               console.log(obj)
-              that.setData({
-                obj
-              });
+            that.formSubmit({ location: that.data.startAddress, obj})
+           
               if (that.data.endAddress) {
-                console.log('jksm,hfnasjnf hnajksfhasmfbnl;')
-                that.setData({
-                  kilometre: that.distance(that.data.startAddress.split(',')[0], that.data.startAddress.split(',')[1], that.data.endAddress.split(',')[0], that.data.endAddress.split(',')[1])
-                })
+                for (var i = 0; i < wx.getStorageSync('Serve').money.length;i++){
+                  if (wx.getStorageSync('Serve').money[i].name=='每公里'){
+                  that.distance(that.data.startAddress,that.data.endAddress)
+
+                    that.setData({
+                        price: (that.data.kilometre * wx.getStorageSync('Serve').money[i].money).toFixed(2)
+                    })
+                  }
+                }
+                
               }
-            } else {
-              if (!that.data.obj.startAddress) {
-                wx.showToast({
-                  title: '亲！请选择预约地点哦。',
-                  icon: 'none'
-                })
-              }
-            }
+            // } else {
+            //   if (!that.data.obj.startAddress) {
+            //     wx.showToast({
+            //       title: '亲！请选择预约地点哦。',
+            //       icon: 'none'
+            //     })
+            //   }
+            // }
           },
         })
       }
@@ -577,7 +597,6 @@ Page({
     };
     this.setData({
       obj,
-      price: wx.getStorageSync('Serve').vehicle[e.detail.index].money * 100
     })
     console.log(this.data.obj)
     this.setData({ vehicle: false });
@@ -618,9 +637,19 @@ Page({
       obj
     });
     if (this.data.startAddress) {
-      this.setData({
-        kilometre: this.distance(this.data.startAddress.split(',')[0], this.data.startAddress.split(',')[1], this.data.endAddress.split(',')[0], this.data.endAddress.split(',')[1])
-      })
+   this.distance(this.data.startAddress, this.data.endAddress)
+  
+      for (var i = 0; i < wx.getStorageSync('Serve').money.length; i++) {
+        if (wx.getStorageSync('Serve').money[i].name == '每公里') {
+     this.distance(this.data.startAddress, this.data.endAddress)
+     
+
+          this.setData({
+            price: (this.data.kilometre * wx.getStorageSync('Serve').money[i].money).toFixed(2)
+          });
+          console.log(this.data.price)
+        }
+      }
     }
     console.log(this.data.endAddress)
   },
@@ -746,8 +775,8 @@ console.log(this.data.obj)
     arr.openId = wx.getStorageSync("openid").openid,
       console.log(arr)
     if (arr.oTel != '' && arr.startAddress != '' && arr.oTypeIndex != '' && arr.openId != '' && arr.oName != '' && arr.oVehicle && arr.endAddress!='') {
-      
-      if ((/^1[34578]\d{9}$/.test(arr.oTel))) {
+      var reg = this.data.Country == '+86' ? /^[1][3,4,5,7,8][0-9]{9}$/ : /^\d{9}$/
+      if ((reg.test(arr.oTel))) {
         console.log("______________________")
         wx.showLoading({
           title: this.data.language ? '正在下单请稍等...' : 'Just a moment, please...',
@@ -758,7 +787,18 @@ console.log(this.data.obj)
         arr.oVehicle = this.data.obj.oVehicleIndex;
         arr.oTime = new Date().getTime();
         arr.oTel = this.data.Country + arr.oTel
-        arr.kilometre = this.distance(this.data.startAddress.split(',')[0], this.data.startAddress.split(',')[1], this.data.endAddress.split(',')[0], this.data.endAddress.split(',')[1])
+        this.formSubmit({ start: this.data.startAddress, end: this.data.endAddress })
+        this.formSubmit({ start: this.data.startAddress, end: this.data.endAddress })
+        if (this.data.kilometre != '' && this.data.kilometre!=null){
+          arr.kilometre = this.data.kilometre
+
+        }else{
+          wx.showToast({
+            title: '提示: 国内-国外无法计算距离',
+            icon:'none'
+          })
+          return
+        }
         console.log(this.data.obj)
         console.log(arr)
         var opt = {
@@ -876,25 +916,50 @@ console.log(this.data.obj)
       datePickerIsShow: false,
     });
   },
-  distance: function (la1, lo1, la2, lo2) {
+  distance: function (lat1, lng1,data) {
+  wx.request({
+    url: 'https://apis.map.qq.com/ws/direction/v1/driving/',
+    method:'GET',
+    data:{
+      from: lat1,
+      to: lng1.split(',')[1] + ',' + lng1.split(',')[0],
+      key:'6PSBZ-QMNYW-QDARC-RHF2I-Q6FE3-3OBKM'
+    },
+    success:(res)=>{
+      console.log(res)
 
-    var La1 = la1 * Math.PI / 180.0;
-
-    var La2 = la2 * Math.PI / 180.0;
-
-    var La3 = La1 - La2;
-
-    var Lb3 = lo1 * Math.PI / 180.0 - lo2 * Math.PI / 180.0;
-
-    var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(La3 / 2), 2) + Math.cos(La1) * Math.cos(La2) * Math.pow(Math.sin(Lb3 / 2), 2)));
-
-    s = s * 6378.137;//地球半径
-
-    s = Math.round(s * 10000) / 10000;
-    console.log("计算结果", s)
-
-    return s
-
-
+      if (res.data.status==0){
+        this.setData({
+          kilometre: (res.data.result.routes[0].distance / 1000).toFixed(3)
+        })
+        return (res.data.result.routes[0].distance/1000).toFixed(3);
+      }else{
+        this.setData({
+          kilometre: null
+        })
+        return null
+      }
+    }
+  })
+  },
+  formSubmit(e) {
+    console.log(e)
+    wx.request({
+      url: 'https://apis.map.qq.com/ws/geocoder/v1',
+      type: 'GET',
+      data: {
+        location: e.location,
+        key: 'QL6BZ-FFXWX-WWR4F-7UGKF-7VM5E-5WBLM'
+      },
+      success:(res)=>{
+        console.log(res.data.result);
+        
+        // return res.data.result.address;
+        e.obj.startAddress = res.data.result.address;
+        this.setData({
+          obj:e.obj
+        })
+      }
+    })
   }
 })

@@ -335,36 +335,49 @@ Page({
         var longitude = res.longitude
         wx.chooseLocation({
           success: function (res) {
-            console.log(res)
             that.setData({
               startAddress: res.latitude + ',' + res.longitude
             })
-            if (res.address) {
-              console.log(that.data.obj.oTime)
-              var obj = {
-                oTel: that.data.obj.oTel,
-                startAddress: res.address,
-                oType: that.data.obj.oType,
-                oTime: that.data.obj.oTime,
-                oRemark: that.data.obj.oRemark,
-                openId: that.data.obj.openId,
-                oTypeIndex: that.data.obj.oTypeIndex,
-                oName: that.data.obj.oName,
-                oVehicle: that.data.obj.oVehicle,
-                oVehicleIndex: that.data.obj.oVehicleIndex
-              };
-              console.log(obj)
-              that.setData({
-                obj
-              });
-            } else {
-              if (!that.data.obj.startAddress) {
-                wx.showToast({
-                  title: '亲！请选择预约地点哦。',
-                  icon: 'none'
-                })
+            // if (res.address || res.name) {
+            console.log(that.data.startAddress)
+            var obj = {
+              oTel: that.data.obj.oTel,
+              startAddress: '',
+              oType: that.data.obj.oType,
+              oTime: that.data.obj.oTime,
+              oRemark: that.data.obj.oRemark,
+              openId: that.data.obj.openId,
+              oTypeIndex: that.data.obj.oTypeIndex,
+              oName: that.data.obj.oName,
+              oVehicle: that.data.obj.oVehicle,
+              oVehicleIndex: that.data.obj.oVehicleIndex,
+              endAddress: that.data.obj.endAddress
+            };
+            console.log(obj)
+            that.formSubmit({ location: that.data.startAddress, obj })
+
+            if (that.data.endAddress) {
+              for (var i = 0; i < wx.getStorageSync('Serve').money.length; i++) {
+                if (wx.getStorageSync('Serve').money[i].name == '每公里') {
+                  that.setData({
+                    kilometre: that.distance(that.data.startAddress.split(',')[0], that.data.startAddress.split(',')[1], that.data.endAddress.split(',')[0], that.data.endAddress.split(',')[1])
+                  });
+
+                  that.setData({
+                    price: (that.data.kilometre * wx.getStorageSync('Serve').money[i].money).toFixed(2)
+                  })
+                }
               }
+
             }
+            // } else {
+            //   if (!that.data.obj.startAddress) {
+            //     wx.showToast({
+            //       title: '亲！请选择预约地点哦。',
+            //       icon: 'none'
+            //     })
+            //   }
+            // }
           },
         })
       }
@@ -640,7 +653,8 @@ Page({
     arr.openId = wx.getStorageSync("openid").openid,
       console.log(arr)
     if (arr.oTel != '' && arr.startAddress != '' && arr.oTypeIndex != '' && arr.openId != '' && arr.oName != '' && arr.oVehicle) {
-      if ((/^1[34578]\d{9}$/.test(arr.oTel))) {
+      var reg = this.data.Country == '+86' ? /^[1][3,4,5,7,8][0-9]{9}$/ : /^\d{9}$/
+      if ((reg.test(arr.oTel))) {
         console.log("______________________")
         wx.showLoading({
           title: this.data.language ? '正在下单请稍等...' :'Just a moment, please...',
@@ -789,5 +803,25 @@ Page({
     return s
 
 
+  },
+  formSubmit(e) {
+    console.log(e)
+    wx.request({
+      url: 'https://apis.map.qq.com/ws/geocoder/v1',
+      type: 'GET',
+      data: {
+        location: e.location,
+        key: 'QL6BZ-FFXWX-WWR4F-7UGKF-7VM5E-5WBLM'
+      },
+      success: (res) => {
+        console.log(res.data.result);
+
+        // return res.data.result.address;
+        e.obj.startAddress = res.data.result.address;
+        this.setData({
+          obj: e.obj
+        })
+      }
+    })
   }
 })
