@@ -76,6 +76,7 @@
     </view>
   </view>
   <view class="plr40 mt60 pb20" wx:if='{{list.oState==1}}'>
-    <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" bindtap='replenishment'>立即支付</view>
+    <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" bindtap='replenishment'>修改金额</view>
   </view>
+  
 </view>

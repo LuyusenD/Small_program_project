@@ -1,4 +1,5 @@
 // pages/orderListDetail/orderListDetail.js
+import play from '../../utils/payment.js'
 import url from '../../utils/config.js';
 import MD5 from '../../utils/MD5.js';
 Page({
@@ -124,5 +125,10 @@ Page({
           })
         }
       })
+  },
+  //修改金额
+  replenishment () {
+    play(this.data.list)
   }
+
 })
