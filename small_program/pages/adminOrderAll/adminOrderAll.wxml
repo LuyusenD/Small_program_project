@@ -25,10 +25,11 @@
               <text>共计：<text class='color2'>￥{{item.price}}</text></text>
             </view>
           <van-row>
-            <van-col offset='20' span="4"><van-button type='danger' bindtap='cancelOrder' data-value="{{item.oId}}" size="small">{{language?'删除订单':'Delete order'}}</van-button></van-col>
+            <van-col offset='1' span="5"><van-button type='danger' bindtap='cancelOrder' data-value="{{item.oId}}" size="small">{{language?'删除订单':'Delete order'}}</van-button></van-col>
+            <van-col offset='1' span="5"><van-button type='danger' bindtap='setMoeny' data-value="{{item.oId}}" size="small">{{language?'金额修改':'Set money'}}</van-button></van-col>
+            <van-col offset='1' span="5" wx:if="{{item.oState==1}}"><van-button type='danger' bindtap='check' data-value="{{item.oId}}" size="small">{{language?'审核':'check'}}</van-button></van-col>
+            <van-col offset='1' span="5" wx:if="{{item.oState<5}}"><van-button type='danger' bindtap='setStatusok' data-value="{{item.oId}}" size="small">{{language?'订单完成':'order Success'}}</van-button></van-col>
           </van-row>
-
-          
         </view>
       </view>
       <view class='center' wx:if="{{order.length<=0}}">
@@ -38,3 +39,21 @@
     </view>
 <!-- 删除订单弹框 -->
 <van-dialog id="van-dialog" />
+<van-popup show="{{ show }}" bind:close="onClose" >
+  <view style="width:300px;">
+      <van-cell-group style="width:300px;">
+        <van-field
+          placeholder="请输入要修改的金额"
+          value="{{money}}"
+          bind:change="onChangeMoney"
+          label="金额"
+          border="{{ false }}"
+        />
+      </van-cell-group>
+      <view style="height:20px"></view>
+      <view style="widht:80%;display: flex;justify-content: space-between;">
+        <van-button type="default" bindtap="iscan">取消</van-button>
+        <van-button type="primary" bindtap="isok">确认</van-button>
+      </view>
+  </view>
+</van-popup>

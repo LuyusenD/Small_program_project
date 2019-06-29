@@ -53,6 +53,12 @@
       <view>{{language?'图片':'banner'}}</view>
     </view>
   </view>
+   <view bindtap='jump' data-url='/pages/adminSetServe/adminSetServe'>
+    <view>
+      <image src='/image/lubo.png'></image>
+      <view>{{language?'服务':'serve'}}</view>
+    </view>
+  </view>
 </view>
 <view style='width:80%;margin:0 auto;'>
   <van-button size="large" round  type="danger" bindtap='isloginOut'>{{language?'退出登录':'Logout'}}</van-button>

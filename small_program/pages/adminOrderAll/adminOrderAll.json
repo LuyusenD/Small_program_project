@@ -6,6 +6,9 @@
     "van-panel": "/vant-weapp/dist/panel/index",
     "van-button": "/vant-weapp/dist/button/index",
     "van-row": "/vant-weapp/dist/row/index",
-    "van-col": "/vant-weapp/dist/col/index"
+    "van-col": "/vant-weapp/dist/col/index",
+    "van-field": "/vant-weapp/dist/field/index",
+    "pop-up-wrapper": "../../components/pop-up-wrapper/pop-up-wrapper",
+    "van-popup": "../../vant-weapp/dist/popup/index"
   }
 }

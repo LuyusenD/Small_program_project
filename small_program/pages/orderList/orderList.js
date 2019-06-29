@@ -171,7 +171,7 @@ Page({
               for (var j = 0; j < res.data.data.length; j++) {
                 if (res.data.data[j].oVehicle == arr1[i].id) {
                   res.data.data[j].oVehicle = arr1[i].name;
-                  res.data.data[j].price = arr1[i].money;
+                  res.data.data[j].price = res.data.data[j].money;
                   continue;
                 }
               }

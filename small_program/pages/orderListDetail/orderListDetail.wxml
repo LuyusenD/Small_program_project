@@ -26,7 +26,7 @@
         <view >
           <view>
             <text class="col9">订单状态:</text>
-            <text>{{list.oState==1?"未支付":list.oState==2?"已支付":list.oState==3?"执行中":"已完成"}}</text>
+            <text>{{list.oState==1?"待审核":list.oState==2?"未支付":list.oState==3?"已支付":list.oState==4?"执行中":'已完成'}}</text>
           </view>
         </view>
         <view>
@@ -56,10 +56,6 @@
         </view>
       </view>
       <view class="flex_sb ptb30 bdt" wx:if='{{list.oState>1}}'>
-        <text>共11件商品</text>
-        <text class="color2">￥{{info.total_price}}</text>
-      </view>
-      <view class="flex_sb ptb30 bdt" wx:if='{{list.oState>1}}'>
         <view>
           <view>共1件商品</view>
           <view>优惠金额:0元</view>
@@ -75,8 +71,16 @@
       </view>
     </view>
   </view>
+  <view class="plr40 mt60 pb20" wx:if='{{list.oState==2}}'>
+    <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" bindtap='replenishment'>立即支付</view>
+    <view style='height:50px'></view>
+    <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" data-value='{{list.oId}}' bindtap='cancelOrder'>取消订单</view>
+  </view>
   <view class="plr40 mt60 pb20" wx:if='{{list.oState==1}}'>
-    <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" bindtap='replenishment'>修改金额</view>
+    <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" >等待后台审核订单</view>
+    <view style='height:50px'></view>
+    <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" data-value='{{list.oId}}' bindtap='cancelOrder'>取消订单</view>
   </view>
   
 </view>
+<van-dialog id="van-dialog" />

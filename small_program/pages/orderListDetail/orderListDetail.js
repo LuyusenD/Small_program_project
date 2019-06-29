@@ -2,6 +2,7 @@
 import play from '../../utils/payment.js'
 import url from '../../utils/config.js';
 import MD5 from '../../utils/MD5.js';
+import Dialog from '../../vant-weapp/dist/dialog/dialog';
 Page({
 
   /**
@@ -9,7 +10,8 @@ Page({
    */
   data: {
     // 页面数据
-    list:[]
+    list:[],
+    
   },
 
   /**
@@ -20,7 +22,10 @@ Page({
       wx.showLoading({
         title: '正在加载数据...',
         mask:true
-      })
+      });
+      this.setData({
+        oId: options.oId
+      });
       this.getListDetail(options.oId);
     }else{
       wx.showToast({
@@ -41,7 +46,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getListDetail(this.data.oId);
   },
 
   /**
@@ -110,7 +115,7 @@ Page({
             for (var j = 0; j < res.data.data.length; j++) {
               if (res.data.data[j].oVehicle == arr1[i].id) {
                 res.data.data[j].oVehicle = arr1[i].name;
-                res.data.data[j].price = arr1[i].money;
+                res.data.data[j].price = res.data.data[0].money;
                 continue;
               }
             }
@@ -128,7 +133,51 @@ Page({
   },
   //修改金额
   replenishment () {
-    play(this.data.list)
-  }
-
+    play.play(this.data.list)
+  },
+  cancelOrder(e) {
+    var _this = this;
+    // 订单编号
+    console.log(e)
+    var oId = e.currentTarget.dataset.value;
+    console.log(oId);
+    Dialog.confirm({
+      title: this.data.language ? '提示' : 'Tips',
+      message: this.data.language ? '你确定要删除该订单吗?' : 'Are you sure you want to delete the order?'
+    }).then(() => {
+      var opt = {
+        url: url.url + 'order/delorder',
+        method: "POST",
+        header: {
+          "content-type": "application/x-www-form-urlencoded"
+        },
+        data: {
+          oId: MD5.md5(MD5.md5(MD5.md5(oId))) + "xn"
+        }
+      };
+      url.ajax(opt)
+        .then((res) => {
+          if (res.code == 200) {
+            Dialog.alert({
+              message: this.data.language ? '删除成功' : 'Delete successful'
+            }).then(() => {
+              // on close
+              wx.switchTab({
+                url: '/pages/index/index',
+              })
+            });
+          } else {
+            Dialog.alert({
+              message: this.data.language ? '删除失败' : 'Delete failed'
+            }).then(() => {
+              // on close
+            });
+          }
+        })
+      // on confirm
+    }).catch(() => {
+      // on cancel
+    });
+  },
+ 
 })

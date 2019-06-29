@@ -1,0 +1,27 @@
+<!--pages/Set/Set.wxml-->
+  <van-cell-group>
+      <van-field
+      value="{{ hourMoney }}"
+      required
+      clearable
+      label="{{language?'每小时金额':'Amount per hour'}}"
+      left-icon="gold-coin-o"
+      placeholder="{{language?'请输入每小时金额':'Please enter the hourly rate'}}"
+      border="{{ false }}"
+      bind:input='gethourMoney'
+    />
+      <van-field
+      value="{{ kilometerMoney }}"
+      required
+      clearable
+      label="{{language?'每公里金额':'Amount per kilometer'}}"
+      left-icon="gold-coin-o"
+      placeholder="{{language?'请输入每公里金额':'Please enter the amount per kilometer'}}"
+      border="{{ false }}"
+      bind:input='gethourkilometerMoney'
+    />
+  </van-cell-group>
+  <view style='height:100px'></view>
+   <van-button size="large" bindtap='Setmoney1' type='primary'>{{language?'修改金额':'Set money'}}</van-button>
+  
+<van-dialog id="van-dialog" />

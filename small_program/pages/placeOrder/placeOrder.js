@@ -1,5 +1,6 @@
 // pages/placeOrder/placeOrder.js
-import url from '../../utils/config.js'
+import url from '../../utils/config.js';
+import play from '../../utils/payment.js'
 Page({
 
   /**
@@ -21,7 +22,7 @@ Page({
     week_title: true,                    // 显示周标题
     next: true,                          // 显示下个月
     prev: true,                          // 显示上个月
-
+    kilMoney:0,
     cs: 30,                              // 单元格大小
     title_type: 'en',                    // 周标题类型
     titleType: ['英文单字母', '英语简写', '中文简写'],
@@ -364,7 +365,7 @@ Page({
                   });
 
                   that.setData({
-                    price: (that.data.kilometre * wx.getStorageSync('Serve').money[i].money).toFixed(2)
+                    kilMoney: wx.getStorageSync('Serve').money[i].money
                   })
                 }
               }
@@ -527,7 +528,7 @@ Page({
     };
     this.setData({
       obj,
-      price: wx.getStorageSync('Serve').vehicle[e.detail.index].money * 100
+      price: wx.getStorageSync('Serve').vehicle[e.detail.index].money
     })
     console.log(this.data.obj)
     this.setData({ vehicle: false });
@@ -667,6 +668,7 @@ Page({
         arr.oTel = this.data.Country + arr.oTel
         arr.endAddress = this.data.obj.startAddress;
         arr.kilometre = this.distance(this.data.startAddress.split(',')[0], this.data.startAddress.split(',')[1], this.data.startAddress.split(',')[0], this.data.startAddress.split(',')[1])
+        arr.money=this.data.price;
         console.log(this.data.obj)
         console.log(arr)
         var opt = {
@@ -687,7 +689,10 @@ Page({
                 icon: 'success'
               });
               setTimeout(() => {
-                wx.navigateBack();
+                // play(this.data.obj)
+                wx.redirectTo({
+                  url: '/pages/orderListDetail/orderListDetail?oId=' + res.data.oId,
+                })
               }, 1000)
             } else {
               wx.showToast({

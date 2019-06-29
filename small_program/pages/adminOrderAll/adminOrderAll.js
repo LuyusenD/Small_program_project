@@ -18,7 +18,10 @@ Page({
     // 当前页数显示个数
     pageSize: 6,
     language:true,
-    url:url.url
+    url:url.url,
+    showPopUp:false,
+    money:'',
+    oId:'',
   },
 
   /**
@@ -151,7 +154,7 @@ Page({
               for (var j = 0; j < res.data.data.length; j++) {
                 if (res.data.data[j].oVehicle == arr1[i].id) {
                   res.data.data[j].oVehicle = arr1[i].name;
-                  res.data.data[j].price = arr1[i].money;
+                  res.data.data[j].price = res.data.data[j].money;
                   continue;
                 }
               }
@@ -293,5 +296,152 @@ Page({
     wx.navigateTo({
       url: url,
     })
+  },
+  setMoeny(){
+    this.setData({
+      showPopUp:true
+    })
+  },
+  setStatusok(e){
+    var oId= (e.currentTarget.dataset.value);
+    console.log(oId)
+    var opt = {
+      url: url.url + 'order/editstate',
+      method: "POST",
+      header: {
+        "content-type": "application/x-www-form-urlencoded"
+      },
+      data: {
+        oId: MD5.md5(MD5.md5(MD5.md5(oId))) + "xn",
+        oState:5,
+      }
+    };
+    Dialog.confirm({
+      title: this.data.language ? '提示' : 'Tips',
+      message: this.data.language ? '你确定要修改订单的状态码??' : 'You are sure to modify the status code of the order?'
+    }).then(() => {
+      url.ajax(opt)
+        .then((res) => {
+          if(res.code==200){
+            Dialog.alert({
+              message: this.data.language ? '修改成功' : 'set successful'
+            }).then(() => {
+              // on close
+              this.setData({
+                // 用户所有订单
+                orderList: [],
+                // 当前分页显示订单个数
+                order: [],
+              })
+              this.getorderListAll();
+            });
+          }else{
+            Dialog.alert({
+              message: this.data.language ? '修改失败' : 'set failed'
+            }).then(() => {
+              // on close
+            });
+          }
+        })
+    }).catch(() => {
+      // on cancel
+    });
+   
+  },
+  iscan(){
+    console.log(11111)
+    this.setData({ show: false });
+  },
+  isok(){
+    console.log(2222)
+    if (this.data.money){
+      var opt = {
+        url: url.url + 'order/setmoneyorder',
+        method: "get",
+        header: {
+          "content-type": "application/x-www-form-urlencoded"
+        },
+        data: {
+          oId: this.data.oId,
+          money: this.data.money
+        }
+      };
+      url.ajax(opt)
+        .then((res) => {
+          console.log(res)
+          if(res.code==200){
+            wx.showToast({
+              title: this.data.language ? '修改成功' : 'set success',
+              icon: 'success'
+            })
+            this.setData({
+              // 用户所有订单
+              orderList: [],
+              // 当前分页显示订单个数
+              order: [],
+              money:''
+            })
+            this.getorderListAll();
+          }else{
+            wx.showToast({
+              title: this.data.language ? '修改失败' :'set failed',
+              icon:'none'
+            })
+          }
+          this.setData({ show: false });
+        })
+    }else{
+      wx.showToast({
+        title: this.language ? '请输入修改的金额!' :'Please enter the revised amount',
+        icon:'none'
+      });
+    }
+  },
+  setMoeny(e){
+    var oId=(e.currentTarget.dataset.value);
+    this.setData({ show: true, oId: oId });
+  },
+  onChangeMoney(e){
+    this.setData({
+      money: e.detail
+    });
+    console.log(this.data.money)
+  },
+  check(e){
+    var oId = (e.currentTarget.dataset.value);
+    var opt = {
+      url: url.url + 'order/editstate',
+      method: "POST",
+      header: {
+        "content-type": "application/x-www-form-urlencoded"
+      },
+      data: {
+        oId: MD5.md5(MD5.md5(MD5.md5(oId))) + "xn",
+        oState:2
+      }
+    };
+    Dialog.confirm({
+      title: this.data.language ? '提示' : 'Tips',
+      message: this.data.language ? '你确定要修改订单的状态码??' : 'You are sure to modify the status code of the order?'
+    }).then(() => {
+      url.ajax(opt)
+        .then((res) => {
+          if (res.code == 200) {
+            console.log('修改成功')
+            wx.showToast({
+              title: this.data.language ? '修改成功' : 'set Success',
+              icon: 'success'
+            });
+            this.setData({
+              // 用户所有订单
+              orderList: [],
+              // 当前分页显示订单个数
+              order: [],
+            })
+            this.getorderListAll();
+          }
+        })
+    })
+    
   }
 })

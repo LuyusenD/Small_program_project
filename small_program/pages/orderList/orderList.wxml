@@ -3,7 +3,7 @@
         <view class="bw order_item">
             <view class="flex_sb lh90 bdb font15">
                <text selectable='true'>订单号:{{item.oId}}</text>
-              <text class='{{item.oState==4?"color2":"color3"}}'>{{item.oState==1?"未支付":item.oState==2?"已支付":item.oState==3?"执行中":"已完成"}}</text>
+              <text class='{{item.oState==4?"color2":"color3"}}'>{{item.oState==1?"待审核":item.oState==2?"未支付":item.oState==3?"已支付":item.oState==4?"执行中":'已完成'}}</text>
             </view>
           <navigator url="{{'/pages/orderListDetail/orderListDetail?oId='+item.oId}}" class="db plr30">
             <view class="goods">

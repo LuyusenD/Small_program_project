@@ -98,7 +98,7 @@
     
       <van-cell
       required
-      icon="location"
+      icon="location"  
       title="{{language?'送达':'service'}}"
       value="{{obj.startAddress==''&&language?'请选择送达地址':obj.startAddress==''&&!language?'Please choose the service address.':obj.startAddress}}>"
       bind:click='getAddress'
@@ -267,6 +267,7 @@
 </van-popup>
 <view wx:if="{{!time}}">
   <van-submit-bar
+   price="{{ kilMoney*kilometre+cheMoney }}"
   button-text="{{language?'立即预约':'Immediate appointment'}}"
   bind:submit="makeAppointment"
 />

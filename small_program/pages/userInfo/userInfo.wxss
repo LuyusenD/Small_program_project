@@ -16,5 +16,3 @@ page {
     text-align: center;
     padding: 30rpx;
 }
-.login_btn{
-}

@@ -1,5 +1,4 @@
 {
-  "usingComponents": {},
   "navigationBarTitleText": "订单详情",
   "usingComponents": {
     "van-dialog": "/vant-weapp/dist/dialog/index"

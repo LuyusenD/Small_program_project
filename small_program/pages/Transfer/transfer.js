@@ -6,9 +6,10 @@ Page({
 
   /**
    * 页面的初始数据
-   */
+   */   
   data: {
     money:0,
+    kilMoney:0,
     kilometre:'',
     date1: '',
     datePickerValue: ['', ''],
@@ -17,7 +18,7 @@ Page({
     year: new Date().getFullYear(),      // 年份
     month: new Date().getMonth() + 1,    // 月份
     day: new Date().getDate(),           // 日期
-
+    cheMoney:0,
     header: true,                        // 日历标题
     lunar: true,                         // 显示农历
     more: false,                          // 显示非当前月日期                
@@ -297,7 +298,7 @@ Page({
       for (var i = 0; i < wx.getStorageSync('Serve').money.length; i++) {
         if (wx.getStorageSync('Serve').money[i].name == '每公里') {
           this.setData({
-            money: wx.getStorageSync('Serve').money[i].mpney
+            money: wx.getStorageSync('Serve').money[i].money
          })
         }
       }
@@ -420,15 +421,16 @@ Page({
                 endAddress: that.data.obj.endAddress
               };
               console.log(obj)
-            that.formSubmit({ location: that.data.startAddress, obj})
+            that.formSubmit111({ location: that.data.startAddress, obj})
            
               if (that.data.endAddress) {
                 for (var i = 0; i < wx.getStorageSync('Serve').money.length;i++){
                   if (wx.getStorageSync('Serve').money[i].name=='每公里'){
                   that.distance(that.data.startAddress,that.data.endAddress)
 
+                    console.log(wx.getStorageSync('Serve').money[i].money)
                     that.setData({
-                        price: (that.data.kilometre * wx.getStorageSync('Serve').money[i].money).toFixed(2)
+                      kilMoney: wx.getStorageSync('Serve').money[i].money
                     })
                   }
                 }
@@ -597,6 +599,7 @@ Page({
     };
     this.setData({
       obj,
+      cheMoney: wx.getStorageSync('Serve').vehicle[e.detail.index].money
     })
     console.log(this.data.obj)
     this.setData({ vehicle: false });
@@ -644,9 +647,10 @@ Page({
      this.distance(this.data.startAddress, this.data.endAddress)
      
 
-          this.setData({
-            price: (this.data.kilometre * wx.getStorageSync('Serve').money[i].money).toFixed(2)
-          });
+          console.log(wx.getStorageSync('Serve').money[i].money)
+          that.setData({
+            kilMoney: wx.getStorageSync('Serve').money[i].money
+          })
           console.log(this.data.price)
         }
       }
@@ -787,11 +791,11 @@ console.log(this.data.obj)
         arr.oVehicle = this.data.obj.oVehicleIndex;
         arr.oTime = new Date().getTime();
         arr.oTel = this.data.Country + arr.oTel
-        this.formSubmit({ start: this.data.startAddress, end: this.data.endAddress })
-        this.formSubmit({ start: this.data.startAddress, end: this.data.endAddress })
         if (this.data.kilometre != '' && this.data.kilometre!=null){
           arr.kilometre = this.data.kilometre
-
+          arr.money = this.data.kilMoney * this.data.kilometre + this.data.cheMoney;
+          console.log('___________________')
+          console.log(arr.money)
         }else{
           wx.showToast({
             title: '提示: 国内-国外无法计算距离',
@@ -814,13 +818,11 @@ console.log(this.data.obj)
             console.log(res)
             if (res.code == 200) {
               wx.hideLoading();
-              wx.showToast({
-                title: this.data.language ? '下单成功' : 'checkout success',
-                icon: 'success'
-              });
-              setTimeout(() => {
-                wx.navigateBack();
-              }, 1000)
+
+              // play(this.data.obj)
+              wx.redirectTo({
+                url: '/pages/orderListDetail/orderListDetail?oId=' + res.data.oId,
+              })
             } else {
               wx.showToast({
                 title: res.msg,
@@ -942,7 +944,7 @@ console.log(this.data.obj)
     }
   })
   },
-  formSubmit(e) {
+  formSubmit111(e) {
     console.log(e)
     wx.request({
       url: 'https://apis.map.qq.com/ws/geocoder/v1',

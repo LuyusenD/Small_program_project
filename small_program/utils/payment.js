@@ -1,4 +1,6 @@
-import sha256 from './sha256.js'
+import sha256 from './sha256.js';
+import MD5 from './MD5.js';
+import url from './config.js';
 function play (data) {
   let nonce = Math.random().toString(36).slice(-10)
   let time = new Date().getTime()
@@ -25,6 +27,25 @@ function play (data) {
           res.errMsg === "requestPayment:ok" ? 
           console.log('支付成功'):
           console.log(res)
+          var opt = {
+            url: url.url + 'order/editstate',
+            method: "POST",
+            header: {
+              "content-type": "application/x-www-form-urlencoded"
+            },
+            data: {
+              oId: MD5.md5(MD5.md5(MD5.md5(data.oId))) + "xn"
+            }
+          };
+          url.ajax(opt)
+            .then((res) => {
+              if (res.code == 200) {
+                console.log('修改成功')
+                // wx.redirectTo({
+                //   url:'/pages/index/index'
+                // })
+              }
+            })
         },
         fail: function (res) {
           console.log(res)
@@ -32,8 +53,30 @@ function play (data) {
       })
     }
   })
-  console.log()
   console.log(data)
 }
+ function setStatus(e) {
+  // var oId = (e.currentTarget.dataset.value)
+  var opt = {
+    url: url.url + 'order/editstate',
+    method: "POST",
+    header: {
+      "content-type": "application/x-www-form-urlencoded"
+    },
+    data: {
+      oId: MD5.md5(MD5.md5(MD5.md5(e))) + "xn"
+    }
+  };
+    url.ajax(opt)
+      .then((res) => {
+        if (res.code == 200) {
+          console.log('修改成功')
+        }
+        })
+ 
 
-export default play
+}
+module.exports ={
+  play,
+  setStatus
+} 

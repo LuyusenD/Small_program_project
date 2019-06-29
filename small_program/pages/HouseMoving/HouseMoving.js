@@ -409,22 +409,13 @@ Page({
               for (var i = 0; i < wx.getStorageSync('Serve').money.length; i++) {
                 if (wx.getStorageSync('Serve').money[i].name == '每公里') {
             that.distance(that.data.startAddress, that.data.endAddress)
-
+                  console.log(wx.getStorageSync('Serve').money[i].money)
                   that.setData({
-                    price: (that.data.kilometre * wx.getStorageSync('Serve').money[i].money).toFixed(2)
+                    kilMoney: wx.getStorageSync('Serve').money[i].money
                   })
                 }
               }
-
             }
-            // } else {
-            //   if (!that.data.obj.startAddress) {
-            //     wx.showToast({
-            //       title: '亲！请选择预约地点哦。',
-            //       icon: 'none'
-            //     })
-            //   }
-            // }
           },
         })
       }
@@ -580,9 +571,9 @@ Page({
     };
     this.setData({
       obj,
-      price: wx.getStorageSync('Serve').vehicle[e.detail.index].money * 100
+      price: wx.getStorageSync('Serve').vehicle[e.detail.index].money
     })
-    console.log(this.data.obj)
+    console.log(this.data.price)
     this.setData({ vehicle: false });
   },
   // 显示选择地址
@@ -629,9 +620,9 @@ Page({
                 for (var i = 0; i < wx.getStorageSync('Serve').money.length; i++) {
                   if (wx.getStorageSync('Serve').money[i].name == '每公里') {
                that.distance(that.data.startAddress, that.data.endAddress)
-
+                    console.log(wx.getStorageSync('Serve').money[i].money)
                     that.setData({
-                      price: (that.data.kilometre * wx.getStorageSync('Serve').money[i].money).toFixed(2)
+                      kilMoney: wx.getStorageSync('Serve').money[i].money
                     })
                   }
                 }
@@ -787,6 +778,7 @@ Page({
         arr.oVehicle = this.data.obj.oVehicleIndex;
         arr.oTime = new Date().getTime();
         arr.oTel = this.data.Country + arr.oTel
+        arr.money=this.data.price
         if (this.data.kilometre != '' && this.data.kilometre != null) {
           arr.kilometre = this.data.kilometre
 
@@ -817,7 +809,10 @@ Page({
                 icon: 'success'
               });
               setTimeout(() => {
-                wx.navigateBack();
+                // play(this.data.obj)
+                wx.redirectTo({
+                  url: '/pages/orderListDetail/orderListDetail?oId=' + res.data.oId,
+                })
               }, 1000)
             } else {
               wx.showToast({
