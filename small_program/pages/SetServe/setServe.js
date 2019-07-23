@@ -146,7 +146,7 @@ Page({
           // url: this.data.img,
           money: this.data.money
         }
-      };
+      };  
       url.ajax(opt)
         .then((res) => {
           console.log(res);

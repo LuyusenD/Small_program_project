@@ -12,14 +12,17 @@ Page({
     money: '',
     language: true,
     // serve
-    serve: []
+    serve: [],
+    id:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // this.getServe();
+    console.log(options.id)
+    
+    this.getServe(options.id);
   },
 
   /**
@@ -86,11 +89,21 @@ Page({
   onShareAppMessage: function () {
 
   },
-  getServe() {
+  getServe(id) {
     console.log(wx.getStorageSync("Serve"))
     this.setData({
-      serve: wx.getStorageSync("Serve").serve
-    })
+      serve: wx.getStorageSync("Serve").vehicle
+    });
+    var data=this.data.serve;
+    for(var i=0;i<data.length;i++){
+      if(id==data[i].id){
+       this.setData({
+         id: data[i].id,
+         oType:data[i].name,
+         money:data[i].money
+       })
+      }
+    }
   },
   getoType(e) {
     console.log(e.detail);
@@ -271,13 +284,51 @@ Page({
       })
     }
   },
-  setServe(e) {
-    console.log(e.currentTarget.dataset.detail)
-    wx.navigateTo({
-      url: '/pages/SetServe/setServe?id=' + e.currentTarget.dataset.detail.id,
-    })
+  getMoeny(e){
+    console.log(e.detail);
+    var reg = /^\d{1,}$/;
+    var pattern = new RegExp(reg);
+    if (pattern.test(e.detail)) {
+      this.setData({
+        money: Number(e.detail)
+      });
+    } else {
+      wx.showToast({
+        title: this.data.language ? '只能输入数字哦!' : 'You can only enter numbers.',
+        icon: 'none'
+      });
+      this.setData({
+        money: ''
+      });
+    }
   },
-  delServe(e) {
+  setVehicle(e) {
     console.log(e.currentTarget.dataset.detail)
-  }
+    var opt = {
+      url: url.url + "buff/setmoney",
+      method: "GET",
+      header: {
+        "content-type": "application/x-www-form-urlencoded"
+      },
+      data: {
+        id: this.data.id,
+        type: 'vehicle',
+        money: this.data.money
+      }
+    };
+    url.ajax(opt)
+      .then((res) => {
+        console.log(res);
+        if (res.code == 200) {
+          wx.showToast({
+            title: this.data.language ? '修改成功' : 'set success',
+            icon: 'success',
+            duration: 2000
+          });
+          setTimeout(() => {
+            wx.navigateBack();
+          }, 2000)
+        }
+      })
+  },
 })

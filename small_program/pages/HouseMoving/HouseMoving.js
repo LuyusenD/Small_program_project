@@ -13,7 +13,9 @@ Page({
     year: new Date().getFullYear(),      // 年份
     month: new Date().getMonth() + 1,    // 月份
     day: new Date().getDate(),           // 日期
-
+    kilometre:'',
+    kilMoney:0,
+    cheMoney:0,
     header: true,                        // 日历标题
     lunar: true,                         // 显示农历
     more: false,                          // 显示非当前月日期                
@@ -408,11 +410,14 @@ Page({
             if (that.data.endAddress) {
               for (var i = 0; i < wx.getStorageSync('Serve').money.length; i++) {
                 if (wx.getStorageSync('Serve').money[i].name == '每公里') {
-            that.distance(that.data.startAddress, that.data.endAddress)
+                  that.distance(that.data.startAddress, that.data.endAddress)
+
+
                   console.log(wx.getStorageSync('Serve').money[i].money)
                   that.setData({
                     kilMoney: wx.getStorageSync('Serve').money[i].money
                   })
+                  console.log(that.data.price)
                 }
               }
             }
@@ -571,7 +576,7 @@ Page({
     };
     this.setData({
       obj,
-      price: wx.getStorageSync('Serve').vehicle[e.detail.index].money
+      cheMoney: wx.getStorageSync('Serve').vehicle[e.detail.index].money
     })
     console.log(this.data.price)
     this.setData({ vehicle: false });
@@ -619,11 +624,16 @@ Page({
             if (that.data.startAddress) {
                 for (var i = 0; i < wx.getStorageSync('Serve').money.length; i++) {
                   if (wx.getStorageSync('Serve').money[i].name == '每公里') {
-               that.distance(that.data.startAddress, that.data.endAddress)
+                    that.distance(that.data.startAddress, that.data.endAddress)
+
+
                     console.log(wx.getStorageSync('Serve').money[i].money)
                     that.setData({
                       kilMoney: wx.getStorageSync('Serve').money[i].money
                     })
+                    console.log(that.data.kilMoney)
+                    console.log(that.data.price)
+                    console.log(that.data.kilometre)
                   }
                 }
 
@@ -778,7 +788,7 @@ Page({
         arr.oVehicle = this.data.obj.oVehicleIndex;
         arr.oTime = new Date().getTime();
         arr.oTel = this.data.Country + arr.oTel
-        arr.money=this.data.price
+        arr.money = this.data.kilMoney * this.data.kilometre + this.data.cheMoney;
         if (this.data.kilometre != '' && this.data.kilometre != null) {
           arr.kilometre = this.data.kilometre
 

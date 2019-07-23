@@ -1,7 +1,7 @@
 <!--pages/adminAddCar/adminAddCar.wxml-->
 <van-tabs active="{{ active }}" bind:change="activeonChange">
   <van-tab title="{{language?'添加':'add'}}"></van-tab>
-  <van-tab title="{{language?'修改':'set'}}"></van-tab>
+  <van-tab title="{{language?'操作':'operation'}}"></van-tab>
 </van-tabs>
 <view wx:if="{{active==0}}">
   <view style='height:50rpx;'></view>
@@ -32,9 +32,10 @@
   <view wx:if="{{serve.length>0}}">
     <view wx:for="{{serve}}" wx:key="{{item.id}}">
       <van-row>
-        <van-col span="10">{{language?'类型：'+item.name:'Type：'+item.name}}</van-col>
-        <van-col span="10">{{language?'价格：'+item.money:'Money：'+item.money}}</van-col>
+        <van-col span="9">{{language?'类型：'+item.name:'Type：'+item.name}}</van-col>
+        <van-col span="7">{{language?'价格：'+item.money:'Money：'+item.money}}</van-col>
         <van-col span="4"><van-button size="small" data-detail="{{item}}" bindtap='SetCar' type='info'>修改</van-button></van-col>
+        <van-col span="4"><van-button size="small" data-detail="{{item}}" bindtap='delCar' type='warning'>删除</van-button></van-col>
       </van-row>
     </view>
   </view>
@@ -43,3 +44,5 @@
     <!-- <view>还没有已完成订单呢</view> -->
   </view>
 </view>
+<!-- 删除订单弹框 -->
+<van-dialog id="van-dialog" />

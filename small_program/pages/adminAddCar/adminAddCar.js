@@ -1,5 +1,6 @@
 // pages/adminAddCar/adminAddCar.js
-import url from '../../utils/config.js'
+import url from '../../utils/config.js';
+import Dialog from '../../vant-weapp/dist/dialog/dialog';
 Page({
 
   /**
@@ -212,5 +213,42 @@ Page({
     wx.navigateTo({
       url: '/pages/SetCar/SetCar?id=' + e.currentTarget.dataset.detail.id,
     })
+  },
+  delCar(e){
+    console.log(e.currentTarget.dataset.detail)
+    var opt = {
+      url: url.url + 'buff/delvehicle', //仅为示例，非真实的接口地址
+      method: "POST",
+      header: {
+        "content-type": "application/x-www-form-urlencoded"
+      },
+      data: {
+        id: e.currentTarget.dataset.detail.id
+      }
+    };
+    Dialog.confirm({
+      title: this.data.language ? '提示' : 'Tips',
+      message: this.data.language ? '你确定要删除该订单吗?' : 'Are you sure you want to delete the order?'
+    }).then(() => {
+      url.ajax(opt)
+        .then((res) => {
+          console.log(res)
+          if (res.code == 200) {
+            Dialog.alert({
+              message: this.data.language ? '删除成功' : 'Delete successful'
+            }).then(() => {
+              this.getServeType();
+            });
+          } else {
+            Dialog.alert({
+              message: this.data.language ? '删除失败' : 'Delete failed'
+            }).then(() => {
+              // on close
+            });
+          }
+        })
+    }).catch(() => {
+      // on cancel
+    });
   }
 })

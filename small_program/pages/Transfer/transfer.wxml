@@ -267,7 +267,7 @@
 </van-popup>
 <view wx:if="{{!time}}">
   <van-submit-bar
-   price="{{ kilMoney*kilometre+cheMoney }}"
+   price="{{ (kilMoney*kilometre+cheMoney)*100 }}"
   button-text="{{language?'立即预约':'Immediate appointment'}}"
   bind:submit="makeAppointment"
 />

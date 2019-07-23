@@ -1,0 +1,46 @@
+<!--pages/serveType.wxml-->
+<van-swipe-cell wx:for="{{list}}" key="{{index}}" right-width="{{ 65 }}" left-width="{{ 65 }}">
+  <view slot="left" data-item="{{item}}" bindtap="upload">{{language?'修改':'set'}}</view>
+  <van-cell-group>
+    <van-cell title="{{item.type==1?'清洁服务':'家具安装'}}" value="{{item.title}}" />
+  </van-cell-group>
+  <view slot="right" bindtap="del" data-item="{{item}}">{{language?'删除':'del'}}</view>
+</van-swipe-cell>
+
+<view style="width:90%;margin:0 auto;padding-top:50px">
+  <van-button size="large" bindtap="add" type="primary">{{language?'添加':'add'}}</van-button>
+</view>
+<van-popup   show="{{ show }}" bind:close="onClose1">
+  <view style="width:300px;height:200px"> <van-cell-group>
+  <view style="height:20px"></view>
+  <van-cell title="{{language?'类型':'Type'}}" is-link value="{{obj.typeIndex==''?language?'请选择类型':'Please select type':obj.typeIndex}}" bind:click='click' />
+    <van-field
+    label="{{language?'服务内容':'serviceContent' }}"
+    required
+    value="{{ obj.title }}"
+    placeholder="{{language?'请输入服务内容':'Please enter the service content'}}"
+    border="{{ false }}"
+    bind:change="onChange"
+  />
+  </van-cell-group>
+  <view style="width:90%;margin:0 auto; padding-top:20rpx;"> 
+     <van-button size="large" bindtap="add1" type="primary">{{title}}</van-button>
+  </view>
+  </view>
+</van-popup>
+<van-popup
+  show="{{ isType }}"
+  position="bottom"
+  overlay="{{ true }}"
+  bind:close="onClose"
+  safe-area-inset-bottom
+>
+
+  <van-picker
+  show-toolbar
+  columns="{{ serve }}"
+  bind:cancel="onCancelisTypey"
+  bind:confirm="onChangeisType"
+/>
+
+</van-popup>

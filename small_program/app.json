@@ -25,7 +25,8 @@
     "pages/SetServe/setServe",
     "pages/Transfer/transfer",
     "pages/HouseMoving/HouseMoving",
-    "pages/adminSetServe/adminSetServe"
+    "pages/adminSetServe/adminSetServe",
+    "pages/serveType/serveType"
   ],
   "permission": {
     "scope.userLocation": {

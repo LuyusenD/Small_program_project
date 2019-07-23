@@ -648,7 +648,7 @@ Page({
      
 
           console.log(wx.getStorageSync('Serve').money[i].money)
-          that.setData({
+          this.setData({
             kilMoney: wx.getStorageSync('Serve').money[i].money
           })
           console.log(this.data.price)

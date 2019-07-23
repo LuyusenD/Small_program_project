@@ -249,7 +249,7 @@
 <view wx:if="{{kilometre}}" class='kilometre'>  起点到终点预计{{kilometre}}km</view>
 <view wx:if="{{!time}}">
   <van-submit-bar
-  price="{{price*100}}"
+  price="{{ (kilMoney*kilometre+cheMoney)*100 }}"
   button-text="{{language?'立即预约':'Immediate appointment'}}"
   bind:submit="makeAppointment"
 />

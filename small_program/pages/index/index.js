@@ -147,6 +147,8 @@ Page({
     url.ajax(opt).then((res)=>{
       console.log(res)
       if(res.code==200){
+        console.log('login')
+        console.log(res.data.list)
         this.setData({
           login:res.data.list
         })

@@ -11,20 +11,27 @@ Page({
   data: {
     // 页面数据
     list:[],
-    
+    isShow:true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
+    if(options.isShow){
+      this.setData({
+        isShow:false
+      })
+    }
     if (options.oId){
       wx.showLoading({
         title: '正在加载数据...',
         mask:true
       });
+      console.log(options.isShow)
       this.setData({
-        oId: options.oId
+        oId: options.oId,
       });
       this.getListDetail(options.oId);
     }else{

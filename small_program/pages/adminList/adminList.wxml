@@ -1,5 +1,5 @@
 <!--pages/adminList/adminList.wxml-->
- <!-- <view class="page__bd"> 
+<!-- <view class="page__bd"> 
   <view class="list">
    <view class="page__bd">
     <view class="weui-cells weui-cells_form">
@@ -15,7 +15,7 @@
   </view>
   </view>
  </view> -->
- <view class='container'>
+<view class='container'>
   <view bindtap='jump' data-url='/pages/adminOrderAll/adminOrderAll'>
     <view>
       <image src='/image/seeOrderAll.png'></image>
@@ -29,13 +29,13 @@
     </view>
   </view>
   <view bindtap='jump' data-url='/pages/adminAddUser/adminAddUser'>
-  <!-- <view bindtap='jump' data-url='/pages/adminOrderAll/adminOrderAll'> -->
+    <!-- <view bindtap='jump' data-url='/pages/adminOrderAll/adminOrderAll'> -->
     <view>
       <image src='/image/addUser.png'></image>
       <view>{{language?'添加管理':'Add Admin'}}</view>
     </view>
   </view>
-    <view bindtap='jump' data-url='/pages/adminAddCar/adminAddCar'>
+  <view bindtap='jump' data-url='/pages/adminAddCar/adminAddCar'>
     <view>
       <image src='/image/addServe.png'></image>
       <view>{{language?'添加车型':'Add Car'}}</view>
@@ -53,14 +53,20 @@
       <view>{{language?'图片':'banner'}}</view>
     </view>
   </view>
-   <view bindtap='jump' data-url='/pages/adminSetServe/adminSetServe'>
+  <view bindtap='jump' data-url='/pages/adminSetServe/adminSetServe'>
     <view>
       <image src='/image/lubo.png'></image>
       <view>{{language?'服务':'serve'}}</view>
     </view>
   </view>
+  <view bindtap='jump' data-url='/pages/serveType/serveType'>
+    <view>
+      <image src='/image/lubo.png'></image>
+      <view>{{language?'服务类型':'serveType'}}</view>
+    </view>
+  </view>
 </view>
 <view style='width:80%;margin:0 auto;'>
-  <van-button size="large" round  type="danger" bindtap='isloginOut'>{{language?'退出登录':'Logout'}}</van-button>
+  <van-button size="large" round type="danger" bindtap='isloginOut'>{{language?'退出登录':'Logout'}}</van-button>
 </view>
 <van-dialog id="van-dialog" />

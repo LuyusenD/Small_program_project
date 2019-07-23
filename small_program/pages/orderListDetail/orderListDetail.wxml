@@ -71,16 +71,15 @@
       </view>
     </view>
   </view>
-  <view class="plr40 mt60 pb20" wx:if='{{list.oState==2}}'>
-    <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" bindtap='replenishment'>立即支付</view>
-    <view style='height:50px'></view>
-    <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" data-value='{{list.oId}}' bindtap='cancelOrder'>取消订单</view>
+  <view wx:if="{{isShow}}">
+    <view class="plr40 mt60 pb20" wx:if='{{list.oState==2}}' style="display:flex; justify-content: space-between">
+      <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" style="width:40%;background:rgb(26,173,25)"  bindtap='replenishment'>立即支付</view>
+      <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" style="width:40%"  data-value='{{list.oId}}' bindtap='cancelOrder'>取消订单</view>
+    </view>
+    <view class="plr40 mt60 pb20" wx:if='{{list.oState==1}}'  style="display:flex;justify-content: space-between">
+      <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" style="width:40%" >等待后台审核订单</view>
+      <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" style="width:40%"  data-value='{{list.oId}}' bindtap='cancelOrder'>取消订单</view>
+    </view>
   </view>
-  <view class="plr40 mt60 pb20" wx:if='{{list.oState==1}}'>
-    <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" >等待后台审核订单</view>
-    <view style='height:50px'></view>
-    <view class="btn_tap bgc1 font16 colw w100 lh90 border-r1 tac" data-value='{{list.oId}}' bindtap='cancelOrder'>取消订单</view>
-  </view>
-  
 </view>
 <van-dialog id="van-dialog" />

@@ -5,7 +5,7 @@
                <text selectable='true'>订单编号:{{item.oId}}</text>
               <text class='{{item.oState==4?"color2":"color3"}}'>{{item.oState==1?"未支付":item.oState==2?"已支付":item.oState==3?"执行中":"已完成"}}</text>
             </view>
-          <navigator url="{{'/pages/orderListDetail/orderListDetail?oId='+item.oId}}" class="db plr30">
+          <navigator url="{{'/pages/orderListDetail/orderListDetail?oId='+item.oId+'&isShow=false'}}" class="db plr30">
             <view class="goods">
               <view class="flex_a ptb30 goods_item" >
                 <view class="goods_bg flex_aj">
@@ -26,7 +26,7 @@
             </view>
           <van-row>
             <van-col offset='1' span="5"><van-button type='danger' bindtap='cancelOrder' data-value="{{item.oId}}" size="small">{{language?'删除订单':'Delete order'}}</van-button></van-col>
-            <van-col offset='1' span="5"><van-button type='danger' bindtap='setMoeny' data-value="{{item.oId}}" size="small">{{language?'金额修改':'Set money'}}</van-button></van-col>
+            <van-col offset='1' span="5"><van-button type='danger' bindtap='setMoeny'wx:if="{{item.oState<2}}" data-value="{{item.oId}}" size="small">{{language?'金额修改':'Set money'}}</van-button></van-col>
             <van-col offset='1' span="5" wx:if="{{item.oState==1}}"><van-button type='danger' bindtap='check' data-value="{{item.oId}}" size="small">{{language?'审核':'check'}}</van-button></van-col>
             <van-col offset='1' span="5" wx:if="{{item.oState<5}}"><van-button type='danger' bindtap='setStatusok' data-value="{{item.oId}}" size="small">{{language?'订单完成':'order Success'}}</van-button></van-col>
           </van-row>
