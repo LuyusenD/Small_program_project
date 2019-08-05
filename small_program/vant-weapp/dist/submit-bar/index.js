@@ -17,7 +17,7 @@ VantComponent({
         buttonText: String,
         currency: {
             type: String,
-            value: '¥'
+            value: 'AUG'
         },
         buttonType: {
             type: String,

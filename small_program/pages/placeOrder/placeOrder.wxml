@@ -99,8 +99,8 @@
     <van-cell
       required
       icon="friends"
-      title="{{language?'服务车型':'Service vehicle'}}"
-      value="{{obj.oVehicle==''&&language?'请选择服务车型':obj.oVehicle==''&&!language?'Please choose the service model':obj.oVehicle}}>"
+      title="{{language?'服务内容':'Service content'}}"
+      value="{{obj.server_cont==''&&language?'请选择服务内容':obj.server_cont==''&&!language?'Please choose the service content':obj.server_cont}}>"
       bind:click='getVehicle'
   />
 </van-cell-group>
@@ -187,7 +187,7 @@
 
   <van-picker
   show-toolbar
-  title="{{language?'请选择服务车辆':'Please select the service vehicle'}}"
+  title="{{language?'请选择服务内容':'Please select the service content'}}"
   columns="{{ serveType }}"
   bind:cancel="onCancelServeType"
   bind:confirm="onChangeServeType"
@@ -204,8 +204,8 @@
 
   <van-picker
   show-toolbar
-  title="{{language?'请选择服务车辆':'Please select the service vehicle'}}"
-  columns="{{ ServeVehicle }}"
+  title="{{language?'请选择服务内容':'Please select the service content'}}"
+  columns="{{ server_cont }}"
   bind:cancel="onCancelVehicle"
   bind:confirm="onChangeVehicle"
 />

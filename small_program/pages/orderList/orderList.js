@@ -41,7 +41,6 @@ Page({
       });
       console.log(wx.getStorageSync('language'))
     }
-    this.getOrderList();
   },
 
   /**
@@ -72,6 +71,10 @@ Page({
       });
       console.log(wx.getStorageSync('language'))
     }
+    this.setData({
+      order:[]
+    })
+    this.getOrderList();
   },
 
   /**
@@ -180,7 +183,7 @@ Page({
               orderList: res.data.data,
               order: this.nextData(res.data.data, this.data.pageSize, this.data.page)
             })
-            console.log(res.data.data)
+            console.log(this.data.orderList)
           }else{
             wx.showToast({
               title: this.data.language ? '你还没有订单，快起下单吧！' : 'You havent ordered yet.Quickly place your order.',

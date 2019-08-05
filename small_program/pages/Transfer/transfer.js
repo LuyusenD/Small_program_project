@@ -90,6 +90,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
     qqmapsdk = new QQMapWX({
       key: 'QL6BZ-FFXWX-WWR4F-7UGKF-7VM5E-5WBLM'
     });
@@ -125,7 +126,7 @@ Page({
       ]
     })
     
-    console.log(options.index)
+    console.log(options)
     let obj = {
       oTel: '',
       startAddress: '',
@@ -139,19 +140,14 @@ Page({
       oVehicleIndex: 1,
       endAddress:''
     };
-    this.setData({
-      obj
-    })
-    console.log('__________')
-    console.log(this.data.obj.oTypeIndex)
-    console.log('__________')
     let CountryList =
       [
         this.data.language ? '中国' : 'China',
         this.data.language ? '澳洲' : 'Australia',
       ];
     this.setData({
-      CountryList
+      CountryList,
+      obj
     })
     if (wx.getStorageSync('language')) {
       if (wx.getStorageSync('language').language) {
@@ -177,6 +173,9 @@ Page({
     this.setData({
       items: item
     })
+    this.setData({
+      price: options.money
+    })
     // 页面加载获取所有服务类型
     if (wx.getStorageSync('Serve')) {
       // 本地缓存已有数据
@@ -192,10 +191,10 @@ Page({
       }
       this.setData({
         serveType,
-        ServeVehicle
+        ServeVehicle,
+        cheMoney: parseInt(options.money),
       });
-      console.log(this.data.serveType)
-      console.log(this.data.ServeVehicle)
+     
     } else {
       this.getServeType();
     }

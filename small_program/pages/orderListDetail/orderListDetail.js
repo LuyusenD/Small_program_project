@@ -10,34 +10,34 @@ Page({
    */
   data: {
     // 页面数据
-    list:[],
-    isShow:true
+    list: [],
+    isShow: true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     console.log(options)
-    if(options.isShow){
+    if (options.isShow) {
       this.setData({
-        isShow:false
+        isShow: false
       })
     }
-    if (options.oId){
+    if (options.oId) {
       wx.showLoading({
         title: '正在加载数据...',
-        mask:true
+        mask: true
       });
       console.log(options.isShow)
       this.setData({
         oId: options.oId,
       });
       this.getListDetail(options.oId);
-    }else{
+    } else {
       wx.showToast({
         title: '获取详情失败..',
-        icon:'none'
+        icon: 'none'
       })
     }
   },
@@ -45,101 +45,126 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     this.getListDetail(this.data.oId);
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
   // 获取订单详情
-  getListDetail(oId){
-    var _this=this;
-    var opt={
-      url: url.url +'order/getorder',
-      method:"GET",
-      data:{
+  getListDetail(oId) {
+    var _this = this;
+    var opt = {
+      url: url.url + 'order/getorder',
+      method: "GET",
+      data: {
         str: oId
       }
     }
     url.ajax(opt)
-      .then((res)=>{
+      .then((res) => {
         wx.hideLoading();
-        if (res.code==200){
-          
-          console.log(res.data.data[0].createTime)
-          var createTime = parseInt(res.data.data[0].createTime)
-          res.data.data[0].createTime = res.data.data[0].createTime==0?'无': url.formatTime(createTime, 'Y-M-D h:m:s');
-          var arr = wx.getStorageSync('Serve').serve;
-            for (var j = 0; j < arr.length; j++) {
-              if (res.data.data[0].oType == arr[j].id) {
-                res.data.data[0].oType = arr[j].name.split('(')[0];
-                res.data.data[0].img = url.url+  arr[j].icon;
-                console.log('http://' + arr[j].icon)
-                continue;
+        if (res.code == 200) {
+          var opt = {
+            url: url.url + 'buff/sercont',
+            method: "GET",
+            header: {
+              "content-type": "application/json"
+            },
+            data: {},
+          };
+          url.ajax(opt)
+            .then(res1 => {
+              wx.hideLoading();
+              if (res.code == 200) {
+                console.log(res.data.data[0].createTime)
+                var createTime = parseInt(res.data.data[0].createTime)
+                res.data.data[0].createTime = res.data.data[0].createTime == 0 ? '无' : url.formatTime(createTime, 'Y-M-D h:m:s');
+                var arr = wx.getStorageSync('Serve').serve;
+                for (var j = 0; j < arr.length; j++) {
+                  if (res.data.data[0].oType == arr[j].id) {
+                    res.data.data[0].oType = arr[j].name.split('(')[0];
+                    res.data.data[0].img = url.url + arr[j].icon;
+                    console.log('http://' + arr[j].icon)
+                    continue;
+                  }
+                }
+                var arr1 = wx.getStorageSync('Serve').vehicle;
+                for (var i = 0; i < arr1.length; i++) {
+                  for (var j = 0; j < res.data.data.length; j++) {
+                    if (res.data.data[j].oVehicle == arr1[i].id) {
+                      res.data.data[j].oVehicle = arr1[i].name;
+                      res.data.data[j].price = res.data.data[0].money;
+                      continue;
+                    }
+                  }
+                }
+                res.data.data[0].price = res.data.data[0].money
+                for(var i=0;i<res1.data.length;i++){
+                  if (res1.data[i].id == res.data.data[0].server_cont){
+                    res.data.data[0].server_cont = res1.data[i].title
+                  }
+                }
+                _this.setData({
+                  list: res.data.data[0]
+                })
+              } else {
+                wx.showToast({
+                  title: '加载失败....',
+                  icon: 'none'
+                })
               }
-          }
-          var arr1 = wx.getStorageSync('Serve').vehicle;
-          for (var i = 0; i < arr1.length; i++) {
-            for (var j = 0; j < res.data.data.length; j++) {
-              if (res.data.data[j].oVehicle == arr1[i].id) {
-                res.data.data[j].oVehicle = arr1[i].name;
-                res.data.data[j].price = res.data.data[0].money;
-                continue;
-              }
-            }
-          }
-          _this.setData({
-            list:res.data.data[0]
-          })
-        }else{
+            })
+
+        } else {
           wx.showToast({
             title: '获取订详情失败..',
-            icon:'none'
+            icon: 'none'
           })
         }
       })
   },
   //修改金额
-  replenishment () {
+  replenishment() {
     play.play(this.data.list)
   },
   cancelOrder(e) {
@@ -186,5 +211,5 @@ Page({
       // on cancel
     });
   },
- 
+
 })

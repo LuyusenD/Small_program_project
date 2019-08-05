@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    active:0,
     language: true,
     list: [],
     show: false,
@@ -188,6 +189,10 @@ Page({
       },
       data: this.data.obj,
     };
+    wx.showLoading({
+      title: this.data.language?'加载中...':'Loading...',
+      mask:true
+    })
     url.ajax(opt)
     .then(res=>{
       console.log(res)
@@ -224,6 +229,21 @@ Page({
       }
     })
   },
+  // 用户选择状态
+  activeonChange(e) {
+    // console.log(e)
+    if (e.detail.index == 0) {
+      console.log('添加');
+      this.setData({
+        active: e.detail.index
+      })
+    } else {
+      console.log('修改');
+      this.setData({
+        active: e.detail.index
+      })
+    }
+  },
   del(item){
    var id=item.currentTarget.dataset.item.id;
     var opt = {
@@ -234,8 +254,13 @@ Page({
       },
       data: {id:id},
     };
+    wx.showLoading({
+      title: this.data.language ? '加载中...' : 'Loading...',
+      mask: true
+    })
     url.ajax(opt)
     .then(res=>{
+      wx.hideLoading();
       console.log(res)
       if(res.code==200){
         wx.showToast({

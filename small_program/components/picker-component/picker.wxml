@@ -1,0 +1,9 @@
+<!--components/region_picker /regin_picker.wxml-->
+
+<picker class="" mode="multiSelector" 
+bindchange="bindPickerChange" bindcolumnchange="bindColumnChange"
+value="{{multiIndex}}" range="{{multiArray}}" range-key="name">
+    <!-- 组件外部引用子节点 -->
+    <slot></slot>
+</picker>
+

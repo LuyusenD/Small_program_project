@@ -36,7 +36,7 @@
 </view> -->
 <view class='container container-server-icon'>
 
- <view wx:for="{{serve}}" wx:key="{{index}}" bindtap='jump' data-index='{{item.id}}' data-url="{{index==0?'/pages/Transfer/transfer':index==4?'/pages/HouseMoving/HouseMoving':'/pages/placeOrder/placeOrder'}}">
+ <view wx:for="{{serve}}" wx:key="{{index}}" data-item='{{item}}' bindtap='jump' data-index='{{item.id}}' data-url="{{index==0?'/pages/Transfer/transfer':index==4?'/pages/HouseMoving/HouseMoving':'/pages/placeOrder/placeOrder'}}">
   <image src='{{url+item.icon}}'></image>
   <!-- <text>{{language?item.language.Chinese:item.language.Englist}}</text> -->
   <text>{{item.name}}</text>
@@ -50,7 +50,7 @@
 </view>
 <view class='container'>
   <block wx:for="{{list}}" wx:key="{{index}}" >
-      <view  bindtap='jump1' data-index='{{index}}' data-url="{{item.url}}">
+      <view  bindtap='jump1' data-index='{{index}}'  data-item='{{item}}'   data-url="{{item.url}}">
         <image src='{{item.img}}'></image>
         <text>{{language?item.language.Chinese:item.language.Englist}}</text>
       </view>

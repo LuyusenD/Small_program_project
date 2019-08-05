@@ -33,6 +33,10 @@
           <text class="col9">预约时间:</text>
           <text>{{list.createTime}}</text>
         </view>
+        <view wx:if="{{list.server_cont!=''}}">
+          <text class="col9">服务内容:</text>
+          <text>{{list.server_cont}}</text>
+        </view>
         <view>
           <text class="col9"> 公里:</text>
           <text>{{list.kilometre}}</text>
@@ -48,7 +52,7 @@
             <!-- <view class="font15 fw">服务车型 ： {{list.vehicle}}</view> -->
             <view class="mt20 color2 fw flex_sb">
               <view>
-                ￥<text class="font17 mr10">{{list.price}}</text>x1
+              AUG<text class="font17 mr10">{{list.price}}</text>x1
               </view>
               <navigator url='/pages/feedback/feedback' class='feedback' wx:if='{{index==0}}'>意见反馈</navigator>
             </view>

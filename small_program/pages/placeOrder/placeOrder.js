@@ -52,6 +52,7 @@ Page({
     ServeVehicle: [],
     // 选择所在区域
     Location: '',
+    server_cont:[],
     obj: {
       oTel: '',
       startAddress: '',
@@ -62,7 +63,8 @@ Page({
       oTypeIndex: 1,
       oName: '',
       oVehicle: '',
-      oVehicleIndex: 1,
+      oVehicleIndex: '',
+      server_cont:''
     },
     items: {},
     //价格
@@ -94,9 +96,11 @@ Page({
       oTypeIndex: options.index,
       oName: '',
       oVehicle: '',
-      oVehicleIndex: 1
+      oVehicleIndex: 1,
+      server_cont:''
     };
     this.setData({
+      price:options.money,
       obj
     })
     console.log('__________')
@@ -156,8 +160,55 @@ Page({
     } else {
       this.getServeType();
     }
+    this.getList1(options)
   },
-
+  getList1(options) {
+    wx.showLoading({
+      title: this.data.language ? '加载中...' : 'Loading...',
+      mask: true
+    })
+    var opt = {
+      url: url.url + 'buff/sercont',
+      method: "GET",
+      header: {
+        "content-type": "application/json"
+      },
+      data: {},
+    };
+    url.ajax(opt)
+      .then(res => {
+        wx.hideLoading();
+        if (res.code == 200) {
+          // 本地缓存已有数据
+          var server_cont = [];
+          var oTypearr = [];
+          let arr1 = res.data;
+          for (var i = 0; i < arr1.length; i++) {
+            if (options.index == 3) {
+              if (arr1[i].type == 1) {
+                server_cont.push(arr1[i].title)
+                oTypearr.push(arr1[i])
+              }
+            } else {
+              if (arr1[i].type == 2) {
+                server_cont.push(arr1[i].title)
+                oTypearr.push(arr1[i])
+              }
+            }
+          }
+          this.setData({
+            server_cont,
+            oTypearr
+          });
+        } else {
+          wx.showToast({
+            title: '加载失败....',
+            icon: 'none'
+          })
+        }
+        console.log(res)
+      })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -352,7 +403,9 @@ Page({
               oName: that.data.obj.oName,
               oVehicle: that.data.obj.oVehicle,
               oVehicleIndex: that.data.obj.oVehicleIndex,
-              endAddress: that.data.obj.endAddress
+              server_cont: that.data.obj.server_cont,
+              endAddress: that.data.obj.endAddress,
+              server_cont: that.data.obj.server_cont
             };
             console.log(obj)
             that.formSubmit({ location: that.data.startAddress, obj })
@@ -441,7 +494,8 @@ Page({
       oTypeIndex: this.data.obj.oTypeIndex,
       oName: this.data.obj.oName,
       oVehicle: this.data.obj.oVehicle,
-      oVehicleIndex: this.data.obj.oVehicleIndex
+      oVehicleIndex: this.data.obj.oVehicleIndex,
+      server_cont: this.data.obj.server_cont
     };
     this.setData({
       time: false,
@@ -500,6 +554,7 @@ Page({
       oName: this.data.obj.oName,
       oVehicle: this.data.obj.oVehicle,
       oVehicleIndex: this.data.obj.oVehicleIndex,
+      server_cont: this.data.obj.server_cont
     };
     this.setData({
       obj
@@ -511,9 +566,7 @@ Page({
   onChangeVehicle(e) {
     var _that = this;
     console.log(e)
-    var serveType = wx.getStorageSync('Serve').vehicle[e.detail.index].name;
-    console.log(wx.getStorageSync('Serve').vehicle[e.detail.index]);
-    console.log(this.data.obj)
+    var serveType = this.data.oTypearr[e.detail.index].title;
     var obj = {
       oTel: _that.data.obj.oTel,
       startAddress: _that.data.obj.startAddress,
@@ -523,8 +576,9 @@ Page({
       openId: _that.data.obj.openId,
       oTypeIndex: _that.data.obj.oTypeIndex,
       oName: _that.data.obj.oName,
-      oVehicle: serveType,
-      oVehicleIndex: wx.getStorageSync('Serve').vehicle[e.detail.index].id
+      oVehicle: '',
+      oVehicleIndex: this.data.oTypearr[e.detail.index].id,
+      server_cont: serveType
     };
     this.setData({
       obj,
@@ -578,6 +632,7 @@ Page({
       oName: this.data.obj.oName,
       oVehicle: this.data.obj.oVehicle,
       oVehicleIndex: this.data.obj.oVehicleIndex,
+      server_cont: this.data.obj.server_cont
 
     };
     this.setData({
@@ -599,6 +654,7 @@ Page({
         oName: this.data.obj.oName,
         oVehicle: this.data.obj.oVehicle,
         oVehicleIndex: this.data.obj.oVehicleIndex,
+        server_cont: this.data.obj.server_cont
 
       };
       this.setData({
@@ -617,6 +673,7 @@ Page({
         oName: this.data.obj.oName,
         oVehicle: this.data.obj.oVehicle,
         oVehicleIndex: this.data.obj.oVehicleIndex,
+        server_cont: this.data.obj.server_cont
       };
       this.setData({
         obj,
@@ -639,6 +696,7 @@ Page({
       oName: e.detail,
       oVehicle: this.data.obj.oVehicle,
       oVehicleIndex: this.data.obj.oVehicleIndex,
+      server_cont: this.data.obj.server_cont
 
     };
     this.setData({
@@ -653,7 +711,7 @@ Page({
     var arr = JSON.parse(JSON.stringify(this.data.obj));
     arr.openId = wx.getStorageSync("openid").openid,
       console.log(arr)
-    if (arr.oTel != '' && arr.startAddress != '' && arr.oTypeIndex != '' && arr.openId != '' && arr.oName != '' && arr.oVehicle) {
+    if (arr.oTel != '' && arr.startAddress != '' && arr.oTypeIndex != '' && arr.openId != '' && arr.oName != '' && arr.server_cont) {
       var reg = this.data.Country == '+86' ? /^[1][3,4,5,7,8][0-9]{9}$/ : /^\d{9}$/
       if ((reg.test(arr.oTel))) {
         console.log("______________________")
@@ -663,7 +721,8 @@ Page({
         });
         console.log(this.data.obj)
         arr.oType = this.data.obj.oTypeIndex;
-        arr.oVehicle = this.data.obj.oVehicleIndex;
+        arr.oVehicle = '';
+        arr.server_cont = this.data.obj.oVehicleIndex;
         arr.oTime = new Date().getTime();
         arr.oTel = this.data.Country + arr.oTel
         arr.endAddress = this.data.obj.startAddress;
@@ -772,7 +831,8 @@ Page({
       oTypeIndex: this.data.obj.oTypeIndex,
       oName: this.data.obj.oName,
       oVehicle: this.data.obj.oVehicle,
-      oVehicleIndex: this.data.obj.oVehicleIndex
+      oVehicleIndex: this.data.obj.oVehicleIndex,
+      server_cont: this.data.obj.server_cont
     };
     this.setData({
       time: false,

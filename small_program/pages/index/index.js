@@ -227,21 +227,23 @@ Page({
   jump(e) {
     var url = e.currentTarget.dataset.url;
     var index = e.currentTarget.dataset.index;
+    var item = e.currentTarget.dataset.item;
+    
     console.log(index)
     if(index<=2){
       wx.navigateTo({
-        url: '/pages/Transfer/transfer' + '?index=' + index,
+        url: '/pages/Transfer/transfer' + '?index=' + index + "&money=" + item.money,
       })
     }else if(index==5){
       wx.navigateTo({
-        url: '/pages/HouseMoving/HouseMoving' + '?index=' + index,
+        url: '/pages/HouseMoving/HouseMoving' + '?index=' + index + "&money=" + item.money,
       })
     }else{
       wx.navigateTo({
-        url: '/pages/placeOrder/placeOrder' + '?index=' + index,
+        url: '/pages/placeOrder/placeOrder' + '?index=' + index + "&money=" + item.money,
       })
     }
-    // console.log(url)
+    console.log(e)
     // wx.navigateTo({
     //   url: url + '?index=' + index,
     // })

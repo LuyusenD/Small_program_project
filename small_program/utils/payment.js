@@ -11,7 +11,7 @@ function play (data) {
     data: {
       description: `${data.oType}-${data.oId}`,
       price: data.price * 100,
-      currency: 'CNY',
+      currency: 'AUD',
       operator: `${data.oName}-${data.oTel}`,
       appid: 'wx95f9d0da92ac236f',
       customer_id: `${wx.getStorageSync('openid').openid}`
