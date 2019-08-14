@@ -58,6 +58,7 @@ Page({
     // 服务类型
     serveType: [],
     ServeVehicle: [],
+    ServeVehicleArr: [],
     // 选择所在区域
     Location: '',
     obj: {
@@ -181,17 +182,22 @@ Page({
       // 本地缓存已有数据
       var serveType = [];
       var ServeVehicle = [];
+      var ServeVehicleArr= [];
       var arr = wx.getStorageSync('Serve').serve;
       for (var i = 0; i < arr.length; i++) {
-        serveType.push(arr[i].name)
+          serveType.push(arr[i].name)
       }
       var arr1 = wx.getStorageSync('Serve').vehicle;
       for (var i = 0; i < arr1.length; i++) {
+        if (arr1[i].type == 0) {
         ServeVehicle.push(arr1[i].name)
+          ServeVehicleArr.push(arr1[i])
+        }
       }
       this.setData({
         serveType,
         ServeVehicle,
+        ServeVehicleArr,
         cheMoney: parseInt(options.money),
       });
      
@@ -580,9 +586,9 @@ Page({
   onChangeVehicle(e) {
     var _that = this;
     console.log(e)
-    var serveType = wx.getStorageSync('Serve').vehicle[e.detail.index].name;
-    console.log(wx.getStorageSync('Serve').vehicle[e.detail.index]);
-    console.log(this.data.obj)
+    var serveType = _that.data.ServeVehicleArr[e.detail.index].name;
+    console.log(_that.data.ServeVehicleArr[e.detail.index]);
+    console.log(_that.data.ServeVehicleArr[e.detail.index].id);
     var obj = {
       oTel: _that.data.obj.oTel,
       startAddress: _that.data.obj.startAddress,
@@ -593,12 +599,12 @@ Page({
       oTypeIndex: _that.data.obj.oTypeIndex,
       oName: _that.data.obj.oName,
       oVehicle: serveType,
-      oVehicleIndex: wx.getStorageSync('Serve').vehicle[e.detail.index].id,
+      oVehicleIndex: _that.data.ServeVehicleArr[e.detail.index].id,
       endAddress: _that.data.obj.endAddress
     };
     this.setData({
       obj,
-      cheMoney: wx.getStorageSync('Serve').vehicle[e.detail.index].money
+      cheMoney: _that.data.ServeVehicleArr[e.detail.index].money
     })
     console.log(this.data.obj)
     this.setData({ vehicle: false });

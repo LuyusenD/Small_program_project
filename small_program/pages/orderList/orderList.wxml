@@ -23,7 +23,7 @@
           </navigator>
             <view class="flex_sb lh90 bdt">
               <text>共1件商品</text>
-              <text>共计：<text class='color2'>￥{{item.money}}</text></text>
+              <text>共计：<text class='color2'>AUG {{item.money}}</text></text>
             </view>
         </view>
       </view>

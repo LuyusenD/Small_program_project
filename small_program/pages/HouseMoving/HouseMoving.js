@@ -10,21 +10,21 @@ Page({
     datePickerValue: ['', ''],
     datePickerIsShow: false,
     date: '',
-    year: new Date().getFullYear(),      // 年份
-    month: new Date().getMonth() + 1,    // 月份
-    day: new Date().getDate(),           // 日期
-    kilometre:'',
-    kilMoney:0,
-    cheMoney:0,
-    header: true,                        // 日历标题
-    lunar: true,                         // 显示农历
-    more: false,                          // 显示非当前月日期                
-    week_title: true,                    // 显示周标题
-    next: true,                          // 显示下个月
-    prev: true,                          // 显示上个月
+    year: new Date().getFullYear(), // 年份
+    month: new Date().getMonth() + 1, // 月份
+    day: new Date().getDate(), // 日期
+    kilometre: '',
+    kilMoney: 0,
+    cheMoney: 0,
+    header: true, // 日历标题
+    lunar: true, // 显示农历
+    more: false, // 显示非当前月日期                
+    week_title: true, // 显示周标题
+    next: true, // 显示下个月
+    prev: true, // 显示上个月
 
-    cs: 30,                              // 单元格大小
-    title_type: 'en',                    // 周标题类型
+    cs: 30, // 单元格大小
+    title_type: 'en', // 周标题类型
     titleType: ['英文单字母', '英语简写', '中文简写'],
     title_index: 0,
 
@@ -32,8 +32,9 @@ Page({
     endarr: [],
     endarr1: [],
     startAddress: '',
+    ServeVehicleArr:[],
     activeType: 'rounded', // 日期背景效果
-    days_addon: [],        // 日期
+    days_addon: [], // 日期
     active: 0,
     icon: {
       normal: '//img.yzcdn.cn/icon-normal.png',
@@ -86,7 +87,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     console.log(this.data.obj.endAddress == '')
     this.setData({
       endarr: [
@@ -138,11 +139,10 @@ Page({
     console.log('__________')
     console.log(this.data.obj.oTypeIndex)
     console.log('__________')
-    let CountryList =
-      [
-        this.data.language ? '中国' : 'China',
-        this.data.language ? '澳洲' : 'Australia',
-      ];
+    let CountryList = [
+      this.data.language ? '中国' : 'China',
+      this.data.language ? '澳洲' : 'Australia',
+    ];
     this.setData({
       CountryList
     })
@@ -175,17 +175,22 @@ Page({
       // 本地缓存已有数据
       var serveType = [];
       var ServeVehicle = [];
+      var ServeVehicleArr=[];
       var arr = wx.getStorageSync('Serve').serve;
       for (var i = 0; i < arr.length; i++) {
         serveType.push(arr[i].name)
       }
       var arr1 = wx.getStorageSync('Serve').vehicle;
       for (var i = 0; i < arr1.length; i++) {
-        ServeVehicle.push(arr1[i].name)
+        if (arr1[i].type == 1) {
+          ServeVehicle.push(arr1[i].name)
+          ServeVehicleArr.push(arr1[i])
+        }
       }
       this.setData({
         serveType,
-        ServeVehicle
+        ServeVehicle,
+        ServeVehicleArr
       });
       console.log(this.data.serveType)
       console.log(this.data.ServeVehicle)
@@ -197,7 +202,7 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
   onChange(e) {
@@ -206,7 +211,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     if (wx.getStorageSync('language')) {
       if (wx.getStorageSync('language').language) {
         this.setData({
@@ -229,35 +234,35 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
   onChange(event) {
@@ -381,11 +386,11 @@ Page({
     var that = this;
     wx.getLocation({
       type: 'gcj02', //返回可以用于wx.openLocation的经纬度
-      success: function (res) {
+      success: function(res) {
         var latitude = res.latitude
         var longitude = res.longitude
         wx.chooseLocation({
-          success: function (res) {
+          success: function(res) {
             that.setData({
               startAddress: res.latitude + ',' + res.longitude
             })
@@ -405,7 +410,10 @@ Page({
               endAddress: that.data.obj.endAddress
             };
             console.log(obj)
-            that.formSubmit({ location: that.data.startAddress, obj }, "startAddress")
+            that.formSubmit({
+              location: that.data.startAddress,
+              obj
+            }, "startAddress")
 
             if (that.data.endAddress) {
               for (var i = 0; i < wx.getStorageSync('Serve').money.length; i++) {
@@ -552,15 +560,17 @@ Page({
       obj
     })
     console.log(this.data.obj)
-    this.setData({ show: false });
+    this.setData({
+      show: false
+    });
   },
   // 选择服务车辆变动时
   onChangeVehicle(e) {
     var _that = this;
     console.log(e)
-    var serveType = wx.getStorageSync('Serve').vehicle[e.detail.index].name;
-    console.log(wx.getStorageSync('Serve').vehicle[e.detail.index]);
-    console.log(this.data.obj)
+    var serveType = _that.data.ServeVehicleArr[e.detail.index].name;
+    console.log(_that.data.ServeVehicleArr[e.detail.index]);
+    console.log(_that.data.ServeVehicleArr[e.detail.index].id);
     var obj = {
       oTel: _that.data.obj.oTel,
       startAddress: _that.data.obj.startAddress,
@@ -571,15 +581,17 @@ Page({
       oTypeIndex: _that.data.obj.oTypeIndex,
       oName: _that.data.obj.oName,
       oVehicle: serveType,
-      oVehicleIndex: wx.getStorageSync('Serve').vehicle[e.detail.index].id,
+      oVehicleIndex: _that.data.ServeVehicleArr[e.detail.index].id,
       endAddress: _that.data.obj.endAddress
     };
     this.setData({
       obj,
-      cheMoney: wx.getStorageSync('Serve').vehicle[e.detail.index].money
+      cheMoney: _that.data.ServeVehicleArr[e.detail.index].money
     })
-    console.log(this.data.price)
-    this.setData({ vehicle: false });
+    console.log(this.data.obj)
+    this.setData({
+      vehicle: false
+    });
   },
   // 显示选择地址
   // onChangeendAddress() {
@@ -595,49 +607,52 @@ Page({
     var that = this;
     wx.getLocation({
       type: 'gcj02', //返回可以用于wx.openLocation的经纬度
-      success: function (res) {
+      success: function(res) {
         var latitude = res.latitude
         var longitude = res.longitude
         wx.chooseLocation({
-          success: function (res) {
+          success: function(res) {
             that.setData({
               endAddress: res.latitude + ',' + res.longitude
             })
             console.log(res)
             // if (res.address || res.name) {
-              console.log(that.data.obj.oTime)    
-              var obj = {
-                oTel: that.data.obj.oTel,
-                startAddress: that.data.obj.startAddress,
-                oType: that.data.obj.oType,
-                oTime: that.data.obj.oTime,
-                oRemark: that.data.obj.oRemark,
-                openId: that.data.obj.openId,
-                oTypeIndex: that.data.obj.oTypeIndex,
-                oName: that.data.obj.oName,
-                oVehicle: that.data.obj.oVehicle,
-                oVehicleIndex: that.data.obj.oVehicleIndex,
-                endAddress: ''
-              };
-            that.formSubmit({ location: that.data.endAddress, obj },'endAddress')
+            console.log(that.data.obj.oTime)
+            var obj = {
+              oTel: that.data.obj.oTel,
+              startAddress: that.data.obj.startAddress,
+              oType: that.data.obj.oType,
+              oTime: that.data.obj.oTime,
+              oRemark: that.data.obj.oRemark,
+              openId: that.data.obj.openId,
+              oTypeIndex: that.data.obj.oTypeIndex,
+              oName: that.data.obj.oName,
+              oVehicle: that.data.obj.oVehicle,
+              oVehicleIndex: that.data.obj.oVehicleIndex,
+              endAddress: ''
+            };
+            that.formSubmit({
+              location: that.data.endAddress,
+              obj
+            }, 'endAddress')
 
             if (that.data.startAddress) {
-                for (var i = 0; i < wx.getStorageSync('Serve').money.length; i++) {
-                  if (wx.getStorageSync('Serve').money[i].name == '每公里') {
-                    that.distance(that.data.startAddress, that.data.endAddress)
+              for (var i = 0; i < wx.getStorageSync('Serve').money.length; i++) {
+                if (wx.getStorageSync('Serve').money[i].name == '每公里') {
+                  that.distance(that.data.startAddress, that.data.endAddress)
 
 
-                    console.log(wx.getStorageSync('Serve').money[i].money)
-                    that.setData({
-                      kilMoney: wx.getStorageSync('Serve').money[i].money
-                    })
-                    console.log(that.data.kilMoney)
-                    console.log(that.data.price)
-                    console.log(that.data.kilometre)
-                  }
+                  console.log(wx.getStorageSync('Serve').money[i].money)
+                  that.setData({
+                    kilMoney: wx.getStorageSync('Serve').money[i].money
+                  })
+                  console.log(that.data.kilMoney)
+                  console.log(that.data.price)
+                  console.log(that.data.kilometre)
                 }
-
               }
+
+            }
             // } else {
             //   if (!that.data.obj.startAddress) {
             //     wx.showToast({
@@ -655,22 +670,32 @@ Page({
 
   // 选择服务类型取消
   onCancelServeType(e) {
-    this.setData({ show: false });
+    this.setData({
+      show: false
+    });
     console.log(e)
   },
   // 控制底部弹框
   onClose() {
-    this.setData({ show: false });
+    this.setData({
+      show: false
+    });
   },
   onCancelVehicle() {
-    this.setData({ vehicle: false });
+    this.setData({
+      vehicle: false
+    });
   },
   onCancelLocation() {
-    this.setData({ LocationIs: false });
+    this.setData({
+      LocationIs: false
+    });
   },
   onChangeLocation(e) {
     console.log(e);
-    this.setData({ LocationIs: false });
+    this.setData({
+      LocationIs: false
+    });
     // 0中国 +86 澳洲 +61
     // wx.setStorageSync('Location', e.detail.index)
     this.setData({
@@ -681,7 +706,9 @@ Page({
   // 控制底部弹框
   onCloseCar() {
     console.log(e)
-    this.setData({ showCar: false });
+    this.setData({
+      showCar: false
+    });
 
   },
   // 留言触发事件
@@ -844,7 +871,7 @@ Page({
       });
     }
   },
-  dayClick: function (event) {
+  dayClick: function(event) {
     const year = event.detail.year;
     const month = event.detail.month;
     const day = event.detail.day;
@@ -862,9 +889,12 @@ Page({
       })
     } else {
       this.setData({
-        style: [
-          { month: 'current', day: day, color: 'white', background: '#58cc69' },
-        ],
+        style: [{
+          month: 'current',
+          day: day,
+          color: 'white',
+          background: '#58cc69'
+        }, ],
         time: false,
         date1: year + '-' + month + '-' + day,
         datePickerIsShow: true
@@ -872,7 +902,7 @@ Page({
       console.log(this.data.datePickerIsShow)
     }
   },
-  nextMonth: function (event) {
+  nextMonth: function(event) {
     const currentYear = event.detail.currentYear;
     const currentMonth = event.detail.currentMonth;
     const prevMonth = event.detail.prevMonth;
@@ -883,7 +913,7 @@ Page({
       ]
     });
   },
-  datePickerOnSureClick: function (e) {
+  datePickerOnSureClick: function(e) {
     var _this = this;
     console.log('datePickerOnSureClick');
     console.log(e);
@@ -912,14 +942,14 @@ Page({
     });
   },
 
-  datePickerOnCancelClick: function (event) {
+  datePickerOnCancelClick: function(event) {
     console.log('datePickerOnCancelClick');
     console.log(event);
     this.setData({
       datePickerIsShow: false,
     });
   },
-  distance: function (lat1, lng1, data) {
+  distance: function(lat1, lng1, data) {
     wx.request({
       url: 'https://apis.map.qq.com/ws/direction/v1/driving/',
       method: 'GET',
@@ -945,7 +975,7 @@ Page({
       }
     })
   },
-  formSubmit(e,a) {
+  formSubmit(e, a) {
     console.log(e)
     wx.request({
       url: 'https://apis.map.qq.com/ws/geocoder/v1',
@@ -958,7 +988,7 @@ Page({
         console.log(res.data.result);
 
         // return res.data.result.address;
-        a == "startAddress"?
+        a == "startAddress" ?
           e.obj.startAddress = res.data.result.address : e.obj.endAddress = res.data.result.address
         this.setData({
           obj: e.obj

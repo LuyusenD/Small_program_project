@@ -7,7 +7,7 @@
   <view style='height:50rpx;'></view>
   <van-cell-group>
     <van-field
-      value="{{ oType }}"
+      value="{{ name }}"
       type="text"
       label="{{language?'类型':'Type'}}"
       placeholder="{{language?'请输入要添加的类型':'Please enter the type you want to add'}}"
@@ -25,13 +25,19 @@
       border="{{ false }}"
     />
   </van-cell-group>
+   <van-cell
+        required
+        title="{{language?'类型':'Type'}}"
+        value="{{oTypeIndex==''&&language?'请选择类型':oTypeIndex==''&&!language?'Please select type.':oTypeIndex}}>"
+        bind:click='getType'
+    />
   <view style='height:50rpx;'></view>
   <van-button size="large" bindtap='addSub' type='primary'>{{language?'添加车型':'Add Car'}}</van-button>
 </view>
 <view wx:else>
   <view wx:if="{{serve.length>0}}">
     <view wx:for="{{serve}}" wx:key="{{item.id}}">
-      <van-row>
+      <van-row style='font-size:12px'>
         <van-col span="9">{{language?'类型：'+item.name:'Type：'+item.name}}</van-col>
         <van-col span="7">{{language?'价格：'+item.money:'Money：'+item.money}}</van-col>
         <van-col span="4"><van-button size="small" data-detail="{{item}}" bindtap='SetCar' type='info'>修改</van-button></van-col>
@@ -44,5 +50,21 @@
     <!-- <view>还没有已完成订单呢</view> -->
   </view>
 </view>
+<van-popup
+  show="{{ show }}"
+  position="bottom"
+  overlay="{{ true }}"
+  bind:close="onCancelServeType"
+  safe-area-inset-bottom
+>
+
+  <van-picker
+  show-toolbar
+  title="{{language?'请选择服务类型':'Please select the service type'}}"
+  columns="{{ serveType }}"
+  bind:cancel="onCancelServeType"
+  bind:confirm="onChangeServeType"
+/>
+</van-popup>
 <!-- 删除订单弹框 -->
 <van-dialog id="van-dialog" />

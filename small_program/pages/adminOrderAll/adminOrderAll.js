@@ -17,11 +17,25 @@ Page({
     page: 1,
     // 当前页数显示个数
     pageSize: 6,
-    language:true,
-    url:url.url,
-    showPopUp:false,
-    money:'',
-    oId:'',
+    language: true,
+    url: url.url,
+    showPopUp: false,
+    money: '',
+    show1: false,
+    show2: false,
+    oId: '',
+    startTime: '',
+    endTime: '',
+    currentDate: new Date().getTime() ,
+    minDate: new Date().getTime() - 37869120000,
+    formatter(type, value) {
+      if (type === 'year') {
+        return `${value}年`;
+      } else if (type === 'month') {
+        return `${value}月`;
+      }
+      return value;
+    }
   },
 
   /**
@@ -41,6 +55,71 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
+  DateToString(now) {
+    // var now = new Date;
+    var year = now.getFullYear();
+    var month = (now.getMonth() + 1).toString();
+    var day = (now.getDate()).toString();
+    var hour = (now.getHours()).toString();
+    var minute = (now.getMinutes()).toString();
+    var second = (now.getSeconds()).toString();
+    if (month.length == 1) {
+      month = "0" + month;
+    }
+    if (day.length == 1) {
+      day = "0" + day;
+    }
+    if (hour.length == 1) {
+      hour = "0" + hour;
+    }
+    if (minute.length == 1) {
+      minute = "0" + minute;
+    }
+    if (second.length == 1) {
+      second = "0" + second;
+    }
+    var dateTime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+    return dateTime;
+  },
+  cilck() {
+    this.setData({
+      show1: !this.data.show1
+    })
+  },
+  cilck1() {
+    this.setData({
+      show2: !this.data.show2
+    })
+  },
+  onClose1() {
+    this.setData({
+      show2: false,
+      show1: false
+    })
+  },
+  onClose(){
+    this.setData({
+      show2: false,
+      show1: false
+    })
+  },
+  onInput(e) {
+    console.log(e)
+  },
+  confirm(e) {
+    console.log(e)
+    this.setData({
+      startTime: this.DateToString(new Date(e.detail)),
+      show1:false
+    })
+  },
+  confirm1(e) {
+    console.log(e)
+    this.setData({
+      endTime: this.DateToString(new Date(e.detail)),
+      show2:false
+    })
+  },
   onShow: function () {
     if (wx.getStorageSync('language')) {
       if (wx.getStorageSync('language').language) {
@@ -87,7 +166,7 @@ Page({
    */
   onReachBottom: function () {
     wx.showLoading({
-      title: this.data.language?'正在加载数据...':'Loading...',
+      title: this.data.language ? '正在加载数据...' : 'Loading...',
       mask: true
     });
     console.log(this.data.orderList.length / this.data.pageSize)
@@ -102,7 +181,7 @@ Page({
           order: this.nextData(this.data.orderList, this.data.pageSize, this.data.page)
         });
         wx.showToast({
-          title: this.data.language ? '订单刷新成功' :'Successful order refresh',
+          title: this.data.language ? '订单刷新成功' : 'Successful order refresh',
           icon: 'success'
         })
       }, 1500)
@@ -110,7 +189,7 @@ Page({
       setTimeout(() => {
         wx.hideLoading();
         wx.showToast({
-          title: this.data.language ? '亲,没有更多订单了!' :'No more orders, dear!',
+          title: this.data.language ? '亲,没有更多订单了!' : 'No more orders, dear!',
           icon: 'none'
         })
       }, 1500)
@@ -124,14 +203,23 @@ Page({
 
   },
   // 所有订单页面
-  getorderListAll(){
+  getorderListAll() {
     wx.showLoading({
-      title: this.data.language?'正在加载数据...':'Loadin...',
+      title: this.data.language ? '正在加载数据...' : 'Loadin...',
       mask: true
     })
     var opt = {
       url: url.url + "order/allOrder",
+      data:{
+        startTime: this.data.startTime,
+        endTime: this.data.endTime ,
+      }
     };
+    console.log('_____________________________________________________________________')
+    console.log(opt)
+    console.log(this.data.startTime)
+    console.log(this.data.endTime)
+
     url.ajax(opt)
       .then((res) => {
         wx.hideLoading();
@@ -144,7 +232,7 @@ Page({
               for (var j = 0; j < res.data.data.length; j++) {
                 if (res.data.data[j].oType == arr[i].id) {
                   res.data.data[j].oType = arr[i].name;
-                  res.data.data[j].img =  arr[i].icon;
+                  res.data.data[j].img = arr[i].icon;
                   continue;
                 }
               }
@@ -160,12 +248,18 @@ Page({
               }
             }
             this.setData({
+              orderList: [],
+              order: []
+            })
+            this.setData({
               orderList: res.data.data,
               order: this.nextData(res.data.data, this.data.pageSize, this.data.page)
             })
+            console.log("order")
+            console.log(this.data.order)
           } else {
             wx.showToast({
-              title: this.data.language ? '获取订单信息失败,请稍后重试...' :'Failed to obtain order information. Please try again later.',
+              title: this.data.language ? '获取订单信息失败,请稍后重试...' : 'Failed to obtain order information. Please try again later.',
               icon: 'none'
             })
           }
@@ -202,8 +296,8 @@ Page({
     var oId = e.currentTarget.dataset.value.oId;
     console.log(oId);
     Dialog.confirm({
-      title: this.data.language ? '提示' :'Tips',
-      message: this.data.language ? '你确定要删除该订单吗?' :'Are you sure you want to delete the order?'
+      title: this.data.language ? '提示' : 'Tips',
+      message: this.data.language ? '你确定要删除该订单吗?' : 'Are you sure you want to delete the order?'
     }).then(() => {
       var opt = {
         url: url.url + 'order/delorder',
@@ -219,7 +313,7 @@ Page({
         .then((res) => {
           if (res.code == 200) {
             Dialog.alert({
-              message: this.data.language ? '删除成功' :'Delete successful'
+              message: this.data.language ? '删除成功' : 'Delete successful'
             }).then(() => {
               // on close
               _this.setData({
@@ -232,7 +326,7 @@ Page({
             });
           } else {
             Dialog.alert({
-              message: this.data.language ? '删除失败' :'Delete failed'
+              message: this.data.language ? '删除失败' : 'Delete failed'
             }).then(() => {
               // on close
             });
@@ -250,8 +344,8 @@ Page({
     var oId = e.currentTarget.dataset.value;
     console.log(oId);
     Dialog.confirm({
-      title: this.data.language ? '提示' :'Tips',
-      message: this.data.language ? '你确定要删除该订单吗?' :'Are you sure you want to delete the order?'
+      title: this.data.language ? '提示' : 'Tips',
+      message: this.data.language ? '你确定要删除该订单吗?' : 'Are you sure you want to delete the order?'
     }).then(() => {
       var opt = {
         url: url.url + 'order/delorder',
@@ -267,19 +361,19 @@ Page({
         .then((res) => {
           if (res.code == 200) {
             Dialog.alert({
-              message: this.data.language ? '删除成功' :'Delete successful'
+              message: this.data.language ? '删除成功' : 'Delete successful'
             }).then(() => {
               // on close
               this.setData({
-                page:1,
-                order:[],
-                orderList:[]
+                page: 1,
+                order: [],
+                orderList: []
               })
               _this.getorderListAll();
             });
           } else {
             Dialog.alert({
-              message: this.data.language ? '删除失败' :'Delete failed'
+              message: this.data.language ? '删除失败' : 'Delete failed'
             }).then(() => {
               // on close
             });
@@ -291,19 +385,19 @@ Page({
     });
   },
   // 页面跳转
-  jump(e){
-    var url=e.currentTarget.dataset.url;
+  jump(e) {
+    var url = e.currentTarget.dataset.url;
     wx.navigateTo({
-      url: url+'&isShow=false',
+      url: url + '&isShow=false',
     })
   },
-  setMoeny(){
+  setMoeny() {
     this.setData({
-      showPopUp:true
+      showPopUp: true
     })
   },
-  setStatusok(e){
-    var oId= (e.currentTarget.dataset.value);
+  setStatusok(e) {
+    var oId = (e.currentTarget.dataset.value);
     console.log(oId)
     var opt = {
       url: url.url + 'order/editstate',
@@ -313,7 +407,7 @@ Page({
       },
       data: {
         oId: MD5.md5(MD5.md5(MD5.md5(oId))) + "xn",
-        oState:5,
+        oState: 5,
       }
     };
     Dialog.confirm({
@@ -322,7 +416,7 @@ Page({
     }).then(() => {
       url.ajax(opt)
         .then((res) => {
-          if(res.code==200){
+          if (res.code == 200) {
             Dialog.alert({
               message: this.data.language ? '修改成功' : 'set successful'
             }).then(() => {
@@ -335,7 +429,7 @@ Page({
               })
               this.getorderListAll();
             });
-          }else{
+          } else {
             Dialog.alert({
               message: this.data.language ? '修改失败' : 'set failed'
             }).then(() => {
@@ -346,15 +440,15 @@ Page({
     }).catch(() => {
       // on cancel
     });
-   
+
   },
-  iscan(){
+  iscan() {
     console.log(11111)
     this.setData({ show: false });
   },
-  isok(){
+  isok() {
     console.log(2222)
-    if (this.data.money){
+    if (this.data.money) {
       var opt = {
         url: url.url + 'order/setmoneyorder',
         method: "get",
@@ -369,7 +463,7 @@ Page({
       url.ajax(opt)
         .then((res) => {
           console.log(res)
-          if(res.code==200){
+          if (res.code == 200) {
             wx.showToast({
               title: this.data.language ? '修改成功' : 'set success',
               icon: 'success'
@@ -379,35 +473,35 @@ Page({
               orderList: [],
               // 当前分页显示订单个数
               order: [],
-              money:''
+              money: ''
             })
             this.getorderListAll();
-          }else{
+          } else {
             wx.showToast({
-              title: this.data.language ? '修改失败' :'set failed',
-              icon:'none'
+              title: this.data.language ? '修改失败' : 'set failed',
+              icon: 'none'
             })
           }
           this.setData({ show: false });
         })
-    }else{
+    } else {
       wx.showToast({
-        title: this.language ? '请输入修改的金额!' :'Please enter the revised amount',
-        icon:'none'
+        title: this.language ? '请输入修改的金额!' : 'Please enter the revised amount',
+        icon: 'none'
       });
     }
   },
-  setMoeny(e){
-    var oId=(e.currentTarget.dataset.value);
+  setMoeny(e) {
+    var oId = (e.currentTarget.dataset.value);
     this.setData({ show: true, oId: oId });
   },
-  onChangeMoney(e){
+  onChangeMoney(e) {
     this.setData({
       money: e.detail
     });
     console.log(this.data.money)
   },
-  check(e){
+  check(e) {
     var oId = (e.currentTarget.dataset.value);
     var opt = {
       url: url.url + 'order/editstate',
@@ -417,7 +511,7 @@ Page({
       },
       data: {
         oId: MD5.md5(MD5.md5(MD5.md5(oId))) + "xn",
-        oState:2
+        oState: 2
       }
     };
     Dialog.confirm({
@@ -442,6 +536,6 @@ Page({
           }
         })
     })
-    
+
   }
 })

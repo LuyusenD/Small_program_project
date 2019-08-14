@@ -1,3 +1,16 @@
+    <view class="flex">
+      <view class="flex-list">
+        <view>
+          <text>开始时间:</text>   
+          <text bindtap="cilck">{{startTime?startTime:'未选择'}}</text>     
+        </view>
+           <view>
+          <text>结束时间:</text>   
+          <text bindtap="cilck1">{{endTime?endTime:'未选择'}}</text>     
+        </view>
+        <van-button type="primary" size="mini" bindtap="getorderListAll">搜索</van-button>
+      </view>
+    </view>
     <view class='container pt10'>
       <view class="order_list" wx:for='{{order}}' wx:key="{{index}}">
         <view class="bw order_item">
@@ -56,4 +69,36 @@
         <van-button type="primary" bindtap="isok">确认</van-button>
       </view>
   </view>
+</van-popup>
+<van-popup
+  show="{{ show1 }}"
+  position="bottom"
+  overlay="{{ true }}"
+  bind:close="onClose1"
+>
+  <van-datetime-picker
+  type="date"
+  value="{{ currentDate }}"
+  bind:input="onInput"
+  min-date="{{ minDate }}"
+  formatter="{{ formatter }}"
+  bind:confirm="confirm"
+  bind:cancel="onClose1"
+/>
+</van-popup>
+<van-popup
+  show="{{ show2 }}"
+  position="bottom"
+  overlay="{{ true }}"
+  bind:close="onClose1"
+>
+  <van-datetime-picker
+  type="date"
+  value="{{ currentDate }}"
+  bind:input="onInput"
+  min-date="{{ minDate }}"
+  formatter="{{ formatter }}"
+  bind:confirm="confirm1"
+  bind:cancel="onClose1"
+/>
 </van-popup>

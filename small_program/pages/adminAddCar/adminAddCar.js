@@ -1,4 +1,4 @@
-// pages/adminAddCar/adminAddCar.js
+  // pages/adminAddCar/adminAddCar.js
 import url from '../../utils/config.js';
 import Dialog from '../../vant-weapp/dist/dialog/dialog';
 Page({
@@ -9,9 +9,13 @@ Page({
   data: {
     active:0,
     oType: '',
+    oTypeIndex: '',
     money: '',
+    name:'',
     language: true,
-    serve:[]
+    serve:[],
+    show:false,
+    serveType:['小型货车','大型货车']
   },
 
   /**
@@ -92,11 +96,29 @@ Page({
   onShareAppMessage: function () {
 
   },
+  getType(){
+    this.setData({
+      show: true
+    });
+  },
   getoType(e) {
     console.log(e.detail);
     this.setData({
-      oType: e.detail
+      name: e.detail
     });
+  },
+  onCancelServeType(e){
+    this.setData({
+      show: false
+    });
+  },
+  onChangeServeType(e){
+    this.setData({
+      oTypeIndex: e.detail.value,
+      oType: e.detail.index,
+      show: false
+    })
+    console.log(e)
   },
   getMoeny(e) {
     console.log(e.detail);
@@ -118,9 +140,16 @@ Page({
 
   },
   addSub(){
-    if(!this.data.oType){
+    if(!this.data.name){
       wx.showToast({
-        title: this.data.language ? '请输入要添加的车型！' :'Please enter the model you want to add!',
+        title: this.data.language ? '请输入要添加的车型名称！' :'Please enter the model name you want to add!',
+        icon:'none'
+      });
+      return;
+    }
+    if(this.data.oType!=''){
+      wx.showToast({
+        title: this.data.language ? '请输入要添加的车型类型！' :'Please enter the type of car you want to add!',
         icon:'none'
       });
       return;
@@ -139,8 +168,9 @@ Page({
         "content-type": "application/x-www-form-urlencoded"
       },
       data:{
-        name:this.data.oType,
-        money: Number(this.data.money)
+        name:this.data.name,
+        money: Number(this.data.money),
+        type:this.data.oType
       }
     };
     url.ajax(opt)

@@ -1,6 +1,29 @@
 /* pages/adminOrderAll/adminOrderAll.wxss */
 /* pages/orderList/orderList.wxss */
 /* pages/search/search.wxss */
+.flex{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap:nowrap; 
+}
+.flex-list{
+  width: 80%;
+  padding: 10rpx 0;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap:nowrap;
+}
+.flex-list>view{
+   display: flex;
+  justify-content: flex-start;
+   flex-wrap:wrap;
+}
+.flex-list>view>text{
+  display: block;
+  width: 100%;
+  text-align: center
+}
 .mai{
 /* position: absolute; */
 width: 100%;

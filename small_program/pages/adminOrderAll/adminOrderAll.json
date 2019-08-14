@@ -9,6 +9,7 @@
     "van-col": "/vant-weapp/dist/col/index",
     "van-field": "/vant-weapp/dist/field/index",
     "pop-up-wrapper": "../../components/pop-up-wrapper/pop-up-wrapper",
-    "van-popup": "../../vant-weapp/dist/popup/index"
+    "van-popup": "../../vant-weapp/dist/popup/index",
+    "van-datetime-picker": "/vant-weapp/dist/datetime-picker/index"
   }
 }

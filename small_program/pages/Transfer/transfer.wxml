@@ -99,8 +99,8 @@
       <van-cell
       required
       icon="location"  
-      title="{{language?'送达':'service'}}"
-      value="{{obj.startAddress==''&&language?'请选择送达地址':obj.startAddress==''&&!language?'Please choose the service address.':obj.startAddress}}>"
+      title="{{language?'位置':'location'}}"
+      value="{{obj.startAddress==''&&language?'请选择位置':obj.startAddress==''&&!language?'Please select location':obj.startAddress}}>"
       bind:click='getAddress'
   />
     <van-cell
