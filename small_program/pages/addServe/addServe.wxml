@@ -10,30 +10,16 @@
     <image bindtap='base64' src="{{img=='/image/add.png'?img:url+img}}"></image>
   </view>
   <van-cell-group>
-    <van-field
-      value="{{ oType }}"
-      type="text"
-      label="{{language?'服务类型':'Service type'}}"
-      placeholder="{{language?'请输入要添加的服务类型':'Please enter the type of service you want to add'}}"
-      bind:input='getoType'
-      border="{{ false }}"
-    />
+    <van-field value="{{ oType }}" type="text" label="{{language?'服务类型':'Service type'}}" placeholder="{{language?'请输入要添加的服务类型':'Please enter the type of service you want to add'}}" bind:input='getoType' border="{{ false }}" />
   </van-cell-group>
   <van-cell-group>
-    <van-field
-      value="{{ money }}"
-      type="number"
-      label="{{language?'服务金额':'Service amount'}}"
-      placeholder="{{language?'请输入要添加的服务类型':'Please enter the amount of service you want to add'}}"
-      bind:input='getoMoney'
-      border="{{ false }}"
-    />
+    <van-field value="{{ money }}" type="number" label="{{language?'服务金额':'Service amount'}}" placeholder="{{language?'请输入要添加的服务类型':'Please enter the amount of service you want to add'}}" bind:input='getoMoney' border="{{ false }}" />
   </van-cell-group>
   <view style='height:100rpx;'></view>
   <van-button size="large" bindtap='addoType' type='primary'>{{language?'添加服务':'Add service'}}</van-button>
 </view>
 <view wx:else>
-  <view wx:if="{{serve.length>0}}">
+  <!-- <view wx:if="{{serve.length>0}}">
     <view wx:for="{{serve}}" wx:key="{{item.id}}">
       <van-card
         price="{{item.money}}"
@@ -50,8 +36,28 @@
   </view>
   <view class='center' wx:else>
      <image src='/image/noOrder.png' style='width:50px;height:50px'></image>
-    <!-- <view>还没有已完成订单呢</view> -->
+  </view>
+</view> -->
+  <view wx:for="{{serve}}">
+    <view class="title">{{item.name}}:</view>
+    <view class="table">
+      <view class="tr">
+        <view class="td">{{language?'类型':'Type'}}</view>
+        <view class="td">{{language?'价格':'Money'}}</view>
+        <view class="td">{{language?'操作':'operation'}}</view>
+      </view>
+      <view class="tr" >
+        <view class="td" style="font-size:12px">{{item.name}}</view>
+        <view class="td">{{item.money}}</view>
+        <view class="td">
+           <van-button size="mini" type='info' bindtap='setServe' data-detail='{{item}}'>修改</van-button>
+          <van-button size="mini" type='warning' bindtap='delServe' data-detail='{{item}}'>删除</van-button>
+        </view>
+      </view>
+
+    </view>
   </view>
 </view>
+
 <!-- 删除订单弹框 -->
 <van-dialog id="van-dialog" />

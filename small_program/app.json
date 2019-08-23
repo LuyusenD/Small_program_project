@@ -19,14 +19,14 @@
     "pages/evaluate/evaluate",
     "pages/orderListDetail/orderListDetail",
     "pages/evaluateDetail/evaluateDetail",
-    "pages/adminAddCar/adminAddCar",
     "pages/Set/Set",
     "pages/SetCar/SetCar",
     "pages/SetServe/setServe",
     "pages/Transfer/transfer",
     "pages/HouseMoving/HouseMoving",
     "pages/adminSetServe/adminSetServe",
-    "pages/serveType/serveType"
+    "pages/serveType/serveType",
+    "pages/adminAddCar/adminAddCar"
   ],
   "permission": {
     "scope.userLocation": {

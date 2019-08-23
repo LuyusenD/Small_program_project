@@ -28,4 +28,40 @@
   margin: auto;
   font-size: 14px;
   text-align: center;
+}/* pages/adminAddCar/adminAddCar.wxss */
+.title{
+  text-align: left;
+  margin: 40rpx;
+  font-size: 14px;
+}
+.table{
+  border: 1px solid #CCCCCC;
+  width:740rpx;
+  margin: 0 auto;
+  font-size:12px; 
+}
+.tr{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  height: 80rpx;
+}
+.td{
+  width: 245rpx;
+  line-height: 80rpx;
+  text-align: center;
+  border-right: 1px solid #CCCCCC;
+  border-bottom: 1px solid #CCCCCC;
+}
+.td:first-child{
+  width: 340rpx;
+  text-align: center;
+  border-right: 1px solid #CCCCCC;
+  border-bottom: 1px solid #CCCCCC;
+}
+.td:nth-child(2){
+  width: 150rpx;
+}
+.table>view:last-child{
+  border-bottom: none
 }

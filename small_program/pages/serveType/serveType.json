@@ -11,5 +11,5 @@
       "van-panel": "/vant-weapp/dist/panel/index",
       "van-tabs": "/vant-weapp/dist/tabs/index"
   },
-  "navigationBarTitleText": "服务类容"
+  "navigationBarTitleText": "服务内容"
 }

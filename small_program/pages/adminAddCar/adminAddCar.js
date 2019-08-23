@@ -14,8 +14,9 @@ Page({
     name:'',
     language: true,
     serve:[],
+    serve1:[],
     show:false,
-    serveType:['小型货车','大型货车']
+    serveType:['客车','货车']
   },
 
   /**
@@ -118,7 +119,8 @@ Page({
       oType: e.detail.index,
       show: false
     })
-    console.log(e)
+    console.log(this.data.oTypeIndex)
+    console.log(this.data.oType)
   },
   getMoeny(e) {
     console.log(e.detail);
@@ -140,6 +142,7 @@ Page({
 
   },
   addSub(){
+    console.log(this.data.oType=='')
     if(!this.data.name){
       wx.showToast({
         title: this.data.language ? '请输入要添加的车型名称！' :'Please enter the model name you want to add!',
@@ -147,7 +150,7 @@ Page({
       });
       return;
     }
-    if(this.data.oType!=''){
+    if(this.data.oType===''){
       wx.showToast({
         title: this.data.language ? '请输入要添加的车型类型！' :'Please enter the type of car you want to add!',
         icon:'none'
@@ -207,10 +210,19 @@ Page({
       .then((res) => {
         if (res.code == 200) {
           wx.hideLoading();
-          console.log(111111111111111)
-          console.log(111111111111111)
+          let serve=[], serve1=[];
+          for (var i = 0; i < res.data.vehicle.length;i++){
+            if (res.data.vehicle[i].type==0){
+              serve.push(res.data.vehicle[i])
+            }else{
+              if (res.data.vehicle[i].type == 1){
+                serve1.push(res.data.vehicle[i])
+              }
+            }
+          }
           this.setData({
-            serve: res.data.vehicle
+            serve,
+            serve1
           })
           console.log(this.data.vehicle)
           wx.setStorageSync('Serve', res.data)

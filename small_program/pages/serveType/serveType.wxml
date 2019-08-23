@@ -6,7 +6,7 @@
 <!-- <van-swipe-cell right-width="{{ 65 }}" left-width="{{ 65 }}">
   <view slot="left" data-item="{{item}}" bindtap="upload">{{language?'修改':'set'}}</view> -->
 <view wx:if="{{active==0}}">
-  <van-cell-group wx:for="{{list}}" key="{{index}}" >
+  <van-cell-group wx:for="{{list}}" key="{{index}}">
     <van-cell title="{{item.type==1?'清洁服务':'家具安装'}}" value="{{item.title}}" />
   </van-cell-group>
   <!-- <view slot="right" >{{language?'删除':'del'}}</view>
@@ -18,12 +18,32 @@
 </view>
 
 <view wx:if="{{active==1}}">
-  <van-panel wx:for="{{list}}" key="{{index}}" title="服务类型" desc="{{item.title}}" status="{{item.type==1?'清洁服务':'家具安装'}}" use-footer-slot>
+  <!-- <van-panel wx:for="{{list}}" key="{{index}}" title="服务类型" desc="{{item.title}}" status="{{item.type==1?'清洁服务':'家具安装'}}" use-footer-slot>
   <view slot="footer">
     <van-button size="small"  data-item="{{item}}" bindtap="upload" style="margin-left:50%;">修改</van-button>
     <van-button size="small" type="danger" bindtap="del" data-item="{{item}}" style="margin-left:5px;">删除</van-button>
   </view>
-</van-panel>
+</van-panel> -->
+  <view wx:for="{{list1}}">
+    <view class="title">{{item[0].type==1?'清洁服务':'家具安装'}}:</view>
+    <block>
+      <view class="table">
+        <view class="tr">
+          <view class="td">{{language?'类型':'Type'}}</view>
+          <view class="td">{{language?'内容':'Content'}}</view>
+          <view class="td">{{language?'操作':'operation'}}</view>
+        </view>
+        <view class="tr"  wx:for="{{item}}" wx:for-item="items">
+          <view class="td" style="font-size:12px">{{items.type==1?'清洁服务':'家具安装'}}</view>
+          <view class="td">{{items.title}}</view>
+          <view class="td">
+            <van-button size="mini" type='info' data-item="{{items}}" bindtap="upload">修改</van-button>
+            <van-button size="mini" type='warning' bindtap="del" data-item="{{items}}">删除</van-button>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
 </view>
 <van-popup show="{{ show }}" bind:close="onClose1">
   <view style="width:300px;height:200px">

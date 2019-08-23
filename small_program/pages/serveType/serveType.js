@@ -5,38 +5,38 @@ Page({
    * 页面的初始数据
    */
   data: {
-    active:0,
+    active: 0,
     language: true,
     list: [],
     show: false,
-    isType:false,
-    serve:['清洁服务','家具安装'],
-    title:'',
-    obj:{
-      type:'',
-      typeIndex:'',
-      title:''
+    isType: false,
+    serve: ['清洁服务', '家具安装'],
+    title: '',
+    obj: {
+      type: '',
+      typeIndex: '',
+      title: ''
     }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.getList();
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     if (wx.getStorageSync('language')) {
       if (wx.getStorageSync('language').language) {
         this.setData({
@@ -58,55 +58,55 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
-  onCancelisTypey(){
+  onCancelisTypey() {
     this.setData({
-      isType:false,
-      show:true
+      isType: false,
+      show: true
     })
   },
-  onChange(e){
+  onChange(e) {
     console.log(e)
-    let obj=this.data.obj;
-    obj.title=e.detail;
+    let obj = this.data.obj;
+    obj.title = e.detail;
     this.setData({
       obj
     })
   },
-  onChangeisType(e){
-    let obj=this.data.obj;
-    obj.typeIndex=this.data.serve[e.detail.index]
-    obj.type=e.detail.index+1;
+  onChangeisType(e) {
+    let obj = this.data.obj;
+    obj.typeIndex = this.data.serve[e.detail.index]
+    obj.type = e.detail.index + 1;
     console.log(obj)
     this.setData({
       isType: false,
@@ -114,13 +114,36 @@ Page({
       obj
     })
   },
-  click(){
-    this.setData({ isType: !this.data.isType,show:false });
+  click() {
+    this.setData({
+      isType: !this.data.isType,
+      show: false
+    });
+  },
+
+  filtrateData(arr = []) {
+    let o = {};
+    let new_arr = [];
+    for (let i = 0; i < arr.length; i++) {
+      let b = arr[i];
+      let k = arr[i].type;
+      if (!o[k]) {
+        o[k] = true;
+        new_arr.push([b]);
+      } else if (o[k]) {
+        for (var a = 0; a < new_arr.length; a++) {
+          if (new_arr[a][0].type == k) {
+            new_arr[a].push(b)
+          }
+        }
+      }
+    }
+    return new_arr
   },
   getList() {
     wx.showLoading({
-      title: this.data.language?'加载中...':'Loading...',
-      mask:true
+      title: this.data.language ? '加载中...' : 'Loading...',
+      mask: true
     })
     var opt = {
       url: url.url + 'buff/sercont',
@@ -133,53 +156,61 @@ Page({
     url.ajax(opt)
       .then(res => {
         wx.hideLoading();
-        if(res.code==200){
+        if (res.code == 200) {
+          let list = this.filtrateData(res.data)
+          console.log(list)
           this.setData({
-            list:res.data
+            list:res.data,
+            list1:list
           })
-        }else{
+        } else {
           wx.showToast({
             title: '加载失败....',
-            icon:'none'
+            icon: 'none'
           })
         }
-        console.log(res)
       })
   },
-  add(){
-    this.setData({ show: true,title:this.data.language?'添加':'add' });
+  add() {
+    this.setData({
+      show: true,
+      title: this.data.language ? '添加' : 'add'
+    });
   },
-  upload(item){
-    this.setData({ show: true, title:this.data.language? '修改': 'set' });
+  upload(item) {
+    this.setData({
+      show: true,
+      title: this.data.language ? '修改' : 'set'
+    });
     var item = item.currentTarget.dataset.item
     console.log(item)
-    let obj=this.data.obj;
-    obj.type=item.type;
-    obj.title=item.title;
-    obj.typeIndex=this.data.serve[item.type-1];
-    obj.id=item.id;
+    let obj = this.data.obj;
+    obj.type = item.type;
+    obj.title = item.title;
+    obj.typeIndex = this.data.serve[item.type - 1];
+    obj.id = item.id;
     this.setData({
       obj
     })
   },
-  add1(){
+  add1() {
     console.log(this.data.obj)
-    if(!this.data.obj.type){
+    if (!this.data.obj.type) {
       wx.showToast({
-        title: this.data.language ? '请选择类型' :'Please select type',
-        icon:'none'
+        title: this.data.language ? '请选择类型' : 'Please select type',
+        icon: 'none'
       })
       return;
     }
-    if(!this.data.obj.title){
+    if (!this.data.obj.title) {
       wx.showToast({
-        title: this.data.language ? '请输入服务内容' :'Please enter the service content',
-        icon:'none'
+        title: this.data.language ? '请输入服务内容' : 'Please enter the service content',
+        icon: 'none'
       })
       return;
     }
     console.log(this.data.obj)
-    var obj=this.data.obj;
+    var obj = this.data.obj;
     var o = this.data.title == '添加' || this.data.title == 'add' ? 'buff/sercont/add' : 'buff/sercont/update';
     var opt = {
       url: url.url + o,
@@ -190,44 +221,44 @@ Page({
       data: this.data.obj,
     };
     wx.showLoading({
-      title: this.data.language?'加载中...':'Loading...',
-      mask:true
+      title: this.data.language ? '加载中...' : 'Loading...',
+      mask: true
     })
     url.ajax(opt)
-    .then(res=>{
-      console.log(res)
-      if(res.code==200){
-        wx.showToast({
-          title: this.data.language ? '添加成功!' :'successfully added',
-          icon:'success'
-        })
-        this.setData({
-          show: false,
-          isType: false,
-          obj: {
-            type: '',
-            typeIndex: '',
-            title: ''
-          }
-        });
-        this.getList();
-      }else{
-        wx.showToast({
-          title: this.data.language ? '添加失败!' : 'fail to add',
-          icon: 'none'
-        })
-        this.setData({
-          show: false,
-          isType: false,
-          obj: {
-            type: '',
-            typeIndex: '',
-            title: ''
-          }
-        });
-        this.getList();
-      }
-    })
+      .then(res => {
+        console.log(res)
+        if (res.code == 200) {
+          wx.showToast({
+            title: this.data.language ? '添加成功!' : 'successfully added',
+            icon: 'success'
+          })
+          this.setData({
+            show: false,
+            isType: false,
+            obj: {
+              type: '',
+              typeIndex: '',
+              title: ''
+            }
+          });
+          this.getList();
+        } else {
+          wx.showToast({
+            title: this.data.language ? '添加失败!' : 'fail to add',
+            icon: 'none'
+          })
+          this.setData({
+            show: false,
+            isType: false,
+            obj: {
+              type: '',
+              typeIndex: '',
+              title: ''
+            }
+          });
+          this.getList();
+        }
+      })
   },
   // 用户选择状态
   activeonChange(e) {
@@ -244,45 +275,50 @@ Page({
       })
     }
   },
-  del(item){
-   var id=item.currentTarget.dataset.item.id;
+  del(item) {
+    var id = item.currentTarget.dataset.item.id;
     var opt = {
       url: url.url + 'buff/sercont/del',
       method: "GET",
       header: {
         "content-type": "application/json"
       },
-      data: {id:id},
+      data: {
+        id: id
+      },
     };
     wx.showLoading({
       title: this.data.language ? '加载中...' : 'Loading...',
       mask: true
     })
     url.ajax(opt)
-    .then(res=>{
-      wx.hideLoading();
-      console.log(res)
-      if(res.code==200){
-        wx.showToast({
-          title: this.data.language ? '删除成功!' : 'successfully delete',
-          icon: 'none'
-        });
-        this.getList();
-      }else{
-        wx.showToast({
-          title: this.data.language ? '删除失败!' : 'fail to delete',
-          icon: 'none'
-        })
-      }
-    })
+      .then(res => {
+        wx.hideLoading();
+        console.log(res)
+        if (res.code == 200) {
+          wx.showToast({
+            title: this.data.language ? '删除成功!' : 'successfully delete',
+            icon: 'none'
+          });
+          this.getList();
+        } else {
+          wx.showToast({
+            title: this.data.language ? '删除失败!' : 'fail to delete',
+            icon: 'none'
+          })
+        }
+      })
   },
   onClose1() {
-    let obj={
-      title:'',
-      type:'',
-      typeIndex:''
+    let obj = {
+      title: '',
+      type: '',
+      typeIndex: ''
     }
-    this.setData({ show: false,obj });
+    this.setData({
+      show: false,
+      obj
+    });
   },
   onClose(event) {
     const {
